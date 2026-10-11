@@ -1,0 +1,14 @@
+---
+export const prerender = true;
+import Layout from "../../layouts/Layout.astro";
+import WorkPortfolio from "@/components/work/WorkPortfolio";
+import { getWorkProjects } from "@/lib/work";
+import { validatePortfolioContent } from "@/lib/portfolio-content";
+import { EXPERIENCE } from "@/data/experience";
+validatePortfolioContent();
+const projects = getWorkProjects();
+---
+
+<Layout title="Selected Work" description="Personal projects and open-source work by Rokon, with source-backed technical context, architecture diagrams, and clearly attributed contributions.">
+  <WorkPortfolio projects={projects} experience={EXPERIENCE} />
+</Layout>

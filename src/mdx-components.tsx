@@ -1,6 +1,31 @@
 import { CodeBlock } from "@/components/mdx/code-block";
 import { MediaContainer } from "@/components/mdx/media-container";
-import type { ComponentProps } from "react";
+import { type ComponentProps, type ReactNode, isValidElement } from "react";
+
+function headingText(children: ReactNode): string {
+  if (typeof children === "string" || typeof children === "number")
+    return String(children);
+  if (Array.isArray(children)) return children.map(headingText).join("");
+  if (isValidElement<{ children?: ReactNode }>(children))
+    return headingText(children.props.children);
+  return "section";
+}
+function heading(Tag: "h2" | "h3" | "h4") {
+  return ({ children, id, ...props }: ComponentProps<"h2">) => (
+    <Tag {...props} id={id}>
+      {children}
+      {id && (
+        <a
+          className="heading-anchor"
+          href={`#${id}`}
+          aria-label={`Link to ${headingText(children)}`}
+        >
+          <span aria-hidden="true">#</span>
+        </a>
+      )}
+    </Tag>
+  );
+}
 
 type CodeProps = ComponentProps<"code"> & {
   "data-language"?: string;
@@ -8,28 +33,19 @@ type CodeProps = ComponentProps<"code"> & {
 
 export const mdxComponents = {
   MediaContainer,
+  h2: heading("h2"),
+  h3: heading("h3"),
+  h4: heading("h4"),
   pre: (props: ComponentProps<"pre">) => <CodeBlock {...props} />,
-  hr: (props: ComponentProps<"hr">) => (
-    <div className="my-10 flex w-full items-center" {...props}>
-      <div
-        className="flex-1 h-px bg-border"
-        style={{
-          maskImage:
-            "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
-        }}
-      />
-    </div>
-  ),
+  hr: (props: ComponentProps<"hr">) => <hr {...props} />,
   table: (props: ComponentProps<"table">) => (
-    <div className="my-6 border border-border rounded-xl overflow-hidden">
-      <div className="w-full overflow-x-auto">
-        <table
-          className="m-0! w-full min-w-full border-separate border-spacing-0"
-          {...props}
-        />
-      </div>
+    <div
+      className="article-table"
+      role="region"
+      aria-label="Article table; scroll horizontally if needed"
+      tabIndex={0}
+    >
+      <table {...props} />
     </div>
   ),
   code: ({ children, ...props }: CodeProps) => {
@@ -37,10 +53,7 @@ export const mdxComponents = {
       return <code {...props}>{children}</code>;
     }
     return (
-      <code
-        className="px-1.5 py-0.5 rounded-md bg-muted/60 dark:bg-muted/40 text-sm font-mono text-foreground/90"
-        {...props}
-      >
+      <code className="inline-code" {...props}>
         {children}
       </code>
     );

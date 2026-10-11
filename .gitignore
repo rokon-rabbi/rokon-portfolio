@@ -24,6 +24,8 @@ pnpm-debug.log*
 .env.production
 .env.local
 .env.*.local
+.env.*
+!.env.example
 
 # macOS-specific files
 .DS_Store
@@ -32,3 +34,11 @@ pnpm-debug.log*
 .idea/
 
 /reference/private/
+
+# Browser failure traces are local diagnostics; selected QA screenshots live in docs.
+/test-results/
+/playwright-report/
+
+# Local Python diagnostics; deployment tools are shipped as source.
+__pycache__/
+*.pyc

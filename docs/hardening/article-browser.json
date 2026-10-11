@@ -1,0 +1,182 @@
+{
+  "checks": [
+    "Production headers and CSP permit genuine theme/menu interactions across all tested routes; keyboard focus is visible and layouts fit mobile.",
+    "An isolated published MDX fixture renders BlogPosting, highlighted code and keyboard clipboard controls under the production CSP.",
+    "No browser exceptions or third-party requests occurred.",
+    "An unauthorized injected inline script is blocked by the enforced CSP."
+  ],
+  "origin": "http://127.0.0.1:4174",
+  "interactionSamples": [
+    {
+      "route": "/blog/qa-production-csp",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 8,
+      "maxObservedDurationMs": 40,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 9341,
+          "duration": 32
+        },
+        {
+          "name": "keypress",
+          "id": 9341,
+          "duration": 32
+        },
+        {
+          "name": "click",
+          "id": 9341,
+          "duration": 32
+        },
+        {
+          "name": "keyup",
+          "id": 9341,
+          "duration": 24
+        },
+        {
+          "name": "keydown",
+          "id": 9348,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 9348,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 9348,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 9348,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 9362,
+          "duration": 32
+        },
+        {
+          "name": "keypress",
+          "id": 9362,
+          "duration": 32
+        },
+        {
+          "name": "click",
+          "id": 9362,
+          "duration": 32
+        },
+        {
+          "name": "keyup",
+          "id": 9362,
+          "duration": 24
+        },
+        {
+          "name": "keydown",
+          "id": 9369,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 9369,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 9369,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 9369,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 9376,
+          "duration": 24
+        },
+        {
+          "name": "keypress",
+          "id": 9376,
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "id": 9376,
+          "duration": 24
+        },
+        {
+          "name": "keyup",
+          "id": 9376,
+          "duration": 40
+        },
+        {
+          "name": "keydown",
+          "id": 9383,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 9383,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 9383,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 9383,
+          "duration": 24
+        },
+        {
+          "name": "keydown",
+          "id": 9390,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 9390,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 9390,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 9390,
+          "duration": 32
+        },
+        {
+          "name": "keydown",
+          "id": 9397,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 9397,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 9397,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 9397,
+          "duration": 24
+        }
+      ]
+    }
+  ],
+  "thirdParty": [],
+  "exceptions": [],
+  "note": "Local lab Event Timing samples, quantized to 8ms and limited to events >=16ms. These are not field INP or a percentile from real visitors."
+}

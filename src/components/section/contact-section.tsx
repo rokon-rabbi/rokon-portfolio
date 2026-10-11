@@ -1,32 +1,46 @@
-import { FlickeringGrid } from "@/components/magicui/flickering-grid";
-import { DATA } from "@/data/resume";
-
-export default function ContactSection() {
+import type { PortfolioData } from "@/data/resume";
+import { CONTACT_DETAILS, emailHref } from "@/data/contact";
+export default function ContactSection({
+  contacts,
+  content,
+}: {
+  contacts: PortfolioData["contacts"];
+  content: PortfolioData["sections"]["contact"];
+}) {
   return (
-    <div className="border rounded-xl p-10 relative">
-      <div className="absolute -top-4 border bg-primary z-10 rounded-xl px-4 py-1 left-1/2 -translate-x-1/2">
-        <span className="text-background text-sm font-medium">{DATA.sections.contact.label}</span>
-      </div>
-      <div className="absolute inset-0 top-0 left-0 right-0 h-1/2 rounded-xl overflow-hidden">
-        <FlickeringGrid
-          className="h-full w-full"
-          squareSize={2}
-          gridGap={2}
-          style={{
-            maskImage: "linear-gradient(to bottom, black, transparent)",
-            WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-          }}
-        />
-      </div>
-      <div className="relative flex flex-col items-center gap-4 text-center">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-          {DATA.sections.contact.heading}
+    <div className="contact-panel" data-motion="reveal">
+      <div>
+        <p className="eyebrow mb-4">07 / {content.label}</p>
+        <h2 id="contact-heading">
+          Let’s connect
+          <br />
+          <span className="text-primary">the dots.</span>
         </h2>
-        <p className="mx-auto max-w-lg text-muted-foreground text-balance">
-          {DATA.sections.contact.text}
-        </p>
+      </div>
+      <div>
+        <span className="contact-signal" aria-hidden="true">
+          <i />
+          <span />
+          <i />
+        </span>
+        <p className="contact-description">{content.text}</p>
+        <div className="profile-actions">
+          <a href={CONTACT_DETAILS.email ? emailHref(CONTACT_DETAILS.email) : "/contact"} className="button button-primary">
+            {CONTACT_DETAILS.email ? "Email me" : "Let’s connect"} <span aria-hidden="true">↗</span>
+          </a>
+        {contacts.map((contact) => (
+          <a
+            key={contact.id}
+            href={contact.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button button-outline"
+          >
+            Find me on {contact.label} <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+        </div>
       </div>
     </div>
   );
 }
-

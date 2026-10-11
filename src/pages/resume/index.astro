@@ -1,0 +1,19 @@
+---
+export const prerender = true;
+import Layout from "@/layouts/Layout.astro";
+import { createPublicResume } from "@/lib/public-resume";
+import { emailHref } from "@/data/contact";
+import "@/styles/profile-pages.css";
+import "@/styles/resume.css";
+const resume = createPublicResume();
+---
+<Layout title="Professional resume" description={`Professional experience, technical skills, and education for ${resume.name}, ${resume.headline}.`}>
+  <article class="public-resume" aria-labelledby="resume-title">
+    <header class="resume-header"><p class="eyebrow">Professional resume</p><h1 id="resume-title">{resume.name}</h1><p class="resume-role">{resume.headline}</p><nav class="resume-contacts" aria-label="Resume contacts">{resume.email && <a class="text-link" href={emailHref(resume.email)}>{resume.email}</a>}{resume.links.map((link) => <a class="text-link" href={link.url}>{link.label}<span class="print-url">: {link.url}</span></a>)}</nav><div class="resume-downloads"><a class="button button-primary" href="/resume/rokon-resume.pdf" download="Rokon-Resume.pdf">Download PDF <span aria-hidden="true">↓</span></a><a class="button button-outline" href="/resume/rokon-resume.txt" download="Rokon-Resume.txt">Download plain text <span aria-hidden="true">↓</span></a></div></header>
+    <section aria-labelledby="resume-profile"><h2 id="resume-profile">Profile</h2><p>{resume.summary}</p></section>
+    <section aria-labelledby="resume-experience"><h2 id="resume-experience">Professional experience</h2>{resume.experience.map((role) => <div class="resume-experience"><div class="resume-job-heading"><h3>{role.title}</h3><p class="metadata">{role.period}</p></div><p class="resume-employer">{role.company}</p><ul>{role.contributions.map((claim) => <li>{claim}</li>)}</ul></div>)}</section>
+    <section aria-labelledby="resume-skills"><h2 id="resume-skills">Technical skills</h2><dl class="resume-skills">{resume.skills.map((group) => <div><dt>{group.label}</dt><dd>{group.skills.join(", ")}</dd></div>)}</dl></section>
+    <section aria-labelledby="resume-education"><h2 id="resume-education">Education</h2><h3>{resume.education.institution}</h3>{resume.education.degree && <p>{resume.education.degree}</p>}{resume.education.period && <p class="metadata">{resume.education.period}</p>}</section>
+    <nav class="resume-return" aria-label="More about Rokon"><a class="text-link" href="/about">About my approach <span aria-hidden="true">↗</span></a><a class="text-link" href="/contact">Start a conversation <span aria-hidden="true">↗</span></a></nav>
+  </article>
+</Layout>

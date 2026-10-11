@@ -1,0 +1,1373 @@
+{
+  "checks": [
+    "Production headers and CSP permit genuine theme/menu interactions across all tested routes; keyboard focus is visible and layouts fit mobile.",
+    "Reduced motion prevents GSAP and Three.js downloads.",
+    "Public content and native links remain readable at 320px with JavaScript disabled.",
+    "No browser exceptions or third-party requests occurred.",
+    "An unauthorized injected inline script is blocked by the enforced CSP."
+  ],
+  "origin": "http://127.0.0.1:4173",
+  "interactionSamples": [
+    {
+      "route": "/",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 9,
+      "maxObservedDurationMs": 128,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 2906,
+          "duration": 40
+        },
+        {
+          "name": "keypress",
+          "id": 2906,
+          "duration": 40
+        },
+        {
+          "name": "click",
+          "id": 2906,
+          "duration": 40
+        },
+        {
+          "name": "keyup",
+          "id": 2906,
+          "duration": 128
+        },
+        {
+          "name": "keydown",
+          "id": 2913,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 2913,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 2913,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 2913,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 2920,
+          "duration": 24
+        },
+        {
+          "name": "keyup",
+          "id": 2920,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 2927,
+          "duration": 24
+        },
+        {
+          "name": "keypress",
+          "id": 2927,
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "id": 2927,
+          "duration": 24
+        },
+        {
+          "name": "keydown",
+          "id": 2934,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 2934,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 2934,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 2934,
+          "duration": 24
+        },
+        {
+          "name": "keydown",
+          "id": 2941,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 2941,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 2941,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 2941,
+          "duration": 24
+        },
+        {
+          "name": "keydown",
+          "id": 2948,
+          "duration": 24
+        },
+        {
+          "name": "keypress",
+          "id": 2948,
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "id": 2948,
+          "duration": 24
+        },
+        {
+          "name": "keyup",
+          "id": 2948,
+          "duration": 24
+        },
+        {
+          "name": "keydown",
+          "id": 2955,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 2955,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 2955,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 2962,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 2962,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 2962,
+          "duration": 16
+        }
+      ]
+    },
+    {
+      "route": "/about",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 7,
+      "maxObservedDurationMs": 16,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 1129,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 1129,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 1129,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 1129,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 1143,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 1143,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 1150,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 1150,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 1150,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 1157,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 1157,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 1157,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 1157,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 1171,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 1171,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 1171,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 1171,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 1178,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 1178,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 1178,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 1178,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 1185,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 1185,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 1185,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 1185,
+          "duration": 16
+        }
+      ]
+    },
+    {
+      "route": "/contact",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 5,
+      "maxObservedDurationMs": 24,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 7221,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7221,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7221,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7221,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7228,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7228,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7228,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7228,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7249,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7249,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7249,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7249,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7263,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7263,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7263,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7263,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7277,
+          "duration": 24
+        }
+      ]
+    },
+    {
+      "route": "/resume",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 5,
+      "maxObservedDurationMs": 24,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 5523,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5523,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5523,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5523,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5530,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5530,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5530,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5530,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5558,
+          "duration": 24
+        },
+        {
+          "name": "keyup",
+          "id": 5565,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5572,
+          "duration": 16
+        }
+      ]
+    },
+    {
+      "route": "/work",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 7,
+      "maxObservedDurationMs": 24,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 5801,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5801,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5801,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5801,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5822,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5822,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5822,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5822,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5829,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5829,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5829,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5829,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5836,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5836,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5836,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5836,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5843,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5843,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5843,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5850,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5850,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5850,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5850,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5857,
+          "duration": 24
+        }
+      ]
+    },
+    {
+      "route": "/work/chemistry-calculator",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 8,
+      "maxObservedDurationMs": 24,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 7724,
+          "duration": 24
+        },
+        {
+          "name": "keypress",
+          "id": 7724,
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "id": 7724,
+          "duration": 24
+        },
+        {
+          "name": "keyup",
+          "id": 7724,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7738,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7738,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7745,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7745,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7745,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7745,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7752,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7752,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7752,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7752,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7759,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7759,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7759,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7759,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7766,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7766,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7766,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7766,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7773,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7773,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7773,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7773,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 7780,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 7780,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 7780,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 7780,
+          "duration": 16
+        }
+      ]
+    },
+    {
+      "route": "/work/community-driven-social-volunteering-platform",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 8,
+      "maxObservedDurationMs": 24,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 366,
+          "duration": 24
+        },
+        {
+          "name": "keypress",
+          "id": 366,
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "id": 366,
+          "duration": 24
+        },
+        {
+          "name": "keyup",
+          "id": 366,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 373,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 373,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 373,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 373,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 387,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 387,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 387,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 387,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 394,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 394,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 394,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 394,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 401,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 401,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 401,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 401,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 408,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 408,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 408,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 408,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 415,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 415,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 415,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 415,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 422,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 422,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 422,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 422,
+          "duration": 16
+        }
+      ]
+    },
+    {
+      "route": "/work/courseflow",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 7,
+      "maxObservedDurationMs": 24,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 5169,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5169,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5169,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5169,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5183,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5183,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5190,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5190,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5190,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5197,
+          "duration": 24
+        },
+        {
+          "name": "keypress",
+          "id": 5197,
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "id": 5197,
+          "duration": 24
+        },
+        {
+          "name": "keyup",
+          "id": 5197,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5211,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5211,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5211,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5211,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5218,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5218,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5218,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 5225,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 5225,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 5225,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 5225,
+          "duration": 16
+        }
+      ]
+    },
+    {
+      "route": "/blog",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 6,
+      "maxObservedDurationMs": 24,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 9601,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 9601,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 9601,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 9608,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 9608,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 9608,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 9608,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 9622,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 9622,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 9622,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 9622,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 9629,
+          "duration": 24
+        },
+        {
+          "name": "keyup",
+          "id": 9636,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 9643,
+          "duration": 24
+        }
+      ]
+    },
+    {
+      "route": "/design-system",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 7,
+      "maxObservedDurationMs": 24,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 4378,
+          "duration": 24
+        },
+        {
+          "name": "keypress",
+          "id": 4378,
+          "duration": 24
+        },
+        {
+          "name": "click",
+          "id": 4378,
+          "duration": 24
+        },
+        {
+          "name": "keyup",
+          "id": 4378,
+          "duration": 24
+        },
+        {
+          "name": "keydown",
+          "id": 4399,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 4399,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 4399,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 4399,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 4406,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 4406,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 4406,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 4406,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 4413,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 4413,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 4413,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 4413,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 4420,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 4420,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 4420,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 4420,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 4427,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 4427,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 4427,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 4427,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 4434,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 4434,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 4434,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 4434,
+          "duration": 16
+        }
+      ]
+    },
+    {
+      "route": "/missing-qa-page",
+      "cpuSlowdown": 4,
+      "recordedInteractions": 5,
+      "maxObservedDurationMs": 32,
+      "events": [
+        {
+          "name": "keydown",
+          "id": 6012,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 6012,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 6019,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 6019,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 6019,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 6019,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 6033,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 6033,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 6033,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 6033,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 6040,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 6040,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 6040,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 6040,
+          "duration": 16
+        },
+        {
+          "name": "keydown",
+          "id": 6054,
+          "duration": 16
+        },
+        {
+          "name": "keypress",
+          "id": 6054,
+          "duration": 16
+        },
+        {
+          "name": "click",
+          "id": 6054,
+          "duration": 16
+        },
+        {
+          "name": "keyup",
+          "id": 6054,
+          "duration": 32
+        }
+      ]
+    }
+  ],
+  "thirdParty": [],
+  "exceptions": [],
+  "note": "Local lab Event Timing samples, quantized to 8ms and limited to events >=16ms. These are not field INP or a percentile from real visitors."
+}

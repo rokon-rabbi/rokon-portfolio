@@ -1,0 +1,106 @@
+name: Portfolio CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  validate-build:
+    name: Validate and build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+      CI: "true"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Supported Node.js LTS
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Locked pnpm version
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          version: "12.6.0"
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Astro and TypeScript validation
+        run: |
+          pnpm exec astro check
+          pnpm exec tsc --noEmit
+      - name: Source tests
+        run: >-
+          node --test --test-isolation=none
+          tests/content-foundation.test.mjs tests/design-system.test.mjs
+          tests/work-content.test.mjs tests/motion.test.mjs
+          tests/hero-scene.test.mjs tests/blog-publication.test.mjs
+          tests/public-resume.test.mjs
+      - name: Build static production assets
+        run: pnpm build
+      - name: Complete tests including generated routes and release safety
+        run: node --test --test-isolation=none tests/*.test.mjs
+      - name: Verify critical outputs and stamp build identity
+        run: node scripts/ci-artifacts.mjs stamp dist
+      - name: Analyze bundles
+        run: pnpm analyze:bundles
+      - name: Install browser engines
+        run: pnpm exec playwright install --with-deps chromium firefox
+      - name: Static browser and interaction tests
+        run: node scripts/ci-browser.mjs
+      - name: Publish verified static artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: static-site-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            dist/client/
+            dist/static-build.json
+            dist/security-headers.json
+            dist/nginx-security-map.conf
+            dist/nginx-security-headers.conf
+            dist/nginx-routing-map.conf
+            dist/ci-build.json
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 6
+      - name: Browser diagnostics
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: browser-qa-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            test-results/responsive/
+            docs/responsive-qa/ci-playwright-results.json
+          if-no-files-found: ignore
+          retention-days: 7
+
+  deploy:
+    name: Deploy approved main build
+    needs: validate-build
+    if: >-
+      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+      vars.PRODUCTION_DEPLOY_ENABLED == 'true'
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/deploy.yml
+    with:
+      commit: ${{ github.sha }}
+      artifact: static-site-${{ github.sha }}-${{ github.run_attempt }}
+    secrets:
+      VPS_SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+      VPS_SSH_KNOWN_HOSTS: ${{ secrets.VPS_SSH_KNOWN_HOSTS }}
+      VPS_SSH_HOST_FINGERPRINTS: ${{ secrets.VPS_SSH_HOST_FINGERPRINTS }}

@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-10T19:03:18.429Z",
+  "image": "nginx@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+  "originUnderTest": "https://rokonuzzaaman.web.app",
+  "checks": [
+    "The reviewed wildcard include passes nginx -t with no initial release",
+    "Default deployment plan makes no filesystem/service changes",
+    "First non-root activation validates full Nginx configuration, reloads and verifies real HTTPS",
+    "After current switches, old workers still serve r1 bytes/CSP until reload; new workers serve r2's changed inline-script CSP",
+    "Rollback is verified over HTTPS and displaced-release assets remain available with immutable caching",
+    "A deliberately failed live candidate restores both links, reloads and verifies r1; failed release retained",
+    "HTTPS checker accepts the explicit local CA and rejects untrusted TLS with default settings",
+    "HTTP-01 webroot remains available while ordinary HTTP requests redirect to the built HTTPS origin"
+  ],
+  "actions": [
+    {
+      "label": "initial preview",
+      "expectedExit": 0,
+      "output": "PLAN ONLY: stage /tmp/portfolio-release-workflow-22C9Tm/incoming-r1 into /tmp/portfolio-release-workflow-22C9Tm/site/releases/r1; activation=not requested. No files or services changed.\n"
+    },
+    {
+      "label": "first manual staging",
+      "expectedExit": 0,
+      "output": "Staged sealed release r1; current was not changed.\n"
+    },
+    {
+      "label": "first activation of staged release",
+      "expectedExit": 0,
+      "output": "HTTPS verification passed for r1: 60 checks; certificate validation enabled.\nActivated r1; previous=(none). No release directories were deleted.\nnginx: the configuration file /qa/nginx.conf syntax is ok\nnginx: configuration file /qa/nginx.conf test is successful\n2026/10/10 19:03:20 [notice] 14#14: signal process started\n"
+    },
+    {
+      "label": "second activation with live old-worker proof",
+      "expectedExit": 0,
+      "output": "HTTPS verification passed for r1: 60 checks; certificate validation enabled.\nHTTPS verification passed for r2: 61 checks; certificate validation enabled.\nStaged sealed release r2; current was not changed.\nActivated r2; previous=r1. No release directories were deleted.\nnginx: the configuration file /qa/nginx.conf syntax is ok\nnginx: configuration file /qa/nginx.conf test is successful\n2026/10/10 19:03:22 [notice] 27#27: signal process started\n"
+    },
+    {
+      "label": "previous-release rollback",
+      "expectedExit": 0,
+      "output": "HTTPS verification passed for r2: 61 checks; certificate validation enabled.\nHTTPS verification passed for r1: 60 checks; certificate validation enabled.\nActivated r1; previous=r2. No release directories were deleted.\nnginx: the configuration file /qa/nginx.conf syntax is ok\nnginx: configuration file /qa/nginx.conf test is successful\n2026/10/10 19:03:24 [notice] 40#40: signal process started\n"
+    },
+    {
+      "label": "injected post-reload verification failure and recovery",
+      "expectedExit": 1,
+      "output": "HTTPS verification passed for r3: 61 checks; certificate validation enabled.\nHTTPS verification passed for r1: 60 checks; certificate validation enabled.\nStaged sealed release r3; current was not changed.\nnginx: the configuration file /qa/nginx.conf syntax is ok\nnginx: configuration file /qa/nginx.conf test is successful\n2026/10/10 19:03:25 [notice] 53#53: signal process started\nActivation failed; restoring the managed links and previous Nginx selection.\nnginx: the configuration file /qa/nginx.conf syntax is ok\nnginx: configuration file /qa/nginx.conf test is successful\n2026/10/10 19:03:25 [notice] 66#66: signal process started\nERROR: Command '['/tmp/portfolio-release-workflow-22C9Tm/verify-reject-r3', '--base', '/tmp/portfolio-release-workflow-22C9Tm/site', '--domain', 'rokonuzzaaman.web.app', '--release', 'r3']' returned non-zero exit status 1.\n"
+    },
+    {
+      "label": "final public-file and header verification",
+      "expectedExit": 0,
+      "output": "HTTPS verification passed for r1: 60 checks; certificate validation enabled.\n"
+    },
+    {
+      "label": "self-signed TLS correctly rejected by default CA trust",
+      "expectedExit": 1,
+      "output": "ERROR: HTTPS request failed: curl: (60) SSL certificate OpenSSL verify result: self-signed certificate (18)\nMore details here: https://curl.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the webpage mentioned above.\n"
+    }
+  ],
+  "httpsAssertions": 483,
+  "nginxVersion": "nginx version: nginx/1.30.5",
+  "passed": true
+}

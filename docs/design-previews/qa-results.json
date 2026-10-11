@@ -1,0 +1,23 @@
+{
+  "checks": [
+    "system dark theme and correct canvas",
+    "one main/h1 and shared landmarks",
+    "theme toggle and saved light preference survives reload under dark OS",
+    "Home rendered text contrast light",
+    "Home rendered text contrast dark",
+    "Home reflow at 320, 390, 768, 1024, and 1440 in both themes",
+    "mobile menu opens from keyboard, links receive focus, Escape closes and restores focus",
+    "mobile menu closes on navigation",
+    "gallery rendered text contrast light",
+    "gallery rendered text contrast dark",
+    "gallery reflow in both themes",
+    "tabs support arrows, End, wraparound, and skip disabled tabs",
+    "filter selected state and result announcement",
+    "form field has visible keyboard focus",
+    "reduced motion disables transitions",
+    "blog empty state and shared shell",
+    "custom 404 recovery and noindex",
+    "no-JS content, native menu and dark system fallback"
+  ],
+  "exceptions": []
+}

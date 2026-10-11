@@ -1,0 +1,21 @@
+---
+export const prerender = true;
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import CaseStudyPage from "@/components/work/CaseStudyPage";
+import { getWorkPaths, getRelatedProjects, isProjectBrief } from "@/lib/work";
+import { validatePortfolioContent } from "@/lib/portfolio-content";
+
+export const getStaticPaths = (() => {
+  validatePortfolioContent();
+  return getWorkPaths();
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+const brief = isProjectBrief(project);
+const description = project.summary ?? `${project.title} is listed as a personal project. Repository and case-study details are awaiting confirmation.`;
+---
+
+<Layout title={project.title} description={description} noindex={brief}>
+  <CaseStudyPage project={project} related={getRelatedProjects(project)} />
+</Layout>

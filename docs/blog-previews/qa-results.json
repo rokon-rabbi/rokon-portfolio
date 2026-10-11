@@ -1,0 +1,44 @@
+{
+  "checks": [
+    "only eligible published fixtures reach article paths, tag paths, build-time metadata and RSS",
+    "featured presentation and editorial cards fit five widths in both themes with AA text contrast",
+    "search, topic intersection, zero-results feedback, URL state and reset work without HTML injection",
+    "bookmarkable metadata filters and native tag archives contain the right articles",
+    "article SEO, Open Graph, dates, chronological navigation and related notes render from verified metadata",
+    "TOC and heading links use real unique anchors and clear the sticky navigation",
+    "keyboard copy writes the correct block to the real clipboard and permission failure announces a manual option",
+    "long code, tables and images stay inside the reading column; overflow remains keyboard accessible at mobile widths",
+    "all three unapproved drafts render only in local noindex previews and contain no publication schema",
+    "reading respects reduced motion and has no WebGL dependency",
+    "archive, tag browsing, article content and anchors remain readable at 320px without JavaScript",
+    "no browser exceptions"
+  ],
+  "contrast": [
+    {
+      "surface": "archive",
+      "mode": "dark",
+      "count": 72,
+      "minimum": 7.655924182276447
+    },
+    {
+      "surface": "archive",
+      "mode": "light",
+      "count": 72,
+      "minimum": 4.553133340552594
+    },
+    {
+      "surface": "article",
+      "mode": "dark",
+      "count": 104,
+      "minimum": 7.655924182276447
+    },
+    {
+      "surface": "article",
+      "mode": "light",
+      "count": 104,
+      "minimum": 4.553133340552594
+    }
+  ],
+  "exceptions": [],
+  "fixtureNotice": "Published content in these captures is temporary test material. User drafts remain unpublished."
+}

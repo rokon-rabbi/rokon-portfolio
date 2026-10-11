@@ -1,0 +1,90 @@
+name: Portfolio production deployment
+
+on:
+  workflow_call:
+    inputs:
+      commit:
+        required: true
+        type: string
+      artifact:
+        required: true
+        type: string
+    secrets:
+      VPS_SSH_PRIVATE_KEY:
+        required: true
+      VPS_SSH_KNOWN_HOSTS:
+        required: true
+      VPS_SSH_HOST_FINGERPRINTS:
+        required: true
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Rollback target; leave empty for previous. Does not build or deploy a new release."
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  production:
+    name: Production release
+    if: >-
+      vars.PRODUCTION_DEPLOY_ENABLED == 'true' && github.ref == 'refs/heads/main' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: production
+    concurrency:
+      group: portfolio-vps-production
+      cancel-in-progress: false
+      queue: max
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout approved tools
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.commit || github.sha }}
+          persist-credentials: false
+      - name: Supported Node.js LTS for configuration rendering
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Download this successful CI run's artifact
+        if: github.event_name == 'push'
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ inputs.artifact }}
+          path: ${{ runner.temp }}/portfolio-artifact
+          digest-mismatch: error
+      - name: Verify target, pinned SSH identity and release; transfer and activate
+        env:
+          DEPLOY_APPROVED: ${{ vars.PRODUCTION_DEPLOY_ENABLED }}
+          DEPLOY_OPERATION: ${{ github.event_name == 'push' && 'deploy' || 'rollback' }}
+          DEPLOY_COMMIT: ${{ inputs.commit || github.sha }}
+          DEPLOY_ROLLBACK_RELEASE: ${{ inputs.release }}
+          DEPLOY_ARTIFACT: ${{ runner.temp }}/portfolio-artifact
+          VPS_SSH_HOST: ${{ vars.VPS_SSH_HOST }}
+          VPS_SSH_PORT: ${{ vars.VPS_SSH_PORT }}
+          VPS_SSH_USER: ${{ vars.VPS_SSH_USER }}
+          VPS_BASE: ${{ vars.VPS_BASE }}
+          VPS_INCOMING: ${{ vars.VPS_INCOMING }}
+          VPS_DOMAIN: ${{ vars.VPS_DOMAIN }}
+          VPS_TLS_CERT: ${{ vars.VPS_TLS_CERT }}
+          VPS_TLS_KEY: ${{ vars.VPS_TLS_KEY }}
+          VPS_ACCESS_LOG: ${{ vars.VPS_ACCESS_LOG }}
+          VPS_ERROR_LOG: ${{ vars.VPS_ERROR_LOG }}
+          VPS_ACME_ROOT: ${{ vars.VPS_ACME_ROOT }}
+          VPS_CHECK_HOOK: ${{ vars.VPS_CHECK_HOOK }}
+          VPS_RELOAD_HOOK: ${{ vars.VPS_RELOAD_HOOK }}
+          VPS_KEEP_RELEASES: ${{ vars.VPS_KEEP_RELEASES }}
+          VPS_MIN_RELEASE_AGE_HOURS: ${{ vars.VPS_MIN_RELEASE_AGE_HOURS }}
+          VPS_SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          VPS_SSH_KNOWN_HOSTS: ${{ secrets.VPS_SSH_KNOWN_HOSTS }}
+          VPS_SSH_HOST_FINGERPRINTS: ${{ secrets.VPS_SSH_HOST_FINGERPRINTS }}
+          GH_TOKEN: ${{ github.token }}
+        run: python3 deploy/ci.py

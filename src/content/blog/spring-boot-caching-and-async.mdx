@@ -1,0 +1,81 @@
+---
+title: "Caching and asynchronous processing in Spring Boot"
+description: "Separate faster reads from deferred work, then make freshness, failure, and execution boundaries explicit."
+date: "2026-10-10"
+tags: ["spring-boot", "java", "caching", "asynchronous", "architecture"]
+topic: "backend"
+coverImage: "/images/blog/systems.svg"
+coverAlt: "Conceptual illustration of a read path through a cache and a separate queued-work path."
+author: "Md. Rokonuzzaman"
+featured: false
+draft: true
+---
+
+> Draft for review. The examples are hypothetical and have not been run as a complete application. They do not describe confidential systems or claim measured improvements from personal work.
+
+Caching and asynchronous processing solve different problems. A cache can avoid repeating a read. Deferred work can move an operation outside the immediate request path. Neither removes the need to decide what happens when data changes or execution fails.
+
+Consider a hypothetical catalog service. Product details are read frequently, while generating an export takes longer. The design should give each operation a separate contract: how fresh a product response must be, and when an export request is considered accepted or complete.
+
+## Give the cache a freshness contract
+
+Decide which records can be cached, what identifies them, and how long stale data is acceptable. Start with a measured expensive read, rather than caching every service method. A cache adds a second place where a value can exist and therefore a second state to reason about.
+
+The following Spring service sketch assumes cache support is enabled, a `CacheManager` has been configured, and the repository type exists. The method is called through an injected bean by another component.
+
+```java title="ProductQueries.java"
+@Service
+public class ProductQueries {
+    private final ProductRepository repository;
+
+    public ProductQueries(ProductRepository repository) {
+        this.repository = repository;
+    }
+
+    @Cacheable(cacheNames = "products", key = "#p0", unless = "#result == null")
+    public Product findById(long id) {
+        return repository.findById(id).orElse(null);
+    }
+}
+```
+
+The annotation names a cache; it does not define a TTL. Expiration and storage behavior belong to the chosen provider. For tenant-specific data, the key must include the tenant boundary. Avoid storing mutable objects that callers could change after a read.
+
+An update needs a corresponding invalidation rule. Decide when eviction occurs relative to database commit and how other application instances learn about the change. A local in-memory cache and a shared cache have different failure and consistency characteristics.
+
+### Respect the proxy boundary
+
+Spring's default annotation-based cache advice uses proxies. A call from one method to another on the same instance does not pass through that proxy. Keep cached operations behind a deliberately injected service boundary and test through that boundary; directly constructing the class does not test interception.
+
+## Define what asynchronous means
+
+An `@Async` method submits work to an executor. It is not, by itself, a durable queue. If the process exits, accepted in-memory work may never finish. Use local asynchronous execution only when that loss model is acceptable or another mechanism can recover the work.
+
+For durable exports, a possible design is to persist a job and publish its identifier to a broker. A worker reads the job, performs the operation, and records the result. This is a design option, not a claim that any specific application uses it.
+
+| Boundary | Decision to make | Behavior to test |
+| --- | --- | --- |
+| Request acceptance | What confirms that a job was recorded? | Failure before and after persistence |
+| Worker execution | Can the same job run twice safely? | Duplicate delivery and partial progress |
+| Retry | Which errors can recover? | Backoff, attempt limits, and permanent failures |
+| Completion | Where can the caller see the result? | Successful, failed, and abandoned jobs |
+
+## Bound the executor and observe failures
+
+For local `@Async` work, configure an executor with deliberate worker and queue limits. An unbounded backlog hides saturation until memory or latency becomes the problem. Choose an overload behavior that the caller can understand.
+
+Spring's default asynchronous interception is also proxy-based; self-invocation needs the same attention as caching. A future-returning method exposes failure through its future, but the caller must observe it. Exceptions from `void` asynchronous methods require a configured exception-handling policy. Neither path should turn a failed operation into an apparent success.
+
+Request-local assumptions also need review. Pass the identifiers and context the operation actually requires rather than assuming request-scoped state is available on a worker thread. Define how cancellation and shutdown affect in-flight work.
+
+## Test correctness before throughput
+
+Use a controllable clock or provider configuration to test expiry. Verify repeated reads, missing values, update/eviction behavior, tenant separation, and concurrent requests through Spring-managed beans. For deferred work, deliberately exercise rejection, duplicate execution, worker shutdown, and downstream errors.
+
+Only then compare latency, cache hit rate, stale-read behavior, queue depth, and completion time against a baseline. A higher hit rate is not a success if it returns the wrong tenant's data. A faster response is not a success if accepted jobs quietly disappear.
+
+## References
+
+- [Spring Framework: Cache abstraction and provider boundaries](https://docs.spring.io/spring-framework/reference/integration/cache.html)
+- [Spring Framework: Annotation-based caching and proxy behavior](https://docs.spring.io/spring-framework/reference/integration/cache/annotations.html)
+- [Spring Framework: Task execution, executors, and asynchronous methods](https://docs.spring.io/spring-framework/reference/integration/scheduling.html)

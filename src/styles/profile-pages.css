@@ -1,0 +1,452 @@
+@layer components {
+  .profile-page {
+    min-width: 0;
+  }
+  .profile-masthead {
+    display: grid;
+    gap: 3rem;
+    padding-block: 0.5rem 4rem;
+  }
+  .profile-title {
+    font-size: clamp(2.75rem, 5.5vw, 5.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.05em;
+    margin-block: 1.5rem 2rem;
+    overflow-wrap: anywhere;
+  }
+  .profile-introduction {
+    max-width: 56ch;
+    color: var(--muted-foreground);
+    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+    line-height: 1.85;
+  }
+  .resume-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-top: 2rem;
+  }
+  .resume-links .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+    font-size: 0.875rem;
+  }
+  .profile-identity {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    background: var(--muted);
+    align-self: start;
+  }
+  .identity-drawing {
+    aspect-ratio: 1.4;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 2rem 2rem;
+  }
+  .identity-drawing > span {
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 11vw, 11rem);
+    line-height: 1;
+    letter-spacing: -0.1em;
+    position: relative;
+    z-index: 1;
+  }
+  .identity-drawing i {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--primary);
+    top: 25%;
+    left: 15%;
+  }
+  .identity-drawing i:nth-of-type(2) {
+    left: auto;
+    right: 15%;
+    top: 70%;
+  }
+  .identity-drawing i:nth-of-type(3) {
+    left: auto;
+    right: 15%;
+    top: 25%;
+    background: var(--warm-decorative);
+  }
+  .identity-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .identity-rule {
+    border-top: 1px solid var(--border);
+    margin-block: 1.5rem;
+  }
+  .identity-scope {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+  .profile-section {
+    border-top: 1px solid var(--border);
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+  .profile-split {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .profile-section h2,
+  .profile-closing h2,
+  .contact-desk h2 {
+    font-size: clamp(2rem, 3.8vw, 3.5rem);
+    margin-top: 1rem;
+  }
+  .profile-body {
+    color: var(--muted-foreground);
+    max-width: 62ch;
+    line-height: 1.85;
+  }
+  .profile-section-label .profile-body {
+    margin-top: 1.5rem;
+    max-width: 32ch;
+  }
+  .profile-section-content > p + p {
+    margin-top: 1rem;
+  }
+  .principle-list {
+    margin-top: 2rem;
+    list-style: none;
+    padding: 0;
+  }
+  .principle-list li {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .principle-list li > span {
+    padding-top: 0.25rem;
+  }
+  .principle-list h3 {
+    font-size: 1.375rem;
+    margin-bottom: 0.5rem;
+  }
+  .principle-list p {
+    font-size: 0.9375rem;
+    color: var(--muted-foreground);
+  }
+  .career-list {
+    list-style: none;
+    padding: 0 0 0 1.75rem;
+    border-left: 1px solid var(--border);
+    margin-left: 0.4rem;
+  }
+  .career-entry {
+    position: relative;
+    padding-bottom: 3rem;
+  }
+  .career-entry:last-child {
+    padding-bottom: 0;
+  }
+  .career-marker {
+    position: absolute;
+    left: -2.15rem;
+    top: 0.4rem;
+    height: 0.75rem;
+    width: 0.75rem;
+    background: var(--background);
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+  }
+  .career-entry:first-child .career-marker {
+    background: var(--primary);
+  }
+  .career-entry h3 {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    margin-block: 0.75rem 0.5rem;
+  }
+  .career-company {
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+  .career-contributions {
+    color: var(--muted-foreground);
+    list-style: disc;
+    padding-left: 1.2rem;
+    font-size: 0.9375rem;
+    margin-block: 1rem;
+  }
+  .career-contributions li {
+    padding-left: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .profile-section-top {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .focus-grid {
+    display: grid;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .focus-item {
+    min-width: 0;
+    padding-block: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .focus-item h3 {
+    font-size: 1.75rem;
+    max-width: 16ch;
+    margin-block: 1.5rem 1rem;
+  }
+  .focus-item p {
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+    max-width: 40ch;
+  }
+  .education-entry {
+    border-left: 2px solid var(--primary);
+    padding: 1.5rem 2rem;
+    background: var(--muted);
+    align-self: start;
+  }
+  .education-entry h3 {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    margin-block: 1rem;
+  }
+  .education-entry .metadata {
+    margin-top: 0.75rem;
+  }
+  .profile-skills {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .profile-skills > div {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+  }
+  .profile-skills dt {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .skill-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .development-interests {
+    margin-top: 2rem;
+  }
+  .development-interests h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .development-interests ul {
+    list-style: disc;
+    padding-left: 1.2rem;
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .profile-closing {
+    display: grid;
+    gap: 2rem;
+    border-block: 1px solid var(--border);
+    background: var(--muted);
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+  .profile-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-top: 2rem;
+  }
+  .profile-actions > .text-link {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .contact-masthead {
+    padding-block: 0.5rem 3.5rem;
+  }
+  .contact-masthead .profile-title {
+    max-width: 20ch;
+  }
+  .contact-desk {
+    display: grid;
+    border: 1px solid var(--border);
+  }
+  .contact-desk-main {
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    min-width: 0;
+  }
+  .contact-desk-main > .profile-body {
+    margin-top: 1.5rem;
+  }
+  .contact-email {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    width: fit-content;
+    max-width: 100%;
+    margin-block: 2.5rem 0.5rem;
+    color: var(--primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.5vw, 2.1rem);
+    line-height: 1.4;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    overflow-wrap: anywhere;
+  }
+  .contact-desk-aside {
+    padding: clamp(1.5rem, 3vw, 3rem);
+    background: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  .connection-drawing {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+  }
+  .connection-drawing svg {
+    width: 100%;
+    max-height: 11rem;
+  }
+  .connection-drawing circle {
+    fill: var(--background);
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+  .connection-drawing circle:first-of-type {
+    fill: var(--primary);
+  }
+  .contact-aside-role {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.35;
+    margin-block: 0.5rem 1.5rem;
+  }
+  .contact-desk-aside > .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    min-height: 2.75rem;
+    font-size: 0.875rem;
+  }
+  .contact-channels {
+    display: grid;
+    margin-block: 2.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-channel {
+    display: grid;
+    gap: 1rem;
+    padding-block: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--foreground);
+    text-decoration: none;
+  }
+  .channel-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+  .channel-title > span {
+    color: var(--primary);
+  }
+  .contact-channel:hover .channel-title {
+    color: var(--primary);
+  }
+  .contact-resume {
+    display: grid;
+    gap: 1.5rem;
+    padding-block: 2rem 0;
+  }
+  .contact-resume h2 {
+    font-size: clamp(1.75rem, 2.7vw, 2.5rem);
+    margin-block: 0.75rem;
+  }
+  .contact-resume .resume-links {
+    margin-top: 0;
+  }
+  @media (min-width: 48rem) {
+    .profile-masthead {
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.4fr);
+      gap: 3rem;
+    }
+    .profile-masthead .profile-title {
+      font-size: clamp(2.75rem, 4.6vw, 4.75rem);
+    }
+    .profile-split {
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+      gap: clamp(3rem, 7vw, 7rem);
+    }
+    .profile-section-top {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.65fr);
+      align-items: end;
+      gap: 3rem;
+    }
+    .focus-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .focus-item {
+      padding: 2rem;
+      border-left: 1px solid var(--border);
+    }
+    .focus-item:first-child {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .focus-item:last-child {
+      padding-right: 0;
+    }
+    .profile-closing {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 3rem;
+    }
+    .contact-desk {
+      grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.45fr);
+    }
+    .contact-desk-aside {
+      border-top: 0;
+      border-left: 1px solid var(--border);
+    }
+    .contact-channels {
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
+    .contact-channel {
+      padding-inline: 2rem;
+      border-left: 1px solid var(--border);
+    }
+    .contact-channel:first-child {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .contact-channel:last-child {
+      padding-right: 0;
+    }
+    .contact-resume {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+  }
+}

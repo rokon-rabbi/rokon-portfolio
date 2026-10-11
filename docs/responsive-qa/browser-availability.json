@@ -1,0 +1,22 @@
+{
+  "platform": "linux",
+  "results": [
+    {
+      "name": "chromium",
+      "available": true,
+      "version": "156.0.8078.4",
+      "executable": "/tmp/rokon-playwright-browsers/chromium-1248/chrome-linux64/chrome"
+    },
+    {
+      "name": "firefox",
+      "available": true,
+      "version": "157.0",
+      "executable": "/tmp/rokon-playwright-browsers/firefox-1555/firefox/firefox"
+    },
+    {
+      "name": "webkit",
+      "available": false,
+      "reason": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Please install them with the following command:      ║\n║                                                      ║\n║     sudo npx playwright install-deps                 ║\n║                                                      ║\n║ Alternatively, use apt:                              ║\n║     sudo apt-get install libicu74\\                   ║\n║         libjpeg-turbo8\\                              ║\n║         libmanette-0.2-0\\                            ║\n║         gstreamer1.0-libav                           ║\n║                                                      ║\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝"
+    }
+  ]
+}

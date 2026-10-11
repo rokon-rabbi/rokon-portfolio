@@ -1,0 +1,203 @@
+{
+  "generatedAt": "2026-10-10T19:23:17.560Z",
+  "assets": [
+    {
+      "name": "systems-scene.BAp2cKcV.js",
+      "bytes": 538374,
+      "gzipBytes": 133357,
+      "brotliBytes": 108929,
+      "role": "Optional dynamically imported Three.js scene"
+    },
+    {
+      "name": "client.DHK2ykC6.js",
+      "bytes": 183974,
+      "gzipBytes": 57306,
+      "brotliBytes": 49527,
+      "role": "React for noindex gallery only; visible islands"
+    },
+    {
+      "name": "page-motion.B2tK55zJ.js",
+      "bytes": 114964,
+      "gzipBytes": 44816,
+      "brotliBytes": 40374,
+      "role": "Optional dynamically imported GSAP motion"
+    },
+    {
+      "name": "Layout.B5IbatBr.css",
+      "bytes": 76340,
+      "gzipBytes": 14263,
+      "brotliBytes": 12369,
+      "role": "Shared styles, local fonts or small native controllers"
+    },
+    {
+      "name": "outfit-latin-wght-normal.Bc-8i84L.woff2",
+      "bytes": 32292,
+      "gzipBytes": 32143,
+      "brotliBytes": 32108,
+      "role": "Shared styles, local fonts or small native controllers"
+    },
+    {
+      "name": "geist-mono-latin-wght-normal.Cjtb1TV-.woff2",
+      "bytes": 31368,
+      "gzipBytes": 31396,
+      "brotliBytes": 31372,
+      "role": "Shared styles, local fonts or small native controllers"
+    },
+    {
+      "name": "profile-pages.ioI3-i2p.css",
+      "bytes": 7606,
+      "gzipBytes": 1920,
+      "brotliBytes": 1609,
+      "role": "Shared styles, local fonts or small native controllers"
+    },
+    {
+      "name": "react.CNfqC2zk.js",
+      "bytes": 7555,
+      "gzipBytes": 2887,
+      "brotliBytes": 2587,
+      "role": "React for noindex gallery only; visible islands"
+    },
+    {
+      "name": "index.astro_astro_type_script_index_0_lang.BOMGCQbT.js",
+      "bytes": 7085,
+      "gzipBytes": 2748,
+      "brotliBytes": 2440,
+      "role": "Shared styles, local fonts or small native controllers"
+    },
+    {
+      "name": "GalleryControls.DMxL2t71.js",
+      "bytes": 2897,
+      "gzipBytes": 1288,
+      "brotliBytes": 1089,
+      "role": "React for noindex gallery only; visible islands"
+    },
+    {
+      "name": "preload-helper.DHhhL8Zf.js",
+      "bytes": 1665,
+      "gzipBytes": 852,
+      "brotliBytes": 729,
+      "role": "Shared styles, local fonts or small native controllers"
+    },
+    {
+      "name": "Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js",
+      "bytes": 1272,
+      "gzipBytes": 682,
+      "brotliBytes": 548,
+      "role": "Shared styles, local fonts or small native controllers"
+    }
+  ],
+  "routes": [
+    {
+      "file": "404.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "index.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/index.astro_astro_type_script_index_0_lang.BOMGCQbT.js",
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "about/index.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "blog/index.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "contact/index.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "design-system/index.html",
+      "reactIslands": 2,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "resume/index.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "work/index.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "work/chemistry-calculator/index.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "work/community-driven-social-volunteering-platform/index.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    },
+    {
+      "file": "work/courseflow/index.html",
+      "reactIslands": 0,
+      "externalModuleScripts": [
+        "/_astro/Layout.astro_astro_type_script_index_1_lang.cMhOlTDD.js"
+      ],
+      "preloadAssets": [
+        "/_astro/outfit-latin-wght-normal.Bc-8i84L.woff2"
+      ]
+    }
+  ],
+  "note": "Asset inventory, not an aggregate page payload. Dynamic chunks are optional. Lighthouse network-waterfall reports record actual loads; visible React islands occur only on the noindex component gallery."
+}

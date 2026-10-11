@@ -1,0 +1,218 @@
+{
+  "origin": "http://127.0.0.1:4173",
+  "reports": [
+    {
+      "name": "home-1",
+      "path": "/",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:05:44.432Z",
+      "scores": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1605.735,
+      "fcpMs": 1170.735,
+      "tbtMs": 226,
+      "cls": 0.001280300217500532,
+      "failedAudits": [
+        "valid-source-maps",
+        "network-dependency-tree-insight"
+      ],
+      "report": "docs/hardening/lighthouse-home-1.json"
+    },
+    {
+      "name": "home-2",
+      "path": "/",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:05:56.611Z",
+      "scores": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1689.8122,
+      "fcpMs": 1445.9606749999998,
+      "tbtMs": 240,
+      "cls": 0.001280300217500532,
+      "failedAudits": [
+        "valid-source-maps",
+        "network-dependency-tree-insight",
+        "render-blocking-insight"
+      ],
+      "report": "docs/hardening/lighthouse-home-2.json"
+    },
+    {
+      "name": "home-3",
+      "path": "/",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:06:07.791Z",
+      "scores": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1501.75755,
+      "fcpMs": 1351.75755,
+      "tbtMs": 241,
+      "cls": 0.001280300217500532,
+      "failedAudits": [
+        "valid-source-maps",
+        "network-dependency-tree-insight",
+        "render-blocking-insight"
+      ],
+      "report": "docs/hardening/lighthouse-home-3.json"
+    },
+    {
+      "name": "about",
+      "path": "/about",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:06:18.936Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1501.82775,
+      "fcpMs": 1351.82775,
+      "tbtMs": 0,
+      "cls": 0,
+      "failedAudits": [
+        "network-dependency-tree-insight",
+        "render-blocking-insight"
+      ],
+      "report": "docs/hardening/lighthouse-about.json"
+    },
+    {
+      "name": "contact",
+      "path": "/contact",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:06:29.739Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1501.995,
+      "fcpMs": 1351.995,
+      "tbtMs": 0,
+      "cls": 0,
+      "failedAudits": [
+        "network-dependency-tree-insight",
+        "render-blocking-insight"
+      ],
+      "report": "docs/hardening/lighthouse-contact.json"
+    },
+    {
+      "name": "resume",
+      "path": "/resume",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:06:40.574Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1502.11005,
+      "fcpMs": 1352.11005,
+      "tbtMs": 0,
+      "cls": 0,
+      "failedAudits": [
+        "network-dependency-tree-insight",
+        "render-blocking-insight"
+      ],
+      "report": "docs/hardening/lighthouse-resume.json"
+    },
+    {
+      "name": "work",
+      "path": "/work",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:06:51.169Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1352.42775,
+      "fcpMs": 1202.42775,
+      "tbtMs": 0,
+      "cls": 0,
+      "failedAudits": [
+        "network-dependency-tree-insight",
+        "render-blocking-insight"
+      ],
+      "report": "docs/hardening/lighthouse-work.json"
+    },
+    {
+      "name": "chemistry",
+      "path": "/work/chemistry-calculator",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:07:02.005Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1351.84095,
+      "fcpMs": 1201.84095,
+      "tbtMs": 0,
+      "cls": 0,
+      "failedAudits": [
+        "network-dependency-tree-insight",
+        "render-blocking-insight"
+      ],
+      "report": "docs/hardening/lighthouse-chemistry.json"
+    },
+    {
+      "name": "volunteering",
+      "path": "/work/community-driven-social-volunteering-platform",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:07:12.979Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1351.61355,
+      "fcpMs": 1201.61355,
+      "tbtMs": 0,
+      "cls": 0,
+      "failedAudits": [
+        "network-dependency-tree-insight",
+        "render-blocking-insight"
+      ],
+      "report": "docs/hardening/lighthouse-volunteering.json"
+    },
+    {
+      "name": "blog",
+      "path": "/blog",
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-10T17:07:23.986Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "lcpMs": 1351.61895,
+      "fcpMs": 1201.61895,
+      "tbtMs": 0,
+      "cls": 0,
+      "failedAudits": [
+        "network-dependency-tree-insight",
+        "render-blocking-insight"
+      ],
+      "report": "docs/hardening/lighthouse-blog.json"
+    }
+  ],
+  "method": "Lighthouse 13.5.0 default mobile, simulated 4x CPU/150ms RTT/1638.4Kbps, production static artifact served with Brotli/gzip and security headers. Three sequential homepage runs, one for each other public route. No field INP is inferred from TBT."
+}

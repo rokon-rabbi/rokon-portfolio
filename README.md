@@ -1,219 +1,93 @@
-<div align="center">
+# Rokon portfolio
 
-# Starfolio
+Portfolio and engineering blog for **Md. Rokonuzzaman**, Full-Stack Software Engineer. Built with Astro 7, TypeScript, React, Tailwind CSS 4, and MDX, starting from [Starfolio](https://github.com/webrating/starfolio).
 
-**A modern, minimal Astro portfolio template** - built with Astro v6, React, Tailwind CSS v4, shadcn/ui, and MDX. Edit three files, deploy anywhere.
+The professional content foundation, visual design system, homepage, sticky navigation, project portfolio, case-study routes, GSAP motion system, isolated Three.js hero, engineering publication, About and Contact pages, and public resume are implemented. Contact email and LinkedIn destinations remain pending. The production build is fully static, including publication routes and resume downloads. It emits crawler files, structured data, raster social previews, and CSP/security-header artifacts. Production deployment remains a separate step.
 
-[![Astro](https://img.shields.io/badge/Astro-v6-BC52EE?logo=astro&logoColor=white)](https://astro.build)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?logo=shadcnui&logoColor=white)](https://ui.shadcn.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/webrating/starfolio)
+For the Linux VPS, serve `dist/client` with Nginx and keep the generated CSP/routing includes outside the web root. No Cloudflare adapter or Node application server is required. Build with your confirmed `PUBLIC_SITE_URL`, then prepare local configuration with `pnpm prepare:vps --release-root /srv/www/rokon/releases/RELEASE`. See [the static VPS architecture and runbook](docs/16-static-vps-hosting.md) before using the output. `pnpm check:vps` runs real Nginx and Playwright on localhost; Docker is a QA dependency only.
 
-[**Live Demo**](https://astro-portfolio-template.stackrater.io) · [Report Bug](https://github.com/webrating/starfolio/issues) · [Request Feature](https://github.com/webrating/starfolio/issues)
+For versioned releases, atomic activation and rollback, use [the production deployment guide](deploy/README.md). Its scripts default to previewing a plan and require explicit activation hooks. The guide keeps server-specific values as placeholders pending the VPS inventory; no remote deployment has been performed.
 
-![Starfolio preview](./public/starfolio-preview.png)
+## Local development
 
-</div>
+Use Node.js 22.12 or newer and pnpm 12.6.0 with the checked-in lockfile.
 
-## Why Starfolio?
-
-A developer portfolio template that doesn't make you hunt through twenty component files to change your name. Your entire portfolio - bio, work history, projects, skills, hackathons, social links - lives in a single typed data file. The components read from it. You never touch them.
-
-**TL;DR: Edit three config files, deploy in minutes**
-
-## Features
-
-- **Astro v6** - static-first, ships zero JS by default
-- **Three-file customization** - edit your data, config, and posts; never touch components
-- **Homepage customization** - show/hide sections, control all of the homepage content, + lots more
-- **Tailwind CSS v4 + shadcn/ui** - modern, accessible UI primitives
-- **Light & dark mode** - automatic system detection, theme variables in one place
-- **MDX blog** - full MDX with components, syntax highlighting, code blocks
-- **SEO-ready** - meta tags, Open Graph images, sitemap, robots.txt
-- **Type-safe** - TypeScript throughout, including your resume data
-- **Variable fonts** - swap fonts in seconds via Fontsource
-- **Responsive design** - mobile-first, looks great everywhere
-- **Cloudflare Pages adapter** - pre-configured, swappable for Vercel / Netlify / Node
-
-## Three files, one portfolio
-
-| File | Controls |
-| --- | --- |
-| `src/data/resume.tsx` | Your name, bio, work, education, projects, skills, hackathons, social links |
-| `src/data/config.ts` | Site URL, SEO, theme colors, font size |
-| `src/content/blog/*.mdx` | Blog posts |
-
-## Stack
-
-- [Astro v6](https://astro.build) - static site generator
-- [React](https://react.dev) - interactive islands
-- [Tailwind CSS v4](https://tailwindcss.com) - styling
-- [shadcn/ui](https://ui.shadcn.com) - UI components
-- [Cloudflare Pages](https://pages.cloudflare.com) - deployment adapter (swappable)
-- [pnpm](https://pnpm.io) - package manager
-
-## Quick start
-
-**Prerequisites:** Node.js >= 22.12.0, pnpm
-
-```bash
-git clone https://github.com/webrating/starfolio
-cd starfolio
-pnpm install
+```sh
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open <http://localhost:4321>.
+pnpm 12.6.0 is pinned in `packageManager`. Dependency build permissions and narrow security overrides live in `pnpm-workspace.yaml`; the frozen install and audited lockfile have been verified.
 
-## Customizing your portfolio
-
-### 1. Personal info - `src/data/resume.tsx`
-
-Edit the `DATA` object:
-
-```ts
-export const DATA = {
-  name: "Your Name",
-  initials: "YN",
-  url: "https://yoursite.com",
-  location: "Your City",
-  description: "One-line bio shown in meta and hero",
-  summary: "Longer about section, supports markdown links",
-  avatarUrl: "/me.png",        // place image in public/
-  ogImage: "/og_image.png",    // OG image for social sharing
-  skills: [...],
-  navbar: [...],
-  contact: { email, social },
-  work: [...],
-  education: [...],
-  projects: [...],
-  hackathons: [...],
-}
+```sh
+pnpm check:content
+pnpm check:design
+pnpm check:work
+pnpm check:motion
+pnpm check:hero
+pnpm check:blog
+pnpm check:resume
+pnpm exec astro check
+pnpm exec tsc --noEmit
+pnpm build
+pnpm check:work:routes
+pnpm check:blog:routes
+pnpm check:profile:routes
+pnpm check:production
+pnpm analyze:bundles
 ```
 
-Replace the placeholder logos in `public/` with your own.
+`check:content` runs Node's test API directly so every assertion also executes in environments that restrict isolated test workers. It checks schemas, attribution, private-field rejection, project publication, blog scheduling, and calendar dates.
 
-### 2. Site settings - `src/data/config.ts`
+## Content editing
 
-```ts
-export const CONFIG = {
-  site: {
-    url: "https://yoursite.com",   // must match astro.config.mjs site
-    locale: "en_US",
-    twitterHandle: "@yourhandle",
-  },
-  seo: {
-    titleTemplate: "%s | %n",      // %s = page title, %n = your name
-    twitterCard: "summary_large_image",
-    robots: "index, follow",
-  },
-  typography: {
-    baseFontSize: 100,             // 100 = default, 110 = 10% larger
-  },
-  theme: {
-    radius: "0.625rem",
-    light: { background, primary, ... },
-    dark:  { background, primary, ... },
-  },
-}
-```
-
-**Changing theme colors:** grab any theme from [ui.shadcn.com/themes](https://ui.shadcn.com/themes) or [tweakcn.com](https://tweakcn.com), copy the CSS variables, and paste them into the `light` / `dark` blocks (strip the `--` prefix, camelCase the property names e.g. `card-foreground` → `cardForeground`).
-
-**Changing font size:** set `baseFontSize` to a percentage - `115` = 15% larger across all text, headings, and links at once.
-
-### 3. Blog posts - `src/content/blog/`
-
-Create a `.mdx` file with this frontmatter:
-
-```mdx
----
-title: "Your Post Title"
-publishedAt: "2025-01-01"
-summary: "One-line description shown in the post list."
-image: "https://..."   # optional cover image
----
-
-Your content here. Full MDX - components, code blocks, everything.
-```
-
-## Changing fonts
-
-1. Find a variable font at [fontsource.org](https://fontsource.org) (filter by Variable)
-2. Install it: `pnpm add @fontsource-variable/<font-name>`
-3. In `src/styles/global.css`, swap the `@import` and `--font-sans` value:
-
-```css
-@import "@fontsource-variable/inter";
---font-sans: 'Inter Variable', sans-serif;
-```
-
-You need both a sans and a mono font. The mono font (`--font-mono`) is used for code blocks. Not every sans font has a matching mono - common pairings:
-
-| Sans | Mono |
+| Location | Responsibility |
 | --- | --- |
-| `geist` | `geist-mono` |
-| `inter` | `jetbrains-mono` |
-| `plus-jakarta-sans` | `fira-code` |
+| `src/data/profile.ts` | Public identity, summary, technical highlights, and approved contacts |
+| `src/data/experience.ts` | Employer roles, month-precision dates, and contributions |
+| `src/data/skills.ts` | User-confirmed core technology groups |
+| `src/data/projects.ts` | Separate personal projects and employer contributions; publication state and case-study preparation |
+| `src/data/case-studies.ts` | Sourced case-study sections, diagrams, approved media, code references, metrics, and explicit gaps |
+| `src/lib/work.ts` | Shared portfolio, static-path, brief, and related-project selection |
+| `src/data/sources.ts` | Evidence IDs, reviewed URLs, dates, and claim boundaries |
+| `src/data/about.ts` | About copy, development interests, and confirmed education details |
+| `src/data/contact.ts` | Validated public email and exact LinkedIn profile URL; null destinations are omitted |
+| `src/lib/public-resume.ts` | Explicit professional-only resume projection shared by HTML, PDF, and text |
+| `src/schemas/` | Runtime validation and inferred content types |
+| `src/data/resume.tsx` | Compatibility facade for existing consumers; no JSX or UI imports |
+| `src/lib/portfolio-content.ts` | Build-time portfolio and relationship validation |
+| `src/content/blog/` | Original sample MDX articles awaiting text review, with drafts enabled by default |
+| `src/lib/blog.ts` | Shared published-post selection for archive and article routes |
 
-## Commands
+Keep claims within their source's scope. Draft and unverified projects are excluded from published selection. CourseFlow remains a draft, with an explicitly opted-in, identity-only brief at `/work/courseflow`; it is `noindex`, excluded from the sitemap, and absent from the homepage's featured projects. Draft and future articles are excluded from archive queries and generated article paths.
 
-| Command | Action |
-| --- | --- |
-| `pnpm install` | Install dependencies |
-| `pnpm dev` | Start dev server at `localhost:4321` |
-| `pnpm build` | Build for production |
-| `pnpm preview` | Preview production build locally |
+Only GitHub is currently supplied as a public contact. `PUBLIC_SITE_URL` can override the previously supplied portfolio origin during a build; the final production origin remains unconfirmed. Keep local overrides in ignored environment files.
 
-## Deployment
+Review the three unpublished engineering samples at `/preview/blog/<slug>` with `pnpm dev`. These previews generate no production paths. The public archive, article/tag routes, metadata search index, RSS, and homepage share one publication gate. See [the publication guide](docs/12-engineering-publication.md) for frontmatter, draft review, and browser QA instructions.
 
-Pre-configured for **Cloudflare Workers or Pages** via `@astrojs/cloudflare`. Run `pnpm build` and deploy the `dist/` folder.
+The original CV belongs at `reference/private/cv.docx`, which is ignored by Git. It is currently missing. Never move it into `public/` or add a raw CV download. Original template articles and media are retained under `reference/template/`, outside the collection and public assets.
 
-To use a different host, swap the adapter in `astro.config.mjs` - see [Astro adapters](https://docs.astro.build/en/guides/deploy/).
+The public resume at `/resume` uses confirmed professional records and the supplied NSTU institution, with actual PDF and text downloads generated during the build. Unknown degree/dates and unsupplied email/LinkedIn are omitted. See [About, Contact, and resume](docs/13-about-contact-resume.md) for evidence, privacy, and verification details.
 
-Starfolio works with any Astro-supported deploy target: **Vercel**, **Netlify**, **Cloudflare Pages**, **GitHub Pages**, **Node**, or static hosting.
+## Documentation
 
-## Project structure
+- [Audit](docs/01-audit.md), [architecture](docs/02-architecture.md), and [design blueprint](docs/03-design-blueprint.md)
+- [Audit content inventory](docs/04-content-inventory.md) and [implementation plan](docs/05-implementation-plan.md)
+- [Implemented content, claim sources, verification, and outstanding details](docs/06-content-foundation.md)
+- [Design tokens, component conventions, contrast, and previews](docs/07-design-system.md)
+- [Homepage composition, navigation, routes, and reviewed previews](docs/08-homepage-redesign.md)
+- [Project routes, structured case studies, media conventions, and tests](docs/09-project-portfolio.md)
+- [Motion presets, annotations, lifecycle, accessibility, and browser verification](docs/10-motion-system.md)
+- [Three.js hero, performance budgets, fallback strategy, and browser verification](docs/11-three-hero.md)
+- [Engineering publication, frontmatter, draft review, discovery, and browser verification](docs/12-engineering-publication.md)
+- [About, Contact, professional resume exports, privacy, and accessibility](docs/13-about-contact-resume.md)
+- [Production hardening, measured Lighthouse results, browser checks, deployment headers, and limitations](docs/14-production-hardening.md)
+- [Responsive and interaction QA, cross-browser results, screenshots, and reproduction](docs/15-responsive-interaction-qa.md)
+- [Static production route audit, Linux VPS/Nginx configuration, artifact layout, and hosting verification](docs/16-static-vps-hosting.md)
+- [GitHub Actions CI/CD, production approval, SSH secrets, release retention and rollback](deploy/CI-CD.md)
 
-```
-src/
-├── content/blog/     # MDX blog posts
-├── data/
-│   ├── resume.tsx    # Your personal data
-│   └── config.ts     # Site settings & theme
-├── components/       # UI components (no need to edit)
-├── layouts/
-│   └── Layout.astro  # HTML shell, reads from config.ts
-├── pages/
-│   ├── index.astro
-│   └── blog/
-└── styles/
-    └── global.css    # Font imports & Tailwind base
-public/               # Static assets (images, favicon)
-```
+Review the component gallery at `/design-system` in local preview. It includes both themes, accessible tabs and filters, form states, badges, project rows, and loading/empty patterns.
 
-## Contributing
+## Attribution
 
-Issues and PRs welcome. If you build something with Starfolio, open an issue with a link - happy to feature it in a "Built with Starfolio" section.
-
-## Show your support
-
-If this template saved you time, please **star the repo** - it helps others find it.
-
-## Credits
-
-- [dillionverma/portfolio](https://github.com/dillionverma/portfolio) - the original, and AMAZING, Next.js portfolio this template is inspired by
-- [Astro](https://astro.build), [shadcn/ui](https://ui.shadcn.com), [Tailwind CSS](https://tailwindcss.com)
-
-## License
-
-[MIT](LICENSE) - free for personal and commercial use.
-
----
-
-<div align="center">
-
-**Keywords:** astro portfolio template · astro portfolio theme · astro starter · personal website template · developer portfolio · resume website · astro shadcn template · tailwind portfolio · mdx blog template
-
-</div>
+Derived from Starfolio by WebsiteRating / webrating. Preserve the upstream copyright notice and [MIT license](LICENSE). Archived examples remain reference material and are not attributed to Rokon.

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" fill="none">
+  <path fill="#10192B" d="M0 0h1600v900H0z"/>
+  <g stroke="#283950"><path d="M0 225h1600M0 450h1600M0 675h1600M400 0v900M800 0v900M1200 0v900"/><path d="M80 80h40m-20-20v40m1380 700h40m-20-20v40"/></g>
+  <path stroke="#7C94AF" stroke-width="2" d="M190 180h1220v540H190zM190 240h1220"/><g fill="#7C94AF"><circle cx="224" cy="210" r="5"/><circle cx="244" cy="210" r="5"/><circle cx="264" cy="210" r="5"/></g>
+  <g stroke-width="2"><path fill="#18263D" stroke="#56D9BA" d="M250 300h310v330H250zM645 300h310v330H645z"/><path fill="#242D52" stroke="#A4A8FF" d="M1040 300h310v330h-310z"/></g>
+  <g fill="#56D9BA"><path d="M280 335h130v30H280zM675 335h130v30H675z"/></g><path fill="#A4A8FF" d="M1070 335h130v30h-130z"/>
+  <g stroke="#7C94AF" stroke-width="2"><path d="M280 410h240M280 460h165M280 510h200M675 410h240M675 460h165M675 510h200M1070 410h240M1070 460h165M1070 510h200"/></g>
+  <path stroke="#56D9BA" stroke-width="2" d="M560 560h85m310 0h85"/>
+</svg>

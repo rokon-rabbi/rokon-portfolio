@@ -1,0 +1,63 @@
+---
+export const prerender = true;
+import Layout from "@/layouts/Layout.astro";
+import ResumeLinks from "@/components/design/ResumeLinks.astro";
+import { ABOUT, EDUCATION } from "@/data/about";
+import { PROFILE } from "@/data/profile";
+import { EXPERIENCE } from "@/data/experience";
+import { SKILL_GROUPS } from "@/data/skills";
+import { CONTACT_DETAILS } from "@/data/contact";
+import { formatEmploymentMonth } from "@/lib/portfolio-dates";
+import { validatePortfolioContent } from "@/lib/portfolio-content";
+import "@/styles/profile-pages.css";
+validatePortfolioContent();
+---
+<Layout title="About" description="Meet Rokon, a full-stack software engineer working across frontend applications, backend systems, and software delivery.">
+  <div class="profile-page">
+    <header class="profile-masthead" data-motion="reveal">
+      <div>
+        <p class="eyebrow">About / The person behind the work</p>
+        <h1 class="profile-title">A thoughtful approach.<br /><span class="text-primary">A connected perspective.</span></h1>
+        <p class="profile-introduction">{ABOUT.introduction}</p>
+        <ResumeLinks />
+      </div>
+      <aside class="profile-identity" aria-label="Professional identity">
+        <div class="identity-drawing" aria-hidden="true"><span>R<span class="text-primary">.</span></span><i></i><i></i><i></i></div>
+        <p class="identity-name">{PROFILE.name}</p>
+        <p class="metadata">{PROFILE.headline}</p>
+        <div class="identity-rule"></div>
+        <p class="eyebrow">Working across</p>
+        <p class="identity-scope">Interfaces. Systems. Delivery.</p>
+      </aside>
+    </header>
+
+    <section class="profile-section profile-split" aria-labelledby="approach-heading">
+      <div class="profile-section-label"><p class="eyebrow">01 / Perspective</p><h2 id="approach-heading">Useful software.<br />Considered decisions.</h2></div>
+      <div class="profile-section-content"><p class="profile-body">{ABOUT.context}</p><p class="profile-body">That work spans user-facing features, backend integration, and delivery. My approach is to keep the workflow in view and make each part easier to understand.</p>
+        <ol class="principle-list">{ABOUT.principles.map((principle, index) => <li><span class="metadata" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><div><h3>{principle.title}</h3><p>{principle.text}</p></div></li>)}</ol>
+      </div>
+    </section>
+
+    <section class="profile-section profile-split" aria-labelledby="career-heading">
+      <div class="profile-section-label"><p class="eyebrow">02 / Career so far</p><h2 id="career-heading">Learning through<br />the work.</h2><p class="profile-body">From education workflows to enterprise applications.</p></div>
+      <ol class="career-list">{EXPERIENCE.map((role) => <li class="career-entry"><div class="career-marker" aria-hidden="true"></div><p class="metadata"><time datetime={role.start}>{formatEmploymentMonth(role.start)}</time> — {role.end ? <time datetime={role.end}>{formatEmploymentMonth(role.end)}</time> : "Present"}</p><h3>{role.title}</h3><p class="career-company">{role.company}</p><p class="profile-body">{role.summary}</p><ul class="career-contributions">{role.contributions.map((claim) => <li>{claim.text}</li>)}</ul>{role.technologies.length > 0 && <div class="skill-badges">{role.technologies.map((skill) => <span class="technical-badge">{skill}</span>)}</div>}</li>)}</ol>
+    </section>
+
+    <section class="profile-section" aria-labelledby="focus-heading">
+      <div class="profile-section-top"><div><p class="eyebrow">03 / Current technical focus</p><h2 id="focus-heading">The connections<br />I’m interested in.</h2></div><p class="profile-body">A practical focus on the full path from an interface to the systems and workflows behind it.</p></div>
+      <div class="focus-grid">{ABOUT.focus.map((focus) => <article class="focus-item"><span class="eyebrow">{focus.number} /</span><h3>{focus.title}</h3><p>{focus.text}</p></article>)}</div>
+    </section>
+
+    <section class="profile-section profile-split" aria-labelledby="education-heading">
+      <div class="profile-section-label"><p class="eyebrow">04 / Education</p><h2 id="education-heading">An academic<br />foundation.</h2></div>
+      <div class="education-entry"><p class="eyebrow">University</p><h3>NSTU</h3><p class="profile-body">{EDUCATION.institution.replace(" (NSTU)", "")}</p>{EDUCATION.degree && <p class="profile-body">{EDUCATION.degree}</p>}{EDUCATION.period && <p class="metadata">{EDUCATION.period}</p>}</div>
+    </section>
+
+    <section class="profile-section profile-split" aria-labelledby="skills-heading">
+      <div class="profile-section-label"><p class="eyebrow">05 / Tools & interests</p><h2 id="skills-heading">A full-stack<br />working toolkit.</h2><p class="profile-body">Selected technologies from my professional focus and development work.</p></div>
+      <div><dl class="profile-skills">{SKILL_GROUPS.map((group) => <div><dt>{group.label}</dt><dd class="skill-badges">{group.skills.map((skill) => <span class="technical-badge">{skill}</span>)}</dd></div>)}</dl><div class="development-interests"><h3>Areas I want to keep exploring</h3><ul>{ABOUT.interests.map((interest) => <li>{interest}</li>)}</ul></div></div>
+    </section>
+
+    <section class="profile-closing" aria-labelledby="about-connect-heading"><div><p class="eyebrow">Keep the conversation going</p><h2 id="about-connect-heading">Have something<br /><span class="text-primary">in mind?</span></h2></div><div><p class="profile-body">I welcome conversations about full-stack engineering, thoughtful collaboration, and software engineering roles.</p><div class="profile-actions"><a class="button button-primary" href="/contact">Let’s talk <span aria-hidden="true">↗</span></a>{PROFILE.contacts.map((contact) => <a class="text-link" href={contact.url}>{contact.label} <span aria-hidden="true">↗</span></a>)}{CONTACT_DETAILS.linkedin && <a class="text-link" href={CONTACT_DETAILS.linkedin}>LinkedIn <span aria-hidden="true">↗</span></a>}</div></div></section>
+  </div>
+</Layout>

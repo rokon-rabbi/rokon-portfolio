@@ -1,0 +1,46 @@
+---
+import ArticleCard from "./ArticleCard.astro";
+import { BLOG_TOPICS, collectTags, tagHref, tagLabel, type ArticleSummary } from "@/lib/blog-publication";
+import { PROFILE } from "@/data/profile";
+interface Props { articles: ArticleSummary[]; selectedTag?: string; }
+const { articles, selectedTag = "" } = Astro.props;
+const selected = selectedTag ? articles.filter((article) => article.tags.includes(selectedTag)) : articles;
+const featured = selected.find((article) => article.featured);
+const notes = selected.filter((article) => article.id !== featured?.id);
+const tags = collectTags(articles.map((article) => ({ id: article.id, data: article })));
+const topics = Object.entries(BLOG_TOPICS).filter(([topic]) => selected.some((article) => article.topic === topic));
+---
+<section class="publication" data-blog-archive data-base-tag={selectedTag} aria-labelledby="publication-title">
+  <header class="publication-masthead">
+    <div>
+      <p class="eyebrow">Rokon / Engineering publication</p>
+      <h1 id="publication-title" class="publication-title">{selectedTag ? tagLabel(selectedTag) : "Notes from the"}<br /><span class="text-primary">engineering desk.</span></h1>
+      <p class="publication-intro">{selectedTag ? `Engineering notes filed under ${tagLabel(selectedTag)}.` : "Thoughtful notes on building, connecting, and delivering software. Decisions, tradeoffs, and the details that make systems easier to maintain."}</p>
+    </div>
+    <div class="publication-edition">
+      <span class="edition-symbol" aria-hidden="true">[ R / N ]</span>
+      <p class="metadata">{PROFILE.name}<br />Software engineering</p>
+      <p class="metadata">{selected.length.toString().padStart(2, "0")} published {selected.length === 1 ? "note" : "notes"}</p>
+      <a href="/rss.xml" class="text-link">Follow via RSS <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  {articles.length > 0 && <>
+    <nav class="publication-tags archive-tags" aria-label="Article tags">
+      <a href="/blog" class="filter-control" aria-current={!selectedTag ? "page" : undefined}>All notes <span>{articles.length}</span></a>
+      {tags.map(({ tag, label, count }) => <a href={tagHref(tag)} class="filter-control" aria-current={selectedTag === tag ? "page" : undefined}>{label} <span>{count}</span></a>)}
+    </nav>
+    <form class="publication-search" data-blog-search role="search" hidden>
+      <div class="field"><label for="article-search">Search notes</label><input id="article-search" class="form-input" name="q" type="search" placeholder="Title, topic, or technology…" maxlength="200" autocomplete="off" /></div>
+      <div class="field"><label for="article-topic">Topic</label><select id="article-topic" class="form-input" name="topic"><option value="">All topics</option>{topics.map(([value, label]) => <option value={value}>{label}</option>)}</select></div>
+      <button class="button button-outline" type="reset">Reset filters</button>
+    </form>
+    <p class="metadata archive-results" data-blog-results role="status" aria-live="polite">{selected.length} {selected.length === 1 ? "note" : "notes"}</p>
+    {featured && <div class="publication-spotlight" data-archive-group><ArticleCard article={featured} featured /></div>}
+    <div class="publication-notes" data-archive-group>{notes.map((article) => <ArticleCard article={article} />)}</div>
+    <div class="publication-empty" data-search-empty hidden><span aria-hidden="true" class="empty-mark">∅</span><div><h2>No matching notes.</h2><p>Try a different phrase or reset the topic filter.</p><button class="button button-outline" type="button" data-search-reset>Reset filters</button></div></div>
+    <noscript><p class="metadata">Browse all notes below, or choose a tag above. Search is available when JavaScript is enabled.</p></noscript>
+  </>}
+  {selected.length === 0 && <div class="publication-empty"><span aria-hidden="true" class="empty-mark">∅</span><div><p class="eyebrow">An open notebook</p><h2>No published notes yet.</h2><p>This space is reserved for considered engineering writing. Until the first note is ready, explore the projects and their technical context.</p><a class="text-link" href="/work">Explore the work <span aria-hidden="true">↗</span></a></div></div>}
+  <aside class="publication-colophon" aria-label="Publication focus"><p class="eyebrow">The areas of inquiry</p><div><h2>Delivery.</h2><p>Repeatable builds and dependable release workflows.</p></div><div><h2>Systems.</h2><p>APIs, data boundaries, and asynchronous work.</p></div><div><h2>Interfaces.</h2><p>Maintainable applications for real workflows.</p></div></aside>
+</section>
+<script>import "../../scripts/blog-archive";</script>

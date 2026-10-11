@@ -1,0 +1,12 @@
+---
+// Local review only. Production builds generate no paths and no draft payloads.
+export const prerender = true;
+import { getCollection } from "astro:content";
+import ArticlePage from "@/components/blog/ArticlePage.astro";
+export async function getStaticPaths() {
+  if (!import.meta.env.DEV) return [];
+  return (await getCollection("blog")).map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+---
+<ArticlePage post={post} published={[]} preview />

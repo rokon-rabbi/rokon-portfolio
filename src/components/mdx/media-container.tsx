@@ -2,9 +2,11 @@
 
 interface MediaContainerProps {
   src: string;
-  alt?: string;
+  alt: string;
   type?: "image" | "video";
   className?: string;
+  width?: number;
+  height?: number;
 }
 
 export function MediaContainer({
@@ -12,23 +14,30 @@ export function MediaContainer({
   alt = "",
   type = "image",
   className = "",
+  width = 1600,
+  height = 900,
 }: MediaContainerProps) {
   return (
-    <div className={`ring-4 ring-muted w-full h-[300px] rounded-lg overflow-hidden flex items-center justify-center ${className}`}>
+    <figure className={`article-media ${className}`}>
       {type === "image" ? (
         <img
           src={src}
           alt={alt}
-          className="w-full h-full object-cover object-center max-w-full max-h-full"
+          width={width}
+          height={height}
+          loading="lazy"
+          decoding="async"
         />
       ) : (
         <video
           src={src}
-          className="w-full h-full object-cover object-center max-w-full max-h-full"
+          aria-label={alt}
+          width={width}
+          height={height}
+          preload="none"
           controls
         />
       )}
-    </div>
+    </figure>
   );
 }
-

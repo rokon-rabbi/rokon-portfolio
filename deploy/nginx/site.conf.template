@@ -1,0 +1,28 @@
+# Include this rendered file inside nginx's http context (e.g. sites-enabled).
+# The build's origin supplies SERVER_NAME; never change it without rebuilding HTML.
+map_hash_bucket_size 256;
+include @RELEASE_ROOT@/nginx-security-map.conf;
+include @RELEASE_ROOT@/nginx-routing-map.conf;
+
+server {
+    listen @HTTP_PORT@;
+    listen [::]:@HTTP_PORT@;
+    server_name @SERVER_NAME@;
+    @LOG_DIRECTIVES@
+    # For HTTP-01 certificate renewal, provision a challenge location before
+    # enabling this redirect; DNS validation or existing certificates also work.
+    @ACME_LOCATION@
+    location / { return 308 @ORIGIN@$request_uri; }
+}
+
+server {
+    listen @HTTPS_PORT@ ssl;
+    listen [::]:@HTTPS_PORT@ ssl;
+    server_name @SERVER_NAME@;
+    @LOG_DIRECTIVES@
+    ssl_certificate @CERTIFICATE@;
+    ssl_certificate_key @PRIVATE_KEY@;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    # Optional with nginx >= 1.25.1: http2 on;
+    include @RELEASE_ROOT@/nginx-static-server.conf;
+}

@@ -1,0 +1,52 @@
+{
+  "checks": [
+    "About, Contact and resume fit five widths in both themes with AA text contrast and no hydrated forms or WebGL",
+    "keyboard skip link, mobile disclosure, Escape/focus return, visible focus and Contact navigation work",
+    "unsupplied email and LinkedIn are omitted; verified GitHub remains available without a fake form",
+    "PDF and plain-text downloads return real public resume artifacts with correct types and attachment headers",
+    "print layout removes navigation/download controls and includes professional link destinations",
+    "reduced-motion preference remains respected",
+    "professional content, native links and resume downloads remain readable at 320px without JavaScript",
+    "zero browser exceptions"
+  ],
+  "contrast": [
+    {
+      "route": "/about",
+      "mode": "light",
+      "count": 114,
+      "minimum": 4.553133340552594
+    },
+    {
+      "route": "/contact",
+      "mode": "light",
+      "count": 47,
+      "minimum": 4.553133340552594
+    },
+    {
+      "route": "/resume",
+      "mode": "light",
+      "count": 56,
+      "minimum": 4.553133340552594
+    },
+    {
+      "route": "/about",
+      "mode": "dark",
+      "count": 114,
+      "minimum": 7.655924182276447
+    },
+    {
+      "route": "/contact",
+      "mode": "dark",
+      "count": 47,
+      "minimum": 7.655924182276447
+    },
+    {
+      "route": "/resume",
+      "mode": "dark",
+      "count": 56,
+      "minimum": 7.655924182276447
+    }
+  ],
+  "exceptions": [],
+  "emailLinksPresent": false
+}

@@ -1,0 +1,67 @@
+{
+  "checks": [
+    "all work routes return 200; unknown and employer case-study routes return 404",
+    "/work: landmarks, current Work navigation, links, contrast, and five responsive widths in both themes",
+    "/work/community-driven-social-volunteering-platform: landmarks, current Work navigation, links, contrast, and five responsive widths in both themes",
+    "/work/courseflow: landmarks, current Work navigation, links, contrast, and five responsive widths in both themes",
+    "/work/chemistry-calculator: landmarks, current Work navigation, links, contrast, and five responsive widths in both themes",
+    "keyboard section navigation clears the sticky header",
+    "code can receive keyboard focus and source-reference disclosure opens with Enter",
+    "mobile menu navigates from a case study to the portfolio with keyboard",
+    "CourseFlow stays an explicit noindex brief without invented diagrams or code",
+    "reduced-motion preference remains respected",
+    "case-study content and native mobile navigation work without JavaScript",
+    "no browser exceptions"
+  ],
+  "contrastResults": [
+    {
+      "path": "/work",
+      "mode": "dark",
+      "count": 79,
+      "minimum": 7.655924182276447
+    },
+    {
+      "path": "/work",
+      "mode": "light",
+      "count": 79,
+      "minimum": 4.553133340552594
+    },
+    {
+      "path": "/work/community-driven-social-volunteering-platform",
+      "mode": "dark",
+      "count": 148,
+      "minimum": 7.655924182276447
+    },
+    {
+      "path": "/work/community-driven-social-volunteering-platform",
+      "mode": "light",
+      "count": 148,
+      "minimum": 4.553133340552594
+    },
+    {
+      "path": "/work/courseflow",
+      "mode": "dark",
+      "count": 105,
+      "minimum": 7.655924182276447
+    },
+    {
+      "path": "/work/courseflow",
+      "mode": "light",
+      "count": 105,
+      "minimum": 4.553133340552594
+    },
+    {
+      "path": "/work/chemistry-calculator",
+      "mode": "dark",
+      "count": 146,
+      "minimum": 7.655924182276447
+    },
+    {
+      "path": "/work/chemistry-calculator",
+      "mode": "light",
+      "count": 146,
+      "minimum": 4.553133340552594
+    }
+  ],
+  "exceptions": []
+}

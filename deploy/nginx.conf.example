@@ -1,0 +1,31 @@
+# REVIEW TEMPLATE: replace @BASE@, then include this file in nginx's http context.
+# Add a dedicated site include; do not replace nginx.conf or another site's file.
+# The generated virtual hosts use the build's confirmed domain and TLS paths.
+# Each virtual host has its own access/error logs. No default_server is added.
+#
+# The [c] wildcard matches ONLY nginx-site.conf. An absent current symlink matches
+# nothing, allowing a failed first activation to remove just this site's hosts.
+# Generated includes pin root, CSP and routing to ONE versioned release. Never
+# replace those generated paths with /current/client: old workers need old HTML.
+include @BASE@/current/nginx-site.[c]onf;
+
+# The generated site defines map_hash_bucket_size 256 in http context. Review the
+# existing configuration for duplicate directives and variable names $site_csp,
+# $site_robots and $site_redirect before enabling. If already defined elsewhere,
+# reconcile the templates once and rebuild; never edit a sealed release.
+#
+# Optional FIRST-CERTIFICATE bootstrap, managed by an administrator in a separate
+# temporary site file. Use only after checking existing vhosts, ports and DNS.
+# Remove the bootstrap file before activating the final TLS virtual hosts.
+# server {
+#     listen 80;
+#     listen [::]:80;
+#     server_name @DOMAIN@;
+#     access_log @ACCESS_LOG@ combined;
+#     error_log @ERROR_LOG@ warn;
+#     location ^~ /.well-known/acme-challenge/ {
+#         root @ACME_ROOT@;
+#         try_files $uri =404;
+#     }
+#     location / { return 404; }
+# }

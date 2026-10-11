@@ -1,0 +1,1259 @@
+{
+  "engines": {
+    "platform": "linux",
+    "results": [
+      {
+        "name": "chromium",
+        "available": true,
+        "version": "156.0.8078.4",
+        "executable": "/tmp/rokon-playwright-browsers/chromium-1248/chrome-linux64/chrome"
+      },
+      {
+        "name": "firefox",
+        "available": true,
+        "version": "157.0",
+        "executable": "/tmp/rokon-playwright-browsers/firefox-1555/firefox/firefox"
+      },
+      {
+        "name": "webkit",
+        "available": false,
+        "reason": "Error: browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Please install them with the following command:      ║\n║                                                      ║\n║     sudo npx playwright install-deps                 ║\n║                                                      ║\n║ Alternatively, use apt:                              ║\n║     sudo apt-get install libicu74\\                   ║\n║         libjpeg-turbo8\\                              ║\n║         libmanette-0.2-0\\                            ║\n║         gstreamer1.0-libav                           ║\n║                                                      ║\n║ <3 Playwright Team                                   ║\n╚══════════════════════════════════════════════════════╝"
+      }
+    ]
+  },
+  "runs": [
+    {
+      "report": "playwright-results.json",
+      "started": "2026-10-10T17:57:40.622Z",
+      "durationSeconds": 96.975718,
+      "passed": 90,
+      "failed": 0,
+      "skipped": 12,
+      "flaky": 0,
+      "widths": [
+        320,
+        375,
+        390,
+        768,
+        1024,
+        1440,
+        1920,
+        2560
+      ],
+      "layoutSamples": 528,
+      "maximumPageOverflowPx": 0,
+      "elementOverflowCount": 0,
+      "projects": [
+        "chromium",
+        "firefox",
+        "touch-chromium"
+      ],
+      "testResults": [
+        {
+          "title": "touch taps, landscape menu, theme, links and vertical hero panning",
+          "project": "chromium",
+          "status": "skipped"
+        },
+        {
+          "title": "WebGL and constrained-device fallbacks retain composition without optional downloads",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "actual Three.js rendering, pause, theme, offscreen and reduced-motion lifecycle",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "publication code and tables scroll with keyboard and touch; copy has accessible feedback",
+          "project": "chromium",
+          "status": "skipped"
+        },
+        {
+          "title": "publication search, topic selection, empty-state reset and tag navigation",
+          "project": "chromium",
+          "status": "skipped"
+        },
+        {
+          "title": "project media preserves intrinsic ratio, four corners, alt text and lazy-load geometry",
+          "project": "chromium",
+          "status": "skipped"
+        },
+        {
+          "title": "touch taps, landscape menu, theme, links and vertical hero panning",
+          "project": "firefox",
+          "status": "skipped"
+        },
+        {
+          "title": "WebGL and constrained-device fallbacks retain composition without optional downloads",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "actual Three.js rendering, pause, theme, offscreen and reduced-motion lifecycle",
+          "project": "firefox",
+          "status": "skipped"
+        },
+        {
+          "title": "publication code and tables scroll with keyboard and touch; copy has accessible feedback",
+          "project": "firefox",
+          "status": "skipped"
+        },
+        {
+          "title": "publication search, topic selection, empty-state reset and tag navigation",
+          "project": "firefox",
+          "status": "skipped"
+        },
+        {
+          "title": "project media preserves intrinsic ratio, four corners, alt text and lazy-load geometry",
+          "project": "firefox",
+          "status": "skipped"
+        },
+        {
+          "title": "touch taps, landscape menu, theme, links and vertical hero panning",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "WebGL and constrained-device fallbacks retain composition without optional downloads",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "actual Three.js rendering, pause, theme, offscreen and reduced-motion lifecycle",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "publication code and tables scroll with keyboard and touch; copy has accessible feedback",
+          "project": "touch-chromium",
+          "status": "skipped"
+        },
+        {
+          "title": "publication search, topic selection, empty-state reset and tag navigation",
+          "project": "touch-chromium",
+          "status": "skipped"
+        },
+        {
+          "title": "project media preserves intrinsic ratio, four corners, alt text and lazy-load geometry",
+          "project": "touch-chromium",
+          "status": "skipped"
+        },
+        {
+          "title": "home light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "home dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "about light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "about dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "contact light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "contact dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "resume light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "resume dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "work light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "work dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "blog light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "blog dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "404 light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "404 dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "keyboard navigation, menu focus, breakpoint transitions and history",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "theme persistence and synchronized controls",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery tabs, filters and labeled input specimens hydrate when visible",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "scroll reveals and reduced-motion switching preserve visible content",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "320px readable baseline with JavaScript disabled",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "internal navigation, fragment targets and downloadable assets resolve",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "home light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "home dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "about light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "about dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "contact light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "contact dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "resume light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "resume dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "work light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "work dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "blog light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "blog dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "gallery light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "gallery dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "404 light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "404 dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "keyboard navigation, menu focus, breakpoint transitions and history",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "theme persistence and synchronized controls",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "gallery tabs, filters and labeled input specimens hydrate when visible",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "scroll reveals and reduced-motion switching preserve visible content",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "320px readable baseline with JavaScript disabled",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "internal navigation, fragment targets and downloadable assets resolve",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "home light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "home dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "about light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "about dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "contact light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "contact dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "resume light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "resume dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "work light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "work dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "blog light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "blog dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "404 light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "404 dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "keyboard navigation, menu focus, breakpoint transitions and history",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "theme persistence and synchronized controls",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery tabs, filters and labeled input specimens hydrate when visible",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "scroll reveals and reduced-motion switching preserve visible content",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "320px readable baseline with JavaScript disabled",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "internal navigation, fragment targets and downloadable assets resolve",
+          "project": "touch-chromium",
+          "status": "expected"
+        }
+      ]
+    },
+    {
+      "report": "fixture-playwright-results.json",
+      "started": "2026-10-10T17:53:02.758Z",
+      "durationSeconds": 135.714904,
+      "passed": 129,
+      "failed": 0,
+      "skipped": 3,
+      "flaky": 0,
+      "widths": [
+        320,
+        375,
+        390,
+        768,
+        1024,
+        1440,
+        1920,
+        2560
+      ],
+      "layoutSamples": 768,
+      "maximumPageOverflowPx": 0,
+      "elementOverflowCount": 0,
+      "projects": [
+        "chromium",
+        "firefox",
+        "touch-chromium"
+      ],
+      "testResults": [
+        {
+          "title": "touch taps, landscape menu, theme, links and vertical hero panning",
+          "project": "chromium",
+          "status": "skipped"
+        },
+        {
+          "title": "WebGL and constrained-device fallbacks retain composition without optional downloads",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "actual Three.js rendering, pause, theme, offscreen and reduced-motion lifecycle",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "publication code and tables scroll with keyboard and touch; copy has accessible feedback",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "publication search, topic selection, empty-state reset and tag navigation",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "project media preserves intrinsic ratio, four corners, alt text and lazy-load geometry",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "touch taps, landscape menu, theme, links and vertical hero panning",
+          "project": "firefox",
+          "status": "skipped"
+        },
+        {
+          "title": "WebGL and constrained-device fallbacks retain composition without optional downloads",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "actual Three.js rendering, pause, theme, offscreen and reduced-motion lifecycle",
+          "project": "firefox",
+          "status": "skipped"
+        },
+        {
+          "title": "publication code and tables scroll with keyboard and touch; copy has accessible feedback",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "publication search, topic selection, empty-state reset and tag navigation",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "project media preserves intrinsic ratio, four corners, alt text and lazy-load geometry",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "touch taps, landscape menu, theme, links and vertical hero panning",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "WebGL and constrained-device fallbacks retain composition without optional downloads",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "actual Three.js rendering, pause, theme, offscreen and reduced-motion lifecycle",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "publication code and tables scroll with keyboard and touch; copy has accessible feedback",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "publication search, topic selection, empty-state reset and tag navigation",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "project media preserves intrinsic ratio, four corners, alt text and lazy-load geometry",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "home light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "home dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "about light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "about dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "contact light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "contact dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "resume light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "resume dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "work light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "work dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "blog light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "blog dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "404 light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "404 dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "article light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "article dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "tag light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "tag dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "media light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "media dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "jenkins light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "jenkins dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "spring light: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "spring dark: complete responsive matrix",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "keyboard navigation, menu focus, breakpoint transitions and history",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "theme persistence and synchronized controls",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery tabs, filters and labeled input specimens hydrate when visible",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "scroll reveals and reduced-motion switching preserve visible content",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "320px readable baseline with JavaScript disabled",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "internal navigation, fragment targets and downloadable assets resolve",
+          "project": "chromium",
+          "status": "expected"
+        },
+        {
+          "title": "home light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "home dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "about light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "about dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "contact light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "contact dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "resume light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "resume dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "work light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "work dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "blog light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "blog dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "gallery light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "gallery dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "404 light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "404 dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "article light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "article dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "tag light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "tag dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "media light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "media dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "jenkins light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "jenkins dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "spring light: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "spring dark: complete responsive matrix",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "keyboard navigation, menu focus, breakpoint transitions and history",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "theme persistence and synchronized controls",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "gallery tabs, filters and labeled input specimens hydrate when visible",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "scroll reveals and reduced-motion switching preserve visible content",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "320px readable baseline with JavaScript disabled",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "internal navigation, fragment targets and downloadable assets resolve",
+          "project": "firefox",
+          "status": "expected"
+        },
+        {
+          "title": "home light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "home dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "about light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "about dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "contact light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "contact dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "resume light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "resume dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "work light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "work dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "chemistry dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "volunteering dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "courseflow dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "blog light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "blog dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "404 light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "404 dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "article light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "article dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "tag light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "tag dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "media light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "media dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "jenkins light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "jenkins dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "spring light: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "spring dark: complete responsive matrix",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "keyboard navigation, menu focus, breakpoint transitions and history",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "theme persistence and synchronized controls",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "gallery tabs, filters and labeled input specimens hydrate when visible",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "scroll reveals and reduced-motion switching preserve visible content",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "320px readable baseline with JavaScript disabled",
+          "project": "touch-chromium",
+          "status": "expected"
+        },
+        {
+          "title": "internal navigation, fragment targets and downloadable assets resolve",
+          "project": "touch-chromium",
+          "status": "expected"
+        }
+      ]
+    }
+  ],
+  "screenshots": {
+    "screenshots": 140,
+    "fixture-screenshots": 192,
+    "before": 1
+  }
+}

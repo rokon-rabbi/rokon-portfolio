@@ -1,0 +1,69 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R /Lang (en) >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 3155 >>
+stream
+BT /F2 24 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 791 Tm (Md. Rokonuzzaman) Tj ET
+BT /F1 12 Tf 0.02 0.38 0.34 rg 1 0 0 1 45 756.2 Tm (Full-Stack Software Engineer) Tj ET
+BT /F1 9 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 731.8000000000001 Tm (GitHub: https://github.com/rokon-rabbi) Tj ET
+BT /F2 10 Tf 0.02 0.38 0.34 rg 1 0 0 1 45 702.7500000000001 Tm (PROFILE) Tj ET
+0.78 0.82 0.82 RG 0.5 w 45 693.2500000000001 m 550 693.2500000000001 l S
+BT /F1 10 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 680.2500000000001 Tm (Full-stack software engineer working across frontend applications, REST APIs, and CI/CD.) Tj ET
+BT /F2 10 Tf 0.02 0.38 0.34 rg 1 0 0 1 45 649.7500000000001 Tm (EXPERIENCE) Tj ET
+0.78 0.82 0.82 RG 0.5 w 45 640.2500000000001 m 550 640.2500000000001 l S
+BT /F2 11 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 627.2500000000001 Tm (Junior Software Engineer \(Full Stack\)) Tj ET
+BT /F1 10 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 611.3000000000001 Tm (Karooth IT \(BD\) Limited) Tj ET
+BT /F1 9 Tf 0.3 0.35 0.4 rg 1 0 0 1 45 596.8000000000001 Tm (October 2025 - Present) Tj ET
+BT /F1 9.5 Tf 0.12 0.17 0.22 rg 1 0 0 1 53 579.7500000000001 Tm (- Contribute to beneficiary registration, payment, and grievance-management workflows.) Tj ET
+BT /F1 9.5 Tf 0.12 0.17 0.22 rg 1 0 0 1 53 565.9750000000001 Tm (- Work on search and asynchronous processing within the MIS.) Tj ET
+BT /F1 9.5 Tf 0.12 0.17 0.22 rg 1 0 0 1 53 552.2000000000002 Tm (- Contribute to CI/CD workflows for application delivery.) Tj ET
+BT /F2 11 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 528.4250000000002 Tm (Software Engineer Intern) Tj ET
+BT /F1 10 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 512.4750000000001 Tm (Ztrios Technologies Limited) Tj ET
+BT /F1 9 Tf 0.3 0.35 0.4 rg 1 0 0 1 45 497.97500000000014 Tm (May 2025 - September 2025) Tj ET
+BT /F1 9.5 Tf 0.12 0.17 0.22 rg 1 0 0 1 53 480.9250000000001 Tm (- Worked on student, parent, and administrator workflows in the Shaheen Education Family LMS.) Tj ET
+BT /F1 9.5 Tf 0.12 0.17 0.22 rg 1 0 0 1 53 467.15000000000015 Tm (- Developed frontend functionality with Next.js and TypeScript and integrated it with backend services.) Tj ET
+BT /F2 10 Tf 0.02 0.38 0.34 rg 1 0 0 1 45 437.37500000000017 Tm (TECHNICAL SKILLS) Tj ET
+0.78 0.82 0.82 RG 0.5 w 45 427.87500000000017 m 550 427.87500000000017 l S
+BT /F1 9.5 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 414.87500000000017 Tm (Frontend: Angular, React, Next.js, TypeScript) Tj ET
+BT /F1 9.5 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 401.1000000000002 Tm (Backend: Java, Spring Boot, REST APIs) Tj ET
+BT /F1 9.5 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 387.3250000000002 Tm (Data and messaging: PostgreSQL, Redis, Elasticsearch, RabbitMQ) Tj ET
+BT /F1 9.5 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 373.55000000000024 Tm (Delivery: Docker, Jenkins, CI/CD) Tj ET
+BT /F2 10 Tf 0.02 0.38 0.34 rg 1 0 0 1 45 343.77500000000026 Tm (EDUCATION) Tj ET
+0.78 0.82 0.82 RG 0.5 w 45 334.27500000000026 m 550 334.27500000000026 l S
+BT /F2 11 Tf 0.12 0.17 0.22 rg 1 0 0 1 45 321.27500000000026 Tm (Noakhali Science and Technology University \(NSTU\)) Tj ET
+BT /F1 8 Tf 0.3 0.35 0.4 rg 1 0 0 1 45 30 Tm (Md. Rokonuzzaman | Professional resume) Tj ET
+BT /F1 8 Tf 0.3 0.35 0.4 rg 1 0 0 1 530 30 Tm (1) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Title (Md. Rokonuzzaman - Professional Resume) /Author (Md. Rokonuzzaman) >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000069 00000 n 
+0000000126 00000 n 
+0000000196 00000 n 
+0000000271 00000 n 
+0000000407 00000 n 
+0000003613 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R /Info 7 0 R >>
+startxref
+3709
+%%EOF

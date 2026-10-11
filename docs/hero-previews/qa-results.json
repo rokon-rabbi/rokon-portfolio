@@ -1,0 +1,100 @@
+{
+  "checks": [
+    "native capability policy keeps readable content and honors reported WebGL availability",
+    "desktop fixture renders five connected nodes with bounded geometry, draw calls, DPR and no textures",
+    "keyboard pause stops the render loop and preserves focus with a visible outline",
+    "theme changes update the paused scene while reserved hero geometry stays unchanged",
+    "scoped mouse response is bounded and requires the desktop tier",
+    "leaving the hero pauses rendering and returning resumes the same scene",
+    "a hidden tab stops rendering and foreground visibility resumes it",
+    "live reduced motion disposes the canvas; initial reduced motion skips Three.js entirely",
+    "mobile caps DPR at one, uses three nodes/one signal, and lets native touch scrolling cross the scene",
+    "two-core policy keeps the static illustration without loading Three.js",
+    "data-saving preference skips GPU allocation and the optional module download",
+    "WebGL-unavailable browsers retain the complete hero and static artwork",
+    "runtime context loss disposes resources and leaves a stable static fallback",
+    "runtime disabling removes the canvas without affecting content; re-enabling creates one owner",
+    "real navigation releases GPU ownership; back navigation restores a single isolated hero",
+    "320px no-JavaScript fallback keeps typography, links, artwork and layout intact",
+    "no browser exceptions"
+  ],
+  "diagnostics": {
+    "native": {
+      "status": "ready",
+      "reason": "eligible",
+      "disposed": false,
+      "loading": false,
+      "paused": false,
+      "scene": {
+        "tier": "compact",
+        "running": true,
+        "disposed": false,
+        "frames": 16,
+        "pixelRatio": 1,
+        "nodes": 3,
+        "packets": 1,
+        "calls": 15,
+        "triangles": 108,
+        "geometries": 5,
+        "textures": 0,
+        "pointer": [
+          0,
+          0
+        ],
+        "resources": 13
+      }
+    },
+    "desktop": {
+      "status": "ready",
+      "reason": "eligible",
+      "disposed": false,
+      "loading": false,
+      "paused": false,
+      "scene": {
+        "tier": "full",
+        "running": true,
+        "disposed": false,
+        "frames": 34,
+        "pixelRatio": 1,
+        "nodes": 5,
+        "packets": 3,
+        "calls": 28,
+        "triangles": 240,
+        "geometries": 5,
+        "textures": 0,
+        "pointer": [
+          0,
+          0
+        ],
+        "resources": 13
+      }
+    },
+    "mobile": {
+      "status": "ready",
+      "reason": "eligible",
+      "disposed": false,
+      "loading": false,
+      "paused": false,
+      "scene": {
+        "tier": "compact",
+        "running": true,
+        "disposed": false,
+        "frames": 13,
+        "pixelRatio": 1,
+        "nodes": 3,
+        "packets": 1,
+        "calls": 15,
+        "triangles": 108,
+        "geometries": 5,
+        "textures": 0,
+        "pointer": [
+          0,
+          0
+        ],
+        "resources": 13
+      }
+    }
+  },
+  "renderer": "SwiftShader fixture; major-performance-caveat gate relaxed only in test fixture",
+  "exceptions": []
+}

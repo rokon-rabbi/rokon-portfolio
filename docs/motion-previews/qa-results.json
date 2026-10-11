@@ -1,0 +1,58 @@
+{
+  "checks": [
+    "keyboard focus immediately finishes its introduction and keeps the focus outline",
+    "desktop entrances and timeline mount; Three.js hero has no competing GSAP parallax",
+    "native wheel scrolling triggers entrances without layout shifts or changing document geometry",
+    "experience progression follows scroll while contribution text remains static and readable",
+    "live reduced-motion change reverts transforms and removes every owned ScrollTrigger",
+    "initial reduced motion skips the GSAP module and retains complete case-study content",
+    "mobile uses compact motion, omits scroll effects, and keeps native keyboard menu behavior",
+    "real touch events open the native menu and navigate to Work without hover dependence",
+    "four-core device policy disables decorative continuous effects",
+    "direct fragments stay below the sticky header and code remains keyboard accessible",
+    "real link navigation cleans up; repeated back/forward restores scroll without replay or duplicate triggers",
+    "desktop-pointer fixture keeps Three.js and GSAP ownership separate",
+    "native scrolling and entrances remain responsive in a four-times CPU-throttled browser sample",
+    "320px layout and all homepage content/navigation remain usable without JavaScript",
+    "no browser exceptions"
+  ],
+  "desktop": {
+    "loaded": true,
+    "count": 27,
+    "parallax": 0,
+    "tracks": 2,
+    "hidden": 0,
+    "transformed": 2,
+    "scrollY": 0,
+    "overflow": false,
+    "smooth": "smooth"
+  },
+  "mobile": {
+    "loaded": true,
+    "count": 25,
+    "parallax": 0,
+    "tracks": 0,
+    "hidden": 0,
+    "transformed": 0,
+    "scrollY": 0,
+    "overflow": false,
+    "smooth": "smooth"
+  },
+  "reducedLive": {
+    "loaded": true,
+    "count": 0,
+    "parallax": 0,
+    "tracks": 0,
+    "hidden": 0,
+    "transformed": 0,
+    "scrollY": 2583,
+    "overflow": false,
+    "smooth": "auto"
+  },
+  "performanceSample": {
+    "frames": 97,
+    "median": 16.699999999999818,
+    "p95": 16.700000000000273
+  },
+  "exceptions": []
+}

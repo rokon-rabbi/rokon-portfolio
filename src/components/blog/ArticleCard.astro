@@ -1,0 +1,24 @@
+---
+import { BLOG_TOPICS, blogDate, tagLabel, tagHref, type ArticleSummary } from "@/lib/blog-publication";
+interface Props { article: ArticleSummary; featured?: boolean; }
+const { article, featured = false } = Astro.props;
+const date = new Date(`${article.date}T00:00:00Z`);
+---
+<article class:list={["publication-card", { "publication-feature": featured }]} data-blog-entry={article.id}>
+  <div class="publication-date">
+    <time datetime={article.date} aria-label={blogDate(article.date)}>
+      <span class="date-day" aria-hidden="true">{date.getUTCDate().toString().padStart(2, "0")}</span>
+      <span class="metadata" aria-hidden="true">{date.toLocaleDateString("en", { month: "short", timeZone: "UTC" })} / {date.getUTCFullYear()}</span>
+      <span class="sr-only">{blogDate(article.date)}</span>
+    </time>
+    <span class="metadata">{article.readingMinutes} min read</span>
+  </div>
+  <div class="publication-card-copy">
+    <p class="eyebrow">{featured ? "Featured note / " : ""}{BLOG_TOPICS[article.topic]}</p>
+    <h2><a href={article.href}>{article.title}<span aria-hidden="true"> ↗</span></a></h2>
+    <p class="publication-description">{article.description}</p>
+    <div class="publication-tags">{article.tags.map((tag) => <a href={tagHref(tag)} class="technical-badge">{tagLabel(tag)}</a>)}</div>
+    {article.updatedDate && article.updatedDate !== article.date && <p class="metadata">Updated <time datetime={article.updatedDate}>{blogDate(article.updatedDate)}</time></p>}
+  </div>
+  {article.coverImage && <a href={article.href} class="publication-card-image" aria-label={`Read ${article.title}`} tabindex="-1"><img src={article.coverImage} alt={article.coverAlt} width="1600" height="900" loading={featured ? "eager" : "lazy"} decoding="async" /></a>}
+</article>

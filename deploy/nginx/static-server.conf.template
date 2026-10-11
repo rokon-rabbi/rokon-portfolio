@@ -1,0 +1,72 @@
+# Shared by production TLS configuration and isolated localhost verification.
+root @RELEASE_ROOT@/client;
+index index.html;
+autoindex off;
+server_tokens off;
+absolute_redirect off;
+include @RELEASE_ROOT@/nginx-security-headers.conf;
+
+gzip on;
+gzip_vary on;
+gzip_min_length 1024;
+gzip_types text/css application/javascript application/json application/xml
+           application/rss+xml image/svg+xml;
+
+# Redirect existing page aliases before try_files changes $uri to an index file.
+# Queries are retained. The map never redirects unknown paths.
+if ($site_redirect != "") { return 308 $site_redirect$is_args$args; }
+error_page 404 /404.html;
+
+# Avoid //index.html at the root: CSP maps must see the exact emitted file URI.
+location = / {
+    try_files /index.html =404;
+    add_header Cache-Control "no-cache";
+    include @RELEASE_ROOT@/nginx-security-headers.conf;
+}
+
+# Internal errors use the real document and retain HTTP 404, CSP and noindex.
+location = /404.html {
+    internal;
+    add_header Cache-Control "no-store" always;
+    include @RELEASE_ROOT@/nginx-security-headers.conf;
+}
+location = /_headers { return 404; }
+location ~ /\. { return 404; }
+
+location ^~ /_astro/ {
+    @ASSET_ROOT_DIRECTIVE@
+    try_files $uri =404;
+    add_header Cache-Control "public, max-age=31536000, immutable";
+    include @RELEASE_ROOT@/nginx-security-headers.conf;
+}
+location = /resume/rokon-resume.pdf {
+    try_files $uri =404;
+    add_header Content-Disposition 'attachment; filename="Rokon-Resume.pdf"';
+    add_header Cache-Control "no-cache";
+    include @RELEASE_ROOT@/nginx-security-headers.conf;
+}
+location = /resume/rokon-resume.txt {
+    try_files $uri =404;
+    add_header Content-Disposition 'attachment; filename="Rokon-Resume.txt"';
+    add_header Cache-Control "no-cache";
+    include @RELEASE_ROOT@/nginx-security-headers.conf;
+}
+location = /rss.xml {
+    types { }
+    default_type application/rss+xml;
+    try_files $uri =404;
+    add_header Cache-Control "no-cache";
+    include @RELEASE_ROOT@/nginx-security-headers.conf;
+}
+location ~* \.(?:css|js|json|xml|txt|svg|png|jpe?g|webp|avif|ico|woff2?|pdf)$ {
+    try_files $uri =404;
+    add_header Cache-Control "public, max-age=3600";
+    include @RELEASE_ROOT@/nginx-security-headers.conf;
+}
+location / {
+    # Checking an index file directly avoids Nginx's directory-slash redirect.
+    # There is no fallback to Home: an unknown page must be HTTP 404.
+    try_files $uri/index.html $uri =404;
+    add_header Cache-Control "no-cache";
+    include @RELEASE_ROOT@/nginx-security-headers.conf;
+}

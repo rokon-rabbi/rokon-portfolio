@@ -1,0 +1,130 @@
+{
+  "fixture": false,
+  "image": "nginx@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+  "checks": [
+    "static output contains no server, Worker, runtime config, source maps or private files",
+    "/about: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/contact: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/design-system: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/resume: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/work/chemistry-calculator: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/work/community-driven-social-volunteering-platform: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/work/courseflow: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/work: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/about/index.html: canonical redirect preserves the query",
+    "/about/: canonical redirect preserves the query",
+    "/blog/index.html: canonical redirect preserves the query",
+    "/blog/: canonical redirect preserves the query",
+    "/contact/index.html: canonical redirect preserves the query",
+    "/contact/: canonical redirect preserves the query",
+    "/design-system/index.html: canonical redirect preserves the query",
+    "/design-system/: canonical redirect preserves the query",
+    "/index.html: canonical redirect preserves the query",
+    "/resume/index.html: canonical redirect preserves the query",
+    "/resume/: canonical redirect preserves the query",
+    "/work/chemistry-calculator/index.html: canonical redirect preserves the query",
+    "/work/chemistry-calculator/: canonical redirect preserves the query",
+    "/work/community-driven-social-volunteering-platform/index.html: canonical redirect preserves the query",
+    "/work/community-driven-social-volunteering-platform/: canonical redirect preserves the query",
+    "/work/courseflow/index.html: canonical redirect preserves the query",
+    "/work/courseflow/: canonical redirect preserves the query",
+    "/work/index.html: canonical redirect preserves the query",
+    "/work/: canonical redirect preserves the query",
+    "/rss.xml: generated endpoint file has correct MIME and security headers",
+    "/robots.txt: generated endpoint file has correct MIME and security headers",
+    "/sitemap.xml: generated endpoint file has correct MIME and security headers",
+    "/sitemap-index.xml: generated endpoint file has correct MIME and security headers",
+    "/sitemap-0.xml: generated endpoint file has correct MIME and security headers",
+    "/blog/search-index.json: generated endpoint file has correct MIME and security headers",
+    "/resume/rokon-resume.pdf: generated endpoint file has correct MIME and security headers",
+    "/resume/rokon-resume.txt: generated endpoint file has correct MIME and security headers",
+    "/unknown-nested/page: real custom HTTP 404 with CSP, noindex and no-store",
+    "/unknown-nested/page/: real custom HTTP 404 with CSP, noindex and no-store",
+    "/404.html: real custom HTTP 404 with CSP, noindex and no-store",
+    "/_astro/missing.js: real custom HTTP 404 with CSP, noindex and no-store",
+    "/_headers: real custom HTTP 404 with CSP, noindex and no-store",
+    "/.env: real custom HTTP 404 with CSP, noindex and no-store",
+    "/nested/.git/config: real custom HTTP 404 with CSP, noindex and no-store",
+    "/preview/blog/maintainable-angular-enterprise-applications: real custom HTTP 404 with CSP, noindex and no-store",
+    "/server/entry.mjs: real custom HTTP 404 with CSP, noindex and no-store",
+    "hashed assets have JavaScript MIME and immutable caching",
+    "Nginx compresses real HTML responses",
+    "HTML conditional revalidation returns 304 with its exact CSP",
+    "nested HEAD requests return headers without a body",
+    "HTTP redirects to the built HTTPS origin, preserving path/query"
+  ],
+  "http": [
+    {
+      "route": "/about",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/contact",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/design-system",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/resume",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/work/chemistry-calculator",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/work/community-driven-social-volunteering-platform",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/work/courseflow",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/work",
+      "status": 200,
+      "type": "text/html"
+    }
+  ],
+  "origin": "https://rokonuzzaaman.web.app",
+  "htmlRoutes": [
+    "/404.html",
+    "/about",
+    "/blog",
+    "/contact",
+    "/design-system",
+    "/",
+    "/resume",
+    "/work/chemistry-calculator",
+    "/work/community-driven-social-volunteering-platform",
+    "/work/courseflow",
+    "/work"
+  ],
+  "publicFileCount": 38,
+  "nginxVersion": "nginx version: nginx/1.30.5",
+  "syntax": "nginx: the configuration file /qa/nginx.conf syntax is ok\nnginx: configuration file /qa/nginx.conf test is successful",
+  "passed": true,
+  "publicRegularFileCount": 37,
+  "publicFileCountNote": "The initial publicFileCount counter included an empty directory. The later complete SHA-256 inventory confirms 37 regular files; scripts/check-vps.mjs now uses stat-based file counting."
+}

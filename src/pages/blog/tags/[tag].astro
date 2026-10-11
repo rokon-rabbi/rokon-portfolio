@@ -1,0 +1,14 @@
+---
+export const prerender = true;
+import Layout from "@/layouts/Layout.astro";
+import BlogArchive from "@/components/blog/BlogArchive.astro";
+import { getPublishedPosts } from "@/lib/blog";
+import { articleSummary, collectTags, tagLabel } from "@/lib/blog-publication";
+export async function getStaticPaths() {
+  const published = await getPublishedPosts();
+  const articles = published.map(articleSummary);
+  return collectTags(published).map(({ tag }) => ({ params: { tag }, props: { articles, tag } }));
+}
+const { articles, tag } = Astro.props;
+---
+<Layout title={`${tagLabel(tag)} — Engineering notes`} description={`Engineering writing on ${tagLabel(tag)} by Md. Rokonuzzaman.`}><BlogArchive articles={articles} selectedTag={tag} /></Layout>

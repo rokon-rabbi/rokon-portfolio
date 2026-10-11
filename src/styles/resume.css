@@ -1,0 +1,168 @@
+@layer components {
+  .public-resume {
+    max-width: 54rem;
+    margin-inline: auto;
+  }
+  .resume-header {
+    padding-bottom: 2.5rem;
+  }
+  .resume-header h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    overflow-wrap: anywhere;
+    margin-block: 1rem;
+  }
+  .resume-role {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--primary);
+  }
+  .resume-contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1rem;
+  }
+  .resume-contacts a {
+    overflow-wrap: anywhere;
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+  }
+  .resume-downloads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .public-resume > section {
+    border-top: 1px solid var(--border);
+    padding-block: 2rem;
+  }
+  .public-resume h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .public-resume h3 {
+    font-size: 1.25rem;
+  }
+  .public-resume section > p,
+  .resume-experience li,
+  .resume-skills dd {
+    color: var(--muted-foreground);
+  }
+  .resume-experience + .resume-experience {
+    margin-top: 2rem;
+  }
+  .resume-job-heading {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .resume-employer {
+    color: var(--primary);
+    margin-block: 0.5rem 1rem;
+  }
+  .resume-experience ul {
+    list-style: disc;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .resume-skills {
+    display: grid;
+    gap: 1rem;
+  }
+  .resume-skills dt {
+    font-weight: 600;
+  }
+  .resume-return {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .resume-return a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .print-url {
+    display: none;
+  }
+  @media (min-width: 48rem) {
+    .resume-job-heading {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .resume-skills > div {
+      display: grid;
+      grid-template-columns: 11rem minmax(0, 1fr);
+      gap: 1rem;
+    }
+  }
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  html {
+    font-size: 10pt !important;
+    color-scheme: light !important;
+  }
+  body {
+    background: white !important;
+    color: #172b35 !important;
+  }
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .resume-downloads,
+  .resume-return {
+    display: none !important;
+  }
+  .site-container {
+    padding: 0;
+    max-width: none;
+  }
+  .page-content {
+    padding: 0;
+  }
+  .public-resume {
+    max-width: none;
+  }
+  .resume-header {
+    padding-bottom: 1rem;
+  }
+  .resume-header h1 {
+    font-size: 25pt;
+  }
+  .public-resume h2 {
+    font-size: 14pt;
+    margin-bottom: 0.75rem;
+    break-after: avoid;
+  }
+  .public-resume h3 {
+    break-after: avoid;
+  }
+  .public-resume > section {
+    padding-block: 1rem;
+    border-color: #c0c8cb;
+  }
+  .resume-experience {
+    break-inside: avoid;
+  }
+  .resume-experience + .resume-experience {
+    margin-top: 1rem;
+  }
+  .public-resume :is(p, li, dd, a) {
+    color: #172b35 !important;
+  }
+  .resume-contacts a {
+    min-height: 0;
+    text-decoration: none;
+  }
+  .print-url {
+    display: inline;
+  }
+}

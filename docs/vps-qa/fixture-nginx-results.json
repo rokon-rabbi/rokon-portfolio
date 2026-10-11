@@ -1,0 +1,272 @@
+{
+  "fixture": true,
+  "image": "nginx@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94",
+  "checks": [
+    "static output contains no server, Worker, runtime config, source maps or private files",
+    "/about: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/qa-responsive-backend: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/qa-responsive-jenkins: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/qa-responsive-publication: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/qa-responsive-spring: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/angular: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/architecture: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/asynchronous: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/caching: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/ci-cd: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/delivery: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/java: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/jenkins: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/qa-checks: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/spring-boot: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/blog/tags/testing: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/contact: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/design-system: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/qa-responsive-components: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/resume: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/work/chemistry-calculator: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/work/community-driven-social-volunteering-platform: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/work/courseflow: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/work: HTML, exact CSP, revalidation and noindex survive static hosting",
+    "/about/index.html: canonical redirect preserves the query",
+    "/about/: canonical redirect preserves the query",
+    "/blog/index.html: canonical redirect preserves the query",
+    "/blog/: canonical redirect preserves the query",
+    "/blog/qa-responsive-backend/index.html: canonical redirect preserves the query",
+    "/blog/qa-responsive-backend/: canonical redirect preserves the query",
+    "/blog/qa-responsive-jenkins/index.html: canonical redirect preserves the query",
+    "/blog/qa-responsive-jenkins/: canonical redirect preserves the query",
+    "/blog/qa-responsive-publication/index.html: canonical redirect preserves the query",
+    "/blog/qa-responsive-publication/: canonical redirect preserves the query",
+    "/blog/qa-responsive-spring/index.html: canonical redirect preserves the query",
+    "/blog/qa-responsive-spring/: canonical redirect preserves the query",
+    "/blog/tags/angular/index.html: canonical redirect preserves the query",
+    "/blog/tags/angular/: canonical redirect preserves the query",
+    "/blog/tags/architecture/index.html: canonical redirect preserves the query",
+    "/blog/tags/architecture/: canonical redirect preserves the query",
+    "/blog/tags/asynchronous/index.html: canonical redirect preserves the query",
+    "/blog/tags/asynchronous/: canonical redirect preserves the query",
+    "/blog/tags/caching/index.html: canonical redirect preserves the query",
+    "/blog/tags/caching/: canonical redirect preserves the query",
+    "/blog/tags/ci-cd/index.html: canonical redirect preserves the query",
+    "/blog/tags/ci-cd/: canonical redirect preserves the query",
+    "/blog/tags/delivery/index.html: canonical redirect preserves the query",
+    "/blog/tags/delivery/: canonical redirect preserves the query",
+    "/blog/tags/java/index.html: canonical redirect preserves the query",
+    "/blog/tags/java/: canonical redirect preserves the query",
+    "/blog/tags/jenkins/index.html: canonical redirect preserves the query",
+    "/blog/tags/jenkins/: canonical redirect preserves the query",
+    "/blog/tags/qa-checks/index.html: canonical redirect preserves the query",
+    "/blog/tags/qa-checks/: canonical redirect preserves the query",
+    "/blog/tags/spring-boot/index.html: canonical redirect preserves the query",
+    "/blog/tags/spring-boot/: canonical redirect preserves the query",
+    "/blog/tags/testing/index.html: canonical redirect preserves the query",
+    "/blog/tags/testing/: canonical redirect preserves the query",
+    "/contact/index.html: canonical redirect preserves the query",
+    "/contact/: canonical redirect preserves the query",
+    "/design-system/index.html: canonical redirect preserves the query",
+    "/design-system/: canonical redirect preserves the query",
+    "/index.html: canonical redirect preserves the query",
+    "/qa-responsive-components/index.html: canonical redirect preserves the query",
+    "/qa-responsive-components/: canonical redirect preserves the query",
+    "/resume/index.html: canonical redirect preserves the query",
+    "/resume/: canonical redirect preserves the query",
+    "/work/chemistry-calculator/index.html: canonical redirect preserves the query",
+    "/work/chemistry-calculator/: canonical redirect preserves the query",
+    "/work/community-driven-social-volunteering-platform/index.html: canonical redirect preserves the query",
+    "/work/community-driven-social-volunteering-platform/: canonical redirect preserves the query",
+    "/work/courseflow/index.html: canonical redirect preserves the query",
+    "/work/courseflow/: canonical redirect preserves the query",
+    "/work/index.html: canonical redirect preserves the query",
+    "/work/: canonical redirect preserves the query",
+    "/rss.xml: generated endpoint file has correct MIME and security headers",
+    "/robots.txt: generated endpoint file has correct MIME and security headers",
+    "/sitemap.xml: generated endpoint file has correct MIME and security headers",
+    "/sitemap-index.xml: generated endpoint file has correct MIME and security headers",
+    "/sitemap-0.xml: generated endpoint file has correct MIME and security headers",
+    "/blog/search-index.json: generated endpoint file has correct MIME and security headers",
+    "/resume/rokon-resume.pdf: generated endpoint file has correct MIME and security headers",
+    "/resume/rokon-resume.txt: generated endpoint file has correct MIME and security headers",
+    "/unknown-nested/page: real custom HTTP 404 with CSP, noindex and no-store",
+    "/unknown-nested/page/: real custom HTTP 404 with CSP, noindex and no-store",
+    "/404.html: real custom HTTP 404 with CSP, noindex and no-store",
+    "/_astro/missing.js: real custom HTTP 404 with CSP, noindex and no-store",
+    "/_headers: real custom HTTP 404 with CSP, noindex and no-store",
+    "/.env: real custom HTTP 404 with CSP, noindex and no-store",
+    "/nested/.git/config: real custom HTTP 404 with CSP, noindex and no-store",
+    "/preview/blog/maintainable-angular-enterprise-applications: real custom HTTP 404 with CSP, noindex and no-store",
+    "/server/entry.mjs: real custom HTTP 404 with CSP, noindex and no-store",
+    "hashed assets have JavaScript MIME and immutable caching",
+    "Nginx compresses real HTML responses",
+    "HTML conditional revalidation returns 304 with its exact CSP",
+    "nested HEAD requests return headers without a body",
+    "HTTP redirects to the built HTTPS origin, preserving path/query"
+  ],
+  "http": [
+    {
+      "route": "/about",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/qa-responsive-backend",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/qa-responsive-jenkins",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/qa-responsive-publication",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/qa-responsive-spring",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/angular",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/architecture",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/asynchronous",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/caching",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/ci-cd",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/delivery",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/java",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/jenkins",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/qa-checks",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/spring-boot",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/blog/tags/testing",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/contact",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/design-system",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/qa-responsive-components",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/resume",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/work/chemistry-calculator",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/work/community-driven-social-volunteering-platform",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/work/courseflow",
+      "status": 200,
+      "type": "text/html"
+    },
+    {
+      "route": "/work",
+      "status": 200,
+      "type": "text/html"
+    }
+  ],
+  "origin": "https://rokonuzzaaman.web.app",
+  "htmlRoutes": [
+    "/404.html",
+    "/about",
+    "/blog",
+    "/blog/qa-responsive-backend",
+    "/blog/qa-responsive-jenkins",
+    "/blog/qa-responsive-publication",
+    "/blog/qa-responsive-spring",
+    "/blog/tags/angular",
+    "/blog/tags/architecture",
+    "/blog/tags/asynchronous",
+    "/blog/tags/caching",
+    "/blog/tags/ci-cd",
+    "/blog/tags/delivery",
+    "/blog/tags/java",
+    "/blog/tags/jenkins",
+    "/blog/tags/qa-checks",
+    "/blog/tags/spring-boot",
+    "/blog/tags/testing",
+    "/contact",
+    "/design-system",
+    "/",
+    "/qa-responsive-components",
+    "/resume",
+    "/work/chemistry-calculator",
+    "/work/community-driven-social-volunteering-platform",
+    "/work/courseflow",
+    "/work"
+  ],
+  "publicFileCount": 54,
+  "nginxVersion": "nginx version: nginx/1.30.5",
+  "syntax": "nginx: the configuration file /qa/nginx.conf syntax is ok\nnginx: configuration file /qa/nginx.conf test is successful",
+  "passed": true
+}

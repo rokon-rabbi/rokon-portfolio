@@ -2,8 +2,20 @@
 export const prerender = true;
 import Layout from "../layouts/Layout.astro";
 import HomePage from "@/components/HomePage";
+import { validatePortfolioContent } from "@/lib/portfolio-content";
+import { DATA } from "@/data/resume";
+import { getPublishedPosts } from "@/lib/blog";
+import "@/styles/profile-pages.css";
+validatePortfolioContent();
+const articles = (await getPublishedPosts()).slice(0, 3).map(post => ({
+  id: post.id,
+  title: post.data.title,
+  summary: post.data.description,
+  publishedAt: post.data.date,
+}));
 ---
 
 <Layout>
-  <HomePage client:only="react" />
+  <HomePage data={DATA} articles={articles} />
+  <script>import "../scripts/systems-hero";</script>
 </Layout>
