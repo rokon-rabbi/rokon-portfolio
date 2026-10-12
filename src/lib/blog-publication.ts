@@ -123,28 +123,3 @@ export function filterArticles(
       ),
   );
 }
-const escapeXML = (text: string) =>
-  text.replace(
-    /[<>&"']/g,
-    (char) =>
-      ({
-        "<": "&lt;",
-        ">": "&gt;",
-        "&": "&amp;",
-        '"': "&quot;",
-        "'": "&apos;",
-      })[char]!,
-  );
-export function blogRSS(
-  posts: readonly ArticleSummary[],
-  origin: string,
-  author: string,
-) {
-  const feed = new URL("/rss.xml", origin).href;
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Rokon — Engineering notes</title><link>${escapeXML(new URL("/blog", origin).href)}</link><description>${escapeXML(`Engineering notes by ${author}.`)}</description><language>en</language><atom:link href="${escapeXML(feed)}" rel="self" type="application/rss+xml"/>${posts
-    .map((post) => {
-      const url = escapeXML(new URL(post.href, origin).href);
-      return `<item><title>${escapeXML(post.title)}</title><description>${escapeXML(post.description)}</description><link>${url}</link><guid isPermaLink="true">${url}</guid><pubDate>${new Date(`${post.date}T00:00:00Z`).toUTCString()}</pubDate><dc:creator>${escapeXML(post.author)}</dc:creator>${post.tags.map((tag) => `<category>${escapeXML(tagLabel(tag))}</category>`).join("")}</item>`;
-    })
-    .join("")}</channel></rss>`;
-}

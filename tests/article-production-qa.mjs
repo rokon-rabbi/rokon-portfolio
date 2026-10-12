@@ -23,7 +23,7 @@ let server;
 try {
   const source = readFileSync(
     new URL(
-      "../src/content/blog/reliable-jenkins-pipeline.mdx",
+      "fixtures/blog/reading-sample.mdx",
       import.meta.url,
     ),
     "utf8",

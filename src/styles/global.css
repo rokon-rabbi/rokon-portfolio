@@ -533,14 +533,17 @@
     gap: 0.5rem;
     min-height: 2.75rem;
     color: var(--foreground);
+    font-size: 1.5rem;
     font-weight: 600;
+    line-height: 1;
     letter-spacing: -0.02em;
     text-decoration: none;
   }
   /* The logo's shape in one colour, so it takes the ink of either theme. */
   .brand-mark {
     display: block;
-    width: 2.375rem;
+    width: 3.375rem;
+    flex-shrink: 0;
     aspect-ratio: 837 / 366;
     background: currentColor;
     -webkit-mask: var(--mark) center / contain no-repeat;

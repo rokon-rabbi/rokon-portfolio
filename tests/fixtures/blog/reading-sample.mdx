@@ -1,0 +1,75 @@
+---
+title: "Article reading layout fixture"
+description: "Temporary test content for typography, heading links, code, tables, and media."
+date: "2020-01-01"
+author: "Publication QA"
+tags: ["testing", "qa-checks"]
+topic: "testing"
+coverImage: "/images/blog/interfaces.svg"
+coverAlt: "A conceptual interface diagram used for layout testing."
+featured: false
+draft: true
+---
+
+This is a reading-layout fixture. It lives outside the article collection and is
+only copied into a temporary build during browser checks. It is not a blog post.
+
+## A readable paragraph
+
+An article needs enough room for a complete thought. This paragraph checks the
+reading column, line spacing, and the distance between paragraphs. Its purpose
+is to expose cramped layouts at large screen sizes and overflowing text on a
+small phone. The surrounding page should remain easy to scan.
+
+A second paragraph checks the vertical rhythm. A reader should see where one
+thought ends and the next begins without encountering a large empty gap. This
+line also contains an [ordinary link](https://example.com) and an inline
+`identifier` so the text styles can be checked together.
+
+### A smaller heading
+
+The smaller heading should be distinct from the paragraph but quieter than a
+section heading.
+
+## Code stays in its own frame
+
+```typescript title="example.ts"
+const message = "A sample copied from this block only";
+const deliberatelyLongLine = "This line is intentionally long enough to require horizontal scrolling on a small phone while the rest of the article stays inside the page.";
+console.log(message);
+```
+
+## Lists keep their spacing
+
+- The first item checks spacing next to a paragraph.
+- The second item checks the gap between list items.
+- The last item checks the transition back to ordinary text.
+
+1. A numbered list keeps its visible order.
+2. A second entry checks the marker alignment.
+
+## A short quotation
+
+> This quotation checks the border, background, and paragraph spacing. It is test
+> text, not an attribution to a person.
+
+## A table can scroll
+
+| Element | Small screen | Large screen |
+| --- | --- | --- |
+| Paragraph | Remains inside the viewport | Uses a comfortable line length |
+| Code and table | Scroll inside their own frame | Fit within the reading column |
+| Contents | Opens when requested | Leaves the article at full width |
+
+## Media keeps its proportions
+
+![A conceptual interface diagram used for layout testing.](/images/blog/interfaces.svg)
+
+## A second code block
+
+```java title="Example.java"
+System.out.println("A different code sample.");
+```
+
+The final paragraph checks the end of the article. There should be a clear gap
+before the previous and next links, with no subscription panel or fixed overlay.

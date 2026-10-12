@@ -39,7 +39,7 @@ for (const path of files.filter((path) => path.endsWith(".html"))) {
       "twitter:image:alt",
     ])
       assert.ok(html.includes(`="${name}"`));
-    assert.ok(html.includes('type="application/rss+xml"'));
+    assert.equal(html.includes('type="application/rss+xml"'), false);
     assert.equal((html.match(/<h1[\s>]/g) || []).length, 1);
     assert.equal((html.match(/<main[\s>]/g) || []).length, 1);
     assert.ok(html.includes('href="#main-content"'));

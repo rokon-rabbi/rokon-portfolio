@@ -56,14 +56,14 @@ pnpm analyze:bundles
 | `src/schemas/` | Runtime validation and inferred content types |
 | `src/data/resume.tsx` | Compatibility facade for existing consumers; no JSX or UI imports |
 | `src/lib/portfolio-content.ts` | Build-time portfolio and relationship validation |
-| `src/content/blog/` | Original sample MDX articles awaiting text review, with drafts enabled by default |
+| `src/content/blog/` | Empty MDX collection, ready for future writing; drafts enabled by default |
 | `src/lib/blog.ts` | Shared published-post selection for archive and article routes |
 
 Keep claims within their source's scope. Draft and unverified projects are excluded from published selection. CourseFlow remains a draft, with an explicitly opted-in, identity-only brief at `/work/courseflow`; it is `noindex`, excluded from the sitemap, and absent from the homepage's featured projects. Draft and future articles are excluded from archive queries and generated article paths.
 
 Only GitHub is currently supplied as a public contact. `PUBLIC_SITE_URL` can override the previously supplied portfolio origin during a build; the final production origin remains unconfirmed. Keep local overrides in ignored environment files.
 
-Review the three unpublished engineering samples at `/preview/blog/<slug>` with `pnpm dev`. These previews generate no production paths. The public archive, article/tag routes, metadata search index, RSS, and homepage share one publication gate. See [the publication guide](docs/12-engineering-publication.md) for frontmatter, draft review, and browser QA instructions.
+The writing collection is empty. Add your own `.mdx` files to `src/content/blog/` when ready, or use the unlisted [writing desk](docs/writing-desk.md) to write, preview, save browser drafts, and download validated MDX files. The editor destination is defined in `src/data/writing-studio.ts`; it is excluded from public navigation and the sitemap. Publishing still uses the existing build and deployment process. The archive, article/tag routes, metadata search, and homepage selection remain available. Drafts can be reviewed at `/preview/blog/<slug>` with `pnpm dev` and produce no production paths. RSS is disabled. Reading uses a single column, comfortable type and spacing, and a collapsible contents list. See [the publication guide](docs/12-engineering-publication.md) for frontmatter and publishing instructions.
 
 The original CV belongs at `reference/private/cv.docx`, which is ignored by Git. It is currently missing. Never move it into `public/` or add a raw CV download. Original template articles and media are retained under `reference/template/`, outside the collection and public assets.
 

@@ -64,7 +64,7 @@ test("CI rejects altered public bytes and missing critical outputs", (t) => {
   const root = fixture(t);
   writeFileSync(join(root, "client/index.html"), "corrupted transfer");
   assert.throws(() => verifyBuild(root), /checksum mismatch/);
-  rmSync(join(root, "client/rss.xml"));
+  rmSync(join(root, "client/blog/search-index.json"));
   assert.throws(() => verifyBuild(root), /checksum mismatch/);
 });
 test("CI rejects another commit, run, attempt or domain before writing hosting files", (t) => {

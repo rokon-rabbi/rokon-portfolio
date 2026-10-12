@@ -6,8 +6,6 @@ import {
   readFileSync,
   writeFileSync,
   rmSync,
-  readdirSync,
-  existsSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -77,7 +75,6 @@ test("engineering publication", async (t) => {
     relatedArticles,
     filterArticles,
     readingMinutes,
-    blogRSS,
   } = await load("src/lib/blog-publication.mjs");
   const { mdxComponents } = await load("src/mdx-components.mjs");
   const { remarkCodeMeta } = await load("src/lib/remark-code-meta.mjs");
@@ -160,12 +157,11 @@ test("engineering publication", async (t) => {
         ["published"],
       );
       const summaries = selected.map(articleSummary);
-      const surfaces =
-        JSON.stringify({
-          summaries,
-          tags: collectTags(selected),
-          related: relatedArticles(selected[0], selected),
-        }) + blogRSS(summaries, "https://example.com", "Editorial QA");
+      const surfaces = JSON.stringify({
+        summaries,
+        tags: collectTags(selected),
+        related: relatedArticles(selected[0], selected),
+      });
       for (const id of [
         "draft-only",
         "future",
@@ -263,69 +259,15 @@ test("engineering publication", async (t) => {
       );
     },
   );
-  await t.test(
-    "RSS escapes text and uses absolute canonical links and UTC dates",
-    () => {
-      const xml = blogRSS(
-        [
-          articleSummary(
-            record("xml-safe", {
-              title: "Cache <work> & data",
-              description: 'Use "bounded" work & explicit ownership.',
-            }),
-          ),
-        ],
-        "https://example.com",
-        "Editorial QA",
-      );
-      assert.ok(xml.includes("Cache &lt;work&gt; &amp; data"));
-      assert.ok(xml.includes("https://example.com/blog/xml-safe"));
-      assert.ok(xml.includes("Fri, 09 Oct 2026 00:00:00 GMT"));
-      assert.equal(
-        blogRSS([], "https://example.com", "Editorial QA").includes("<item>"),
-        false,
-      );
-    },
-  );
-  const drafts = readdirSync(new URL("src/content/blog/", root))
-    .filter((file) => file.endsWith(".mdx"))
-    .map((file) => {
-      const raw = readFileSync(
-        new URL(`src/content/blog/${file}`, root),
-        "utf8",
-      );
-      const match = raw.match(/^---\r?\n([\s\S]+?)\r?\n---\r?\n([\s\S]*)$/);
-      assert.ok(match, file);
-      return {
-        id: file.replace(/\.mdx$/, ""),
-        data: BlogSchema.parse(yaml(match[1])),
-        body: match[2],
-      };
-    });
-  await t.test(
-    "the three requested original samples are valid drafts with real cover assets",
-    () => {
-      assert.equal(drafts.length, 3);
-      for (const post of drafts) {
-        assert.equal(post.data.draft, true);
-        assert.ok(post.body.includes("Draft for review"));
-        assert.ok(post.body.includes("## References"));
-        assert.ok(existsSync(new URL(`public${post.data.coverImage}`, root)));
-        assert.ok(post.body.length > 3000);
-        assert.equal(
-          /\bI (built|implemented|achieved|reduced|deployed)\b/i.test(
-            post.body,
-          ),
-          false,
-        );
-      }
-      assert.deepEqual(
-        selectPublishedPosts(drafts, new Date("2099-01-01T00:00:00Z")),
-        [],
-      );
-    },
-  );
-  for (const post of drafts)
+  const raw = readFileSync(new URL("tests/fixtures/blog/reading-sample.mdx", root), "utf8");
+  const match = raw.match(/^---\r?\n([\s\S]+?)\r?\n---\r?\n([\s\S]*)$/);
+  assert.ok(match, "Reading fixture has frontmatter and a body");
+  const posts = [{
+    id: "reading-sample",
+    data: BlogSchema.parse(yaml(match[1])),
+    body: match[2],
+  }];
+  for (const post of posts)
     await t.test(
       `${post.id}: MDX renders highlighted code, semantic headings, tables and copy shells`,
       async () => {

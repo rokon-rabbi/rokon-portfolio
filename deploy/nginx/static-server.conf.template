@@ -10,7 +10,7 @@ gzip on;
 gzip_vary on;
 gzip_min_length 1024;
 gzip_types text/css application/javascript application/json application/xml
-           application/rss+xml image/svg+xml;
+           image/svg+xml;
 
 # Redirect existing page aliases before try_files changes $uri to an index file.
 # Queries are retained. The map never redirects unknown paths.
@@ -48,13 +48,6 @@ location = /resume/rokon-resume.pdf {
 location = /resume/rokon-resume.txt {
     try_files $uri =404;
     add_header Content-Disposition 'attachment; filename="Rokon-Resume.txt"';
-    add_header Cache-Control "no-cache";
-    include @RELEASE_ROOT@/nginx-security-headers.conf;
-}
-location = /rss.xml {
-    types { }
-    default_type application/rss+xml;
-    try_files $uri =404;
     add_header Cache-Control "no-cache";
     include @RELEASE_ROOT@/nginx-security-headers.conf;
 }

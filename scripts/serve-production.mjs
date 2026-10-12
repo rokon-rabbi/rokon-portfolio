@@ -78,8 +78,6 @@ createServer((request, response) => {
             ? "no-cache"
             : "public, max-age=3600",
   };
-  if (path.endsWith("/rss.xml"))
-    headers["Content-Type"] = "application/rss+xml; charset=utf-8";
   if (/\/resume\/rokon-resume\.(pdf|txt)$/.test(path))
     headers["Content-Disposition"] =
       `attachment; filename="Rokon-Resume.${extname(file).slice(1)}"`;

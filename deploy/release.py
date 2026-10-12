@@ -536,7 +536,7 @@ def verify_once(args, release_id):
                 and headers.get("content-security-policy") == policies["pages"]["/404.html"]["Content-Security-Policy"]
                 and headers.get("x-robots-tag") == "noindex, follow", "Custom 404/security mismatch")
         checks += 1
-    for path, mime in {"/rss.xml": "application/rss+xml", "/robots.txt": "text/plain",
+    for path, mime in {"/robots.txt": "text/plain",
                        "/sitemap.xml": "application/xml", "/sitemap-index.xml": "application/xml",
                        "/sitemap-0.xml": "application/xml", "/blog/search-index.json": "application/json",
                        "/resume/rokon-resume.pdf": "application/pdf", "/resume/rokon-resume.txt": "text/plain"}.items():
@@ -551,7 +551,7 @@ def verify_once(args, release_id):
             extension = path.rsplit(".", 1)[1]
             require(headers.get("content-disposition") == f'attachment; filename="Rokon-Resume.{extension}"', "Download filename mismatch")
         checks += 1
-    endpoint_paths = {"rss.xml", "robots.txt", "sitemap.xml", "sitemap-index.xml", "sitemap-0.xml",
+    endpoint_paths = {"robots.txt", "sitemap.xml", "sitemap-index.xml", "sitemap-0.xml",
                       "blog/search-index.json", "resume/rokon-resume.pdf", "resume/rokon-resume.txt"}
     for asset in sorted((release / "client").rglob("*")):
         if asset.is_file():

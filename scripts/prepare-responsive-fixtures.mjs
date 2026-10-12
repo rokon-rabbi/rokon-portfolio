@@ -11,7 +11,7 @@ for (const file of fixtures)
   if (existsSync(file)) throw new Error(`Refusing to overwrite ${file}`);
 mkdirSync("public/projects", { recursive: true });
 const source = readFileSync(
-  "src/content/blog/maintainable-angular-enterprise-applications.mdx",
+  "tests/fixtures/blog/reading-sample.mdx",
   "utf8",
 )
   .replace(/^draft: true$/m, "draft: false")
@@ -73,8 +73,9 @@ for (const [index, name] of [
 ]) {
   writeFileSync(
     fixtures[index],
-    readFileSync(`src/content/blog/${name}.mdx`, "utf8")
+    readFileSync("tests/fixtures/blog/reading-sample.mdx", "utf8")
       .replace(/^draft: true$/m, "draft: false")
+      .replace(/^title:.*$/m, `title: "${name} layout fixture"`)
       .replace(/^date:.*$/m, 'date: "2020-01-03"'),
   );
 }

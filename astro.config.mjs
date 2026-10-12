@@ -13,6 +13,7 @@ import { remarkCodeMeta } from "./src/lib/remark-code-meta.ts";
 import { CONFIG } from "./src/data/config.ts";
 import { getWorkProjects, isProjectBrief, workHref } from "./src/lib/work.ts";
 import { projectAssetsIntegration } from "./src/lib/project-assets.ts";
+import { WRITING_STUDIO_ROUTE } from "./src/data/writing-studio.ts";
 
 /** @type {import('rehype-pretty-code').Options} */
 const prettyCodeOptions = {
@@ -32,6 +33,7 @@ export default defineConfig({
   build: { format: "directory" },
   trailingSlash: "never",
   compressHTML: true,
+  devToolbar: { enabled: false },
   security: {
     csp: {
       directives: [
@@ -69,6 +71,7 @@ export default defineConfig({
       filter: (page) => {
         const path = new URL(page).pathname.replace(/\/$/, "");
         return (
+          path !== WRITING_STUDIO_ROUTE &&
           !/\/(design-system|404|preview)(\/|\.html|$)/.test(`${path}/`) &&
           !getWorkProjects()
             .filter(isProjectBrief)

@@ -9,7 +9,6 @@ import { CONTACT_DETAILS, emailHref } from "@/data/contact";
       {PROFILE.contacts.map((contact) => <a href={contact.url} target="_blank" rel="noopener noreferrer">{contact.label} <span class="arrow" aria-hidden="true"></span></a>)}
       {CONTACT_DETAILS.linkedin && <a href={CONTACT_DETAILS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span class="arrow" aria-hidden="true"></span></a>}
       {CONTACT_DETAILS.email && <a href={emailHref(CONTACT_DETAILS.email)}>Email</a>}
-      <a href="/rss.xml">RSS</a>
     </nav>
   </div>
 </footer>

@@ -316,12 +316,13 @@ test("publication code and tables scroll with keyboard and touch; copy has acces
   );
   if (info.project.name === "chromium")
     await block.screenshot({ path: `${dir}/article-code-320.png` });
+  await page.locator(".article-outline summary").click();
   const toc = page.locator(".article-toc a[href='#overflow-stress-specimen']");
   await toc.click();
   const heading = page.locator("#overflow-stress-specimen");
   const headingTop = (await heading.boundingBox())!.y;
-  expect(headingTop).toBeGreaterThanOrEqual(95);
-  expect(headingTop).toBeLessThan(200);
+  expect(headingTop).toBeGreaterThanOrEqual(20);
+  expect(headingTop).toBeLessThan(120);
   if (info.project.name === "chromium")
     await page.screenshot({ path: `${dir}/article-toc-320.png` });
   expect(

@@ -1,26 +1,37 @@
-# Engineering articles
+# Writing
 
-Three original sample articles are provided as unpublished drafts for text review.
-They describe hypothetical engineering approaches, with source links and no
-claims of personal delivery outcomes. Review them locally at
-`/preview/blog/<filename-without-extension>` using `pnpm dev`.
+The collection is empty. Add your own `.mdx` files here when you are ready.
+The writing archive, article layout, tag pages, search, and code-copy controls
+remain available. RSS is disabled.
 
-The collection requires `title`, `description`, `author`, a quoted `YYYY-MM-DD`
-`date`, nonempty lowercase slug `tags`, and a `topic` (delivery, backend,
-frontend, architecture, or testing). Optional `updatedDate` cannot precede
-`date`. Optional `coverImage` and `coverAlt` must be supplied together.
-`featured` defaults to false; `draft` defaults to true. Unknown keys fail.
+You can also write in the unlisted browser editor. It saves drafts locally and
+downloads validated MDX files. See [the writing-desk guide](../../../docs/writing-desk.md)
+for its workflow. Add downloaded articles to this directory to publish them.
 
-Keep the three samples at `draft: true` until the user explicitly approves
-their text. Publishing requires a deliberate `draft: false` and an eligible
-publication/update date. Future dates remain excluded until a rebuild after
-the UTC date boundary. Public archives, article/tag paths, search, RSS,
-related notes, and homepage selection use the same publication gate.
+Each filename becomes the article slug, for example `a-small-debugging-note.mdx`.
+Use a flat, lowercase filename with hyphens.
 
-Production generates no preview paths. Covers are original conceptual SVG
-illustrations; code snippets are educational sketches, not verified production
-implementations. See `docs/12-engineering-publication.md` for the full model
-and review/publishing workflow.
+```yaml
+---
+title: "Your article title"
+description: "A short description of what the reader will find."
+date: "2026-10-12"
+author: "Md. Rokonuzzaman"
+tags: ["testing"]
+topic: "testing"
+draft: true
+---
+```
 
-The original Starfolio sample articles are archived in `reference/template/blog`
-outside the content collection. Do not attribute them to Rokon.
+Topics are `delivery`, `backend`, `frontend`, `architecture`, and `testing`.
+Tags must be lowercase slugs. `draft` defaults to true; `featured` defaults to
+false. Optional `coverImage` and `coverAlt` must be supplied together. Optional
+`updatedDate` cannot precede `date`. Unknown metadata fields fail validation.
+
+Preview a draft locally at `/preview/blog/<slug>` with `pnpm dev`. Set
+`draft: false` when you want to publish, then rebuild. Future publication or
+update dates remain excluded until an eligible rebuild. Production creates no
+preview paths.
+
+Reading-layout QA uses `tests/fixtures/blog/reading-sample.mdx`, outside this
+collection. Temporary QA content must be cleaned up before a normal build.

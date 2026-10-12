@@ -252,7 +252,6 @@ try {
     });
   }
   const fileCases = [
-    ["/rss.xml", /application\/rss\+xml/],
     ["/robots.txt", /text\/plain/],
     ["/sitemap.xml", /(?:application|text)\/xml/],
     ["/sitemap-index.xml", /(?:application|text)\/xml/],

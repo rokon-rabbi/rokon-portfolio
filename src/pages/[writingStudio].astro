@@ -1,0 +1,69 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { PROFILE } from "@/data/profile";
+import { BLOG_TOPICS } from "@/lib/blog-publication";
+import { WRITING_STUDIO_ROUTE } from "@/data/writing-studio";
+import "@/styles/writing-studio.css";
+export const prerender = true;
+export function getStaticPaths() {
+  return [{ params: { writingStudio: WRITING_STUDIO_ROUTE.slice(1) } }];
+}
+---
+<Layout title="Writing desk" description="An unlisted place to write and preview articles." noindex>
+  <section class="writing-studio" data-writing-studio data-author={PROFILE.name} data-view="write" aria-labelledby="studio-title">
+    <header class="studio-header">
+      <div><p class="eyebrow">Your writing space</p><h1 id="studio-title">Writing desk.</h1><p class="studio-intro">A thought, a rough draft, a finished note. Start wherever you are.</p></div>
+      <div class="studio-actions"><button class="button button-outline" data-new-draft disabled>New draft</button><button class="button button-primary" data-download-mdx disabled>Download MDX</button></div>
+    </header>
+    <p class="studio-message" data-studio-unavailable>Enable JavaScript to use the editor. You can still write MDX files directly in the project.</p>
+    <div class="studio-draft-bar">
+      <div class="field"><label for="studio-drafts">Your drafts</label><select id="studio-drafts" class="form-input" data-drafts disabled><option>Loading drafts…</option></select></div>
+      <div class="studio-save-state"><p class="metadata" data-save-status role="status" aria-live="polite">Drafts stay in this browser.</p><button class="button button-ghost" data-save-draft disabled>Save now</button></div>
+    </div>
+    <p class="studio-message" data-studio-warning role="alert" hidden></p>
+    <button class="button button-outline" data-recover-storage hidden>Download previous saved data</button>
+    <p class="studio-message studio-error" data-studio-error role="alert" tabindex="-1" hidden></p>
+    <div class="studio-view-toggle" aria-label="Editor view"><button class="button button-outline" data-view-button="write" aria-pressed="true" disabled>Write</button><button class="button button-outline" data-view-button="preview" aria-pressed="false" disabled>Preview</button></div>
+    <div class="studio-columns">
+      <section class="studio-compose" aria-labelledby="compose-heading">
+        <h2 id="compose-heading" class="studio-panel-heading">Your draft</h2>
+        <form data-draft-form>
+          <fieldset data-editor-fields disabled>
+            <legend class="sr-only">Article details and text</legend>
+            <div class="field"><label for="studio-post-title">Title</label><input id="studio-post-title" name="title" class="form-input" placeholder="What’s on your mind?" maxlength="160" required /></div>
+            <div class="field"><label for="studio-description">Short description</label><textarea id="studio-description" name="description" class="form-input" rows="2" maxlength="320" placeholder="Give the reader a reason to open this note." required></textarea></div>
+            <details class="studio-details"><summary>Article details</summary><div class="studio-details-grid">
+              <div class="field"><label for="studio-slug">Filename</label><input id="studio-slug" name="slug" class="form-input" placeholder="my-first-note" maxlength="160" pattern="[a-z0-9]+(-[a-z0-9]+)*" aria-describedby="slug-hint" required /><p id="slug-hint" class="field-hint">Also becomes the article’s URL.</p></div>
+              <div class="field"><label for="studio-date">Publication date</label><input id="studio-date" name="date" class="form-input" type="date" required /></div>
+              <div class="field"><label for="studio-topic">Topic</label><select id="studio-topic" name="topic" class="form-input">{Object.entries(BLOG_TOPICS).map(([value, label]) => <option value={value}>{label}</option>)}</select></div>
+              <div class="field"><label for="studio-tags">Tags</label><input id="studio-tags" name="tags" class="form-input" placeholder="debugging, frontend" maxlength="300" aria-describedby="tags-hint" required /><p id="tags-hint" class="field-hint">1–8 lowercase tags, separated by commas.</p></div>
+              <div class="field studio-author-field"><label for="studio-author">Author</label><input id="studio-author" name="author" class="form-input" maxlength="200" required /></div>
+              <label class="studio-checkbox"><input name="featured" type="checkbox" /> Feature this note</label>
+              <label class="studio-checkbox"><input name="published" type="checkbox" aria-describedby="published-hint" /> Export as published</label>
+              <p id="published-hint" class="field-hint studio-details-hint">Leave unchecked for a draft. Downloading does not publish to the website.</p>
+            </div></details>
+            <div class="field studio-body-field"><label for="studio-body">Your words</label>
+              <div class="studio-formatting" role="group" aria-label="Markdown formatting">
+                <button type="button" data-format="heading" aria-label="Insert section heading">Heading</button><button type="button" data-format="bold" aria-label="Insert bold text"><b>B</b></button><button type="button" data-format="italic" aria-label="Insert italic text"><i>I</i></button><button type="button" data-format="link" aria-label="Insert link">Link</button><button type="button" data-format="list" aria-label="Insert bullet list">List</button><button type="button" data-format="code" aria-label="Insert code block">Code</button>
+              </div>
+              <textarea id="studio-body" name="body" class="studio-body" placeholder="Start with the thing that happened. You can tidy it up later." maxlength="250000" spellcheck="true" aria-describedby="body-hint"></textarea>
+              <p id="body-hint" class="field-hint">Use ## for section headings and Markdown for links, lists, and code. Ctrl/Cmd + S saves your draft.</p>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+      <section class="studio-preview" aria-labelledby="preview-heading">
+        <div class="studio-preview-top"><h2 id="preview-heading" class="studio-panel-heading">Reading preview</h2><span class="metadata" data-word-count>0 words</span></div>
+        <article class="studio-preview-paper"><header><p class="eyebrow" data-preview-topic>Frontend engineering</p><h2 data-preview-title>Untitled note</h2><p class="studio-preview-description" data-preview-description></p><p class="metadata" data-preview-byline></p></header><div class="prose article-prose" data-preview-body><p class="studio-placeholder">Your writing will appear here.</p></div></article>
+      </section>
+    </div>
+    <details class="studio-more"><summary>Backups and publishing</summary><div>
+      <p>Your drafts are saved on this device and in this browser. Download a backup to move them elsewhere or keep a separate copy.</p>
+      <div class="studio-actions"><button class="button button-outline" data-backup-drafts disabled>Back up drafts</button><label class="button button-outline studio-import" for="studio-import">Restore backup<input id="studio-import" type="file" accept="application/json,.json" data-import-backup disabled /></label><button class="button button-ghost" data-delete-draft disabled>Delete current draft</button></div>
+      <p>To publish, download the MDX file, add it to <code>src/content/blog/</code>, then build and deploy the site. Your public Writing page stays unchanged until then.</p>
+    </div></details>
+    <dialog class="studio-dialog" data-delete-dialog aria-labelledby="delete-title"><h2 id="delete-title">Delete this draft?</h2><p>This removes the draft from this browser.</p><div class="studio-actions"><button class="button button-outline" data-delete-cancel>Keep draft</button><button class="button button-destructive" data-delete-confirm>Delete draft</button></div></dialog>
+    <dialog class="studio-dialog" data-restore-dialog aria-labelledby="restore-title"><h2 id="restore-title">Restore this backup?</h2><p>This replaces your browser’s draft list. Download a backup of your current drafts first if you want to keep them.</p><div class="studio-actions"><button class="button button-outline" data-restore-cancel>Cancel</button><button class="button button-primary" data-restore-confirm>Restore drafts</button></div></dialog>
+  </section>
+  <script>import "@/scripts/writing-studio";</script>
+</Layout>

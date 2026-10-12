@@ -222,18 +222,17 @@ try {
     );
     if (response?.ok) {
       index = await response.json();
-      if (index.length === 3) break;
+      if (index.some((post) => post.id === "qa-publication-alpha")) break;
     }
     await sleep(300);
   }
   assert.deepEqual(
-    index.map((post) => post.id),
+    index
+      .filter((post) => post.id.startsWith("qa-publication-"))
+      .map((post) => post.id),
     ["qa-publication-alpha", "qa-publication-beta", "qa-publication-gamma"],
   );
-  const rss = await fetch(`${origin}/rss.xml`);
-  assert.match(rss.headers.get("content-type"), /application\/rss\+xml/);
-  const xml = await rss.text();
-  assert.equal((xml.match(/<item>/g) ?? []).length, 3);
+  assert.equal((await fetch(`${origin}/rss.xml`)).status, 404);
   for (const forbidden of [
     "Unapproved QA draft",
     "Future QA note",
@@ -242,7 +241,7 @@ try {
     "future-only-tag",
   ]) {
     assert.equal(
-      (xml + JSON.stringify(index)).includes(forbidden),
+      JSON.stringify(index).includes(forbidden),
       false,
       forbidden,
     );
@@ -257,7 +256,7 @@ try {
     assert.equal((await fetch(origin + route)).status, 404, route);
   }
   record(
-    "only eligible published fixtures reach article paths, tag paths, build-time metadata and RSS",
+    "only eligible published fixtures reach article paths, tag paths, build-time metadata; RSS is absent",
   );
 
   await view(1440);
@@ -271,7 +270,7 @@ try {
       await evaluate("document.documentElement.dataset.theme"),
       mode,
     );
-    assert.equal((await visibleIds()).length, 3);
+    assert.equal((await visibleIds()).length, index.length);
     assert.equal(
       await evaluate(
         "document.querySelectorAll('.publication-feature').length",
@@ -323,7 +322,7 @@ try {
     false,
   );
   await evaluate("document.querySelector('[data-search-reset]').click()");
-  assert.equal((await visibleIds()).length, 3);
+  assert.equal((await visibleIds()).length, index.length);
   assert.equal(await evaluate("document.activeElement.id"), "article-search");
   assert.equal(await evaluate("location.search"), "");
   record(
@@ -397,7 +396,7 @@ try {
   assert.ok(anchors.count >= 7);
   assert.deepEqual(anchors.missing, []);
   assert.equal(new Set(anchors.headings).size, anchors.headings.length);
-  await evaluate("document.querySelector('.article-toc a').click()");
+  await evaluate("document.querySelector('.article-outline summary').click(); document.querySelector('.article-toc a').click()");
   await sleep(450);
   assert.ok(
     await evaluate(
@@ -405,7 +404,7 @@ try {
     ),
   );
   record(
-    "TOC and heading links use real unique anchors and clear the sticky navigation",
+    "collapsible contents and heading links use real unique anchors and keep the reading heading visible",
   );
 
   await send("Browser.grantPermissions", {
@@ -493,7 +492,7 @@ try {
     "long code, tables and images stay inside the reading column; overflow remains keyboard accessible at mobile widths",
   );
 
-  await navigate("/preview/blog/reliable-jenkins-pipeline");
+  await navigate("/preview/blog/qa-publication-draft");
   assert.equal(
     await evaluate("document.querySelector('meta[name=robots]').content"),
     "noindex, follow",
@@ -511,23 +510,15 @@ try {
   );
   assert.equal(
     await evaluate(
-      "document.querySelectorAll('.article-prose h2').length >= 5",
+      "document.querySelectorAll('.article-prose h2').length >= 2",
     ),
     true,
   );
-  await screenshot("jenkins-draft-mobile");
+  await screenshot("draft-preview-mobile");
   await view(1440);
   await evaluate("window.scrollTo(0,0)");
-  await screenshot("jenkins-draft-desktop");
-  for (const slug of [
-    "spring-boot-caching-and-async",
-    "maintainable-angular-enterprise-applications",
-  ]) {
-    assert.equal((await fetch(`${origin}/preview/blog/${slug}`)).status, 200);
-  }
-  record(
-    "all three unapproved drafts render only in local noindex previews and contain no publication schema",
-  );
+  await screenshot("draft-preview-desktop");
+  record("temporary unpublished content renders only in local noindex previews");
 
   await send("Emulation.setEmulatedMedia", {
     features: [{ name: "prefers-reduced-motion", value: "reduce" }],
@@ -543,7 +534,7 @@ try {
   await send("Emulation.setScriptExecutionDisabled", { value: true });
   await view(320);
   await navigate("/blog");
-  assert.equal((await visibleIds()).length, 3);
+  assert.equal((await visibleIds()).length, index.length);
   assert.equal(
     await evaluate(
       "getComputedStyle(document.querySelector('[data-blog-search]')).display",

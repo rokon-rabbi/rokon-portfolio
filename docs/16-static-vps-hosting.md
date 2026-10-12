@@ -16,19 +16,19 @@ All 17 current page/endpoint source modules declare `prerender = true`. Dynamic 
 | `work/index.astro`, `work/[slug].astro` | Build-time portfolio plus three enumerated project routes: Chemistry Calculator, volunteering platform and CourseFlow brief |
 | `resume/index.astro` | Build-time professional HTML |
 | `resume/rokon-resume.pdf.ts`, `.txt.ts` | Build-time PDF/text bytes; Nginx restores attachment headers |
-| `blog/index.astro` | Build-time archive; presently an honest empty state |
-| `blog/[slug].astro`, `blog/tags/[tag].astro` | Paths selected from approved, non-draft, eligible posts; presently none |
-| `blog/search-index.json.ts` | Build-time JSON; same publication gate as archive/articles/RSS |
-| `rss.xml.ts`, `robots.txt.ts` | Build-time XML/text; sitemap integration also emits index and route XML files |
+| `blog/index.astro` | Build-time archive with an empty writing state |
+| `blog/[slug].astro`, `blog/tags/[tag].astro` | Paths selected from approved, non-draft, eligible posts |
+| `blog/search-index.json.ts` | Build-time JSON; same publication gate as archive/articles |
+| `robots.txt.ts` | Build-time text; sitemap integration also emits index and route XML files |
 | `design-system.astro` | Static, noindex gallery with two `client:visible` React islands |
 | `404.astro` | Actual `/404.html`, noindex; served with HTTP 404 by Nginx |
 | `preview/blog/[slug].astro` | Development only: `getStaticPaths` returns `[]` in production |
 
-The normal build currently emits **11 HTML files**, **5 prerendered endpoint files**, and **3 sitemap XML files**, plus fonts, illustrations, social preview, CSS and browser JavaScript. All three original articles remain drafts. Development preview paths, draft article/tag routes and QA fixtures are absent from the release. Publishing an article or reaching a scheduled publication date requires a **new build and release**; time passing does not modify static files.
+The build emits static HTML and endpoint files, three sitemap XML files, fonts, illustrations, social previews, CSS, and browser JavaScript. All article files have been removed; the content collection is empty and ready for future writing. RSS, development preview paths, draft article/tag routes, and QA fixtures are absent from the release. Publishing an article or reaching a scheduled publication date requires a **new build and release**; time passing does not modify static files.
 
 ## Features preserved and Cloudflare removal
 
-React renders portfolio/MDX component HTML at build time; the gallery's small interactive islands hydrate only when visible. GSAP and Three.js remain dynamic browser imports with their existing visibility, device and reduced-motion gates. MDX, Shiki highlighting, native copy controls, publication discovery, RSS, sitemap, canonical metadata, Open Graph and structured data remain intact. The only application fetch is the same-origin static search-index JSON.
+React renders portfolio/MDX component HTML at build time; the gallery's small interactive islands hydrate only when visible. GSAP and Three.js remain dynamic browser imports with their existing visibility, device and reduced-motion gates. MDX, Shiki highlighting, native copy controls, publication discovery, sitemap, canonical metadata, Open Graph and structured data remain intact. The only application fetch is the same-origin static search-index JSON.
 
 The active package manifest and pnpm lockfile contain no Cloudflare adapter, Wrangler or Workerd dependencies. Worker configuration, middleware and obsolete template code had already been removed from active source and retained only as reference text outside `src`/`public`. Those reference files are not shipped. There is no Cloudflare Images endpoint, KV/session use, D1/R2 binding or request-time image optimization requirement.
 
@@ -55,7 +55,7 @@ dist/
     work/<slug>/index.html
     blog/search-index.json
     resume/rokon-resume.pdf, rokon-resume.txt
-    rss.xml, robots.txt, sitemap*.xml
+    robots.txt, sitemap*.xml
     _astro/, images/, favicon.svg
     _headers                      # Compatibility artifact; Nginx does not read it
   security-headers.json            # QA policy manifest
@@ -71,11 +71,11 @@ The reviewed source templates are [site.conf.template](../deploy/nginx/site.conf
 
 The root has an explicit `/index.html` rule. Real Nginx testing discovered that the generic `$uri/index.html` rule resolved `/` as `//index.html`, selecting the fallback CSP and blocking assets. The explicit root location fixes that URI/policy mismatch. The custom error location retains **404 status**, the 404 page's exact CSP, noindex and `no-store`; direct `/404.html`, missing assets and denied metadata paths also use it.
 
-Nginx applies the generated CSP and security headers in every location that adds a header, including attachments and caching. This handles header inheritance on older supported Nginx versions. HTML and resumes revalidate, hashed `/_astro/` assets use one-year immutable caching, ordinary static assets use a one-hour cache, and gzip compresses HTML/CSS/JS/XML/JSON/SVG. RSS uses `application/rss+xml`; PDF/text downloads retain their filenames. Dotfiles and `/_headers` are denied. `map_hash_bucket_size 256` accommodates long nested route aliases; on a shared multi-site host, define that http-level directive once.
+Nginx applies the generated CSP and security headers in every location that adds a header, including attachments and caching. This handles header inheritance on older supported Nginx versions. HTML and resumes revalidate, hashed `/_astro/` assets use one-year immutable caching, ordinary static assets use a one-hour cache, and gzip compresses HTML/CSS/JS/XML/JSON/SVG. PDF/text downloads retain their filenames. Dotfiles and `/_headers` are denied. `map_hash_bucket_size 256` accommodates long nested route aliases; on a shared multi-site host, define that http-level directive once.
 
 ## Build and prepare locally
 
-Use Node **22.12+** and the pinned **pnpm 12.6.0**. The frozen lockfile install has been verified. Build with the actual HTTPS VPS origin before preparing configuration; canonical URLs, RSS, sitemap, social metadata and schema are compiled into files.
+Use Node **22.12+** and the pinned **pnpm 12.6.0**. The frozen lockfile install has been verified. Build with the actual HTTPS VPS origin before preparing configuration; canonical URLs, sitemap, social metadata and schema are compiled into files.
 
 ```sh
 pnpm install --frozen-lockfile

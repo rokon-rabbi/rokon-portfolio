@@ -67,7 +67,6 @@ export function verifyBuild(directory) {
     "resume/index.html",
     "work/index.html",
     "blog/index.html",
-    "rss.xml",
     "robots.txt",
     "sitemap.xml",
     "sitemap-index.xml",

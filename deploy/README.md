@@ -166,7 +166,7 @@ TLS 1.2/1.3 and the application's existing HSTS/CSP/security headers remain inta
 bash "$TOOLS_DIR/check-deployment.sh" --base "$BASE" --domain "$DOMAIN"
 ```
 
-The default checker validates release checksums, shared assets, **trusted HTTPS**, exact HTML bodies and per-page CSP, noindex, real 404s, canonical aliases/query strings, RSS/robots/sitemaps/search JSON, resume attachments, all static files, critical MIME types and cache policies. It retries while graceful reload completes and never uses insecure TLS. `--release` checks a selected staged/active release; `--offline` checks integrity only and is **not** a production activation verification hook.
+The default checker validates release checksums, shared assets, **trusted HTTPS**, exact HTML bodies and per-page CSP, noindex, real 404s, canonical aliases/query strings, robots/sitemaps/search JSON, resume attachments, all static files, critical MIME types and cache policies. It retries while graceful reload completes and never uses insecure TLS. `--release` checks a selected staged/active release; `--offline` checks integrity only and is **not** a production activation verification hook.
 
 Before DNS cutover, `--connect-ip '<confirmed-server-IP>'` retains the domain for Host/SNI and certificate validation; `--https-port` supports a reviewed test topology. `--ca-cert` supplies an explicit trusted CA bundle, useful for isolated local tests. Normal public deployment uses the system CA store. The equivalent `CHECK_CONNECT_IP`, `CHECK_HTTPS_PORT`, `CHECK_CA_CERT` variables can configure the checker invoked as a hook; they contain no credentials. Scripts do not assume a successful reload means the new worker is ready.
 

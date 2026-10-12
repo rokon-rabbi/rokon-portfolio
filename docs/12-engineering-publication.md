@@ -1,10 +1,9 @@
 # 12 — Engineering publication
 
-Status: implemented locally, 2026-10-10. The archive, article layout, tag routes,
-metadata search, RSS, and development draft previews are complete. Three sample
-articles await the user's text review and remain `draft: true`. The public
-archive therefore displays its empty state, and the public search index and RSS
-contain no article entries. Nothing was deployed.
+Status: updated locally, 2026-10-12. All article files have been removed at the
+user’s request. The archive shows an empty state; article/tag routes and search
+are ready for future writing. RSS remains disabled. The reading layout uses one
+column with a collapsible contents list. These changes have not been deployed.
 
 ## Routes and ownership
 
@@ -14,18 +13,17 @@ contain no article entries. Nothing was deployed.
 | `/blog/<slug>` | `src/pages/blog/[slug].astro`, `ArticlePage.astro` | Static paths for eligible published articles only |
 | `/blog/tags/<tag>` | `src/pages/blog/tags/[tag].astro` | Native static archives for tags present in published articles |
 | `/blog/search-index.json` | `src/pages/blog/search-index.json.ts` | Build-time published metadata; no article bodies |
-| `/rss.xml` | `src/pages/rss.xml.ts` | RSS 2.0, escaped metadata, absolute URLs, UTC publication dates |
 | `/preview/blog/<slug>` | `src/pages/preview/blog/[slug].astro` | Development only; noindex notice, no publication structured data, no production paths |
 
 `src/lib/blog.ts` provides `getPublishedPosts`, backed by the shared
 `selectPublishedPosts` policy in `src/lib/publication.ts`. The homepage, archive,
-article paths, tag paths, search index, RSS, related notes, and chronological
+article paths, tag paths, search index, related notes, and chronological
 navigation all select through that policy. Blog filenames must be flat lowercase
 slugs. Original Starfolio articles remain in `reference/template/blog`, outside
 the collection and public assets.
 
 `src/lib/blog-publication.ts` owns display metadata, dates, reading estimates,
-tag labels, related selection, search matching, and feed serialization.
+tag labels, related selection, and search matching.
 `src/styles/publication.css` defines responsive archive and reading layouts
 using the existing design tokens. Publication rendering uses Astro and static
 React MDX components without a hydrated article island.
@@ -46,30 +44,16 @@ Posts sort newest first, with ID as the deterministic tie-breaker. A future
 update date also excludes a post. Static outputs must be rebuilt when a
 scheduled date becomes eligible.
 
-The original sample drafts are:
-
-| Draft slug | Subject | Cover |
-| --- | --- | --- |
-| `reliable-jenkins-pipeline` | Repeatable verification, failure handling, artifacts, credentials, and release gates | `delivery.svg` |
-| `spring-boot-caching-and-async` | Cache freshness, proxy boundaries, bounded executors, and correctness | `systems.svg` |
-| `maintainable-angular-enterprise-applications` | Feature boundaries, transport, lazy routes, state ownership, and tests | `interfaces.svg` |
-
-Their covers are original conceptual SVG illustrations under
-`public/images/blog/`. The text describes hypothetical approaches and educational
-code sketches, with primary documentation references; it does not establish
-personal delivery outcomes or employer implementation details.
-
-Review each draft with `pnpm dev` at `/preview/blog/<slug>`. Keep it unpublished
-until the user approves the text. After approval, verify the author, dates,
-references, and media, then deliberately set `draft: false` and rebuild. The
-current generated-route tests intentionally assert that these three drafts remain
-unpublished; update those expectations alongside an authorized publication.
+Add your own `.mdx` files to `src/content/blog/` when ready. Preview drafts with
+`pnpm dev` at `/preview/blog/<slug>`, then set `draft: false` and rebuild to
+publish. The reading-layout fixture lives in
+`tests/fixtures/blog/reading-sample.mdx`, outside the content collection.
 
 ## Reading and discovery
 
 The article layout includes a byline, dates, reading estimate, cover, heading
-links, a table of contents for h2/h3 headings, chronological previous/next links,
-related notes, and RSS discovery. Related notes prioritize shared tags and then
+links, a collapsible table of contents for h2/h3 headings, chronological previous/next links,
+and related notes. Related notes prioritize shared tags and then
 topic, exclude the current article, and use deterministic date/ID ordering.
 Reading time estimates account for prose and fenced-code lines.
 
@@ -110,8 +94,8 @@ The resumed final checks passed:
 | Whitespace validation | `git diff --check` passed |
 
 The generated portfolio link check now includes the static blog archive and
-verifies the RSS file exists, alongside page fragments and bundled assets.
-Production assertions verify the empty archive/index/feed, absent draft/tag and
+verifies page fragments and bundled assets. Production assertions check the new
+empty archive/search output, the absence of RSS, removed article/tag and
 preview paths, sitemap exclusions, and removal of temporary QA content.
 
 The preceding browser pass is retained in

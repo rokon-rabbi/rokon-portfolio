@@ -10,17 +10,13 @@ const slugs = [
   "courseflow",
   "chemistry-calculator",
 ];
-const paths = [
-  "/",
-  "/blog",
-  "/about",
-  "/contact",
-  "/resume",
-  "/work",
-  ...slugs.map((slug) => `/work/${slug}`),
-  "/design-system/",
-  "/404",
-];
+const paths = readdirSync(root, { recursive: true })
+  .filter((file) => file.endsWith(".html"))
+  .map((file) =>
+    file === "404.html"
+      ? "/404"
+      : `/${file.replace(/index\.html$/, "").replace(/\/$/, "")}`,
+  );
 const fileFor = (path) =>
   path === "/404"
     ? resolve(root, "404.html")
@@ -89,7 +85,6 @@ test("generated project routes", async (t) => {
           const target = url.pathname.replace(/\/$/, "") || "/";
           if (
             target === "/favicon.svg" ||
-            target === "/rss.xml" ||
             target === "/resume/rokon-resume.pdf" ||
             target === "/resume/rokon-resume.txt" ||
             target.startsWith("/_astro/")
