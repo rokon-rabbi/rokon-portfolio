@@ -1,11 +1,18 @@
 import type { SourceId } from "./sources";
 
 /** Editorial copy based on the confirmed professional brief; no delivery metrics. */
+/** Where Rokon works from, as on his previous portfolio. City only. */
+export const LOCATION = {
+  city: "Dhaka",
+  country: "Bangladesh",
+  timeZone: "Asia/Dhaka",
+} as const;
+
 export const ABOUT = {
   introduction:
-    "I’m Rokon, a full-stack software engineer working across interfaces, APIs, and software delivery. I’m interested in how those pieces fit together to make everyday workflows easier to use and maintain.",
+    "I’m Rokon, a full-stack software engineer working across interfaces, APIs, and the servers they run on. I’m interested in how those pieces fit together to make everyday workflows easier to use and maintain.",
   context:
-    "At Karooth IT (BD) Limited, I contribute to enterprise MIS workflows, including beneficiary registration, payments, and grievance management. Earlier, at Ztrios Technologies Limited, I worked on the Shaheen Education Family LMS with Next.js and TypeScript.",
+    "At Karooth IT (BD) Limited, I work on an enterprise MIS, including beneficiary registration, payments, and grievance management, and on the production Linux servers and Jenkins pipelines behind its delivery. Earlier, at Ztrios Technologies Limited, I worked on the Shaheen Education Family LMS with Next.js and TypeScript.",
   principles: [
     {
       title: "Start with the workflow.",
@@ -23,18 +30,18 @@ export const ABOUT = {
   focus: [
     {
       number: "01",
-      title: "Interfaces with a purpose",
-      text: "Angular, React, Next.js, and TypeScript for applications with clear workflows and maintainable frontend boundaries.",
-    },
-    {
-      number: "02",
-      title: "Connected backend systems",
+      title: "Backend systems that hold up",
       text: "Java, Spring Boot, and REST APIs, with an interest in search, caching, and asynchronous processing.",
     },
     {
+      number: "02",
+      title: "Delivery and production servers",
+      text: "Jenkins and Docker for repeatable releases, and the Linux configuration, Nginx, and HAProxy that an application runs behind.",
+    },
+    {
       number: "03",
-      title: "Repeatable software delivery",
-      text: "Docker, Jenkins, and CI/CD, with attention to making application delivery easier to understand and repeat.",
+      title: "Interfaces with a purpose",
+      text: "Angular, React, Next.js, and TypeScript for applications with clear workflows and maintainable frontend boundaries.",
     },
   ],
   interests: [
@@ -42,10 +49,12 @@ export const ABOUT = {
     "Accessible interfaces",
     "Search and asynchronous workflows",
     "Reliable build and delivery pipelines",
+    "Running services well on Linux",
   ],
 } as const;
 
-// Institution supplied in the About/Contact brief. Do not infer degree or dates.
+// Institution supplied in the About/Contact brief; degree and years as
+// published on Rokon's previous portfolio. Results are deliberately left out.
 export const EDUCATION: {
   institution: string;
   degree: string | null;
@@ -53,7 +62,11 @@ export const EDUCATION: {
   sourceIds: readonly SourceId[];
 } = {
   institution: "Noakhali Science and Technology University (NSTU)",
-  degree: null,
-  period: null,
-  sourceIds: ["user-about-contact-brief", "nstu-institution-name"],
+  degree: "BSc in Software Engineering",
+  period: "2019 – 2024",
+  sourceIds: [
+    "user-about-contact-brief",
+    "nstu-institution-name",
+    "previous-portfolio",
+  ],
 };

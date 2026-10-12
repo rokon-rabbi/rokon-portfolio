@@ -41,7 +41,7 @@ export function ProjectCard({
               className="text-link"
               aria-label={`${link.label}: ${project.title}`}
             >
-              {link.label} <span aria-hidden="true">↗</span>
+              {link.label} <span className="arrow" aria-hidden="true" />
             </a>
           ))}
         </div>

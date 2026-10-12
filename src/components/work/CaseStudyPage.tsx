@@ -91,7 +91,7 @@ export default function CaseStudyPage({
         ) : (
           <div className="case-header-links">
             <a className="button button-primary" href="#architecture">
-              Explore the architecture <span aria-hidden="true">↓</span>
+              Explore the architecture <span className="arrow arrow-down" aria-hidden="true" />
             </a>
             {project.links
               .filter((link) => link.kind !== "upstream")
@@ -104,7 +104,7 @@ export default function CaseStudyPage({
                   rel="noopener noreferrer"
                 >
                   {link.label}
-                  <span aria-hidden="true">↗</span>
+                  <span className="arrow" aria-hidden="true" />
                 </a>
               ))}
           </div>
@@ -123,28 +123,21 @@ export default function CaseStudyPage({
         <nav className="case-contents" aria-label="Case study contents">
           <p className="metadata">In this study</p>
           <ol>
-            {study.sections.map((section, index) => (
+            {study.sections.map((section) => (
               <li key={section.id}>
-                <a href={`#${section.id}`}>
-                  <span aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  {CASE_SECTION_LABELS[section.id]}
-                </a>
+                <a href={`#${section.id}`}>{CASE_SECTION_LABELS[section.id]}</a>
               </li>
             ))}
             <li>
-              <a href="#evidence">
-                <span aria-hidden="true">08</span>Links & evidence
-              </a>
+              <a href="#evidence">Links & evidence</a>
             </li>
           </ol>
           <a className="text-link case-back" href="/work">
-            All projects <span aria-hidden="true">↗</span>
+            All work <span className="arrow arrow-right" aria-hidden="true" />
           </a>
         </nav>
         <div className="case-study-body">
-          {study.sections.map((section, index) => (
+          {study.sections.map((section) => (
             <section
               key={section.id}
               id={section.id}
@@ -153,9 +146,6 @@ export default function CaseStudyPage({
               data-section-status={section.status}
             >
               <div className="case-section-kicker">
-                <span className="metadata">
-                  {String(index + 1).padStart(2, "0")} /
-                </span>
                 <span className="metadata">
                   {section.status === "verified"
                     ? "Source-backed context"
@@ -225,7 +215,6 @@ export default function CaseStudyPage({
             className="case-section case-evidence"
             aria-labelledby="evidence-heading"
           >
-            <p className="metadata">08 /</p>
             <h2 id="evidence-heading" data-motion="reveal">
               Links & project evidence
             </h2>
@@ -240,7 +229,7 @@ export default function CaseStudyPage({
                   aria-label={`${link.label}: ${project.title}`}
                 >
                   {link.label}
-                  <span aria-hidden="true">↗</span>
+                  <span className="arrow" aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -315,7 +304,7 @@ export default function CaseStudyPage({
                               new URL(url).pathname.split("/").pop() ||
                                 new URL(url).hostname,
                             )}
-                            <span aria-hidden="true">↗</span>
+                            <span className="arrow" aria-hidden="true" />
                           </a>
                         </li>
                       ))}
@@ -334,10 +323,9 @@ export default function CaseStudyPage({
       </div>
       <nav className="related-projects" aria-label="Related projects">
         <div className="related-heading" data-motion="reveal">
-          <p className="eyebrow">Continue exploring</p>
-          <h2>More engineering work.</h2>
+          <h2>More work</h2>
           <a className="text-link" href="/work">
-            Back to all work <span aria-hidden="true">↗</span>
+            All work <span className="arrow arrow-right" aria-hidden="true" />
           </a>
         </div>
         <div className="related-project-list">
@@ -350,7 +338,7 @@ export default function CaseStudyPage({
               </span>
               <h3>
                 {candidate.title}
-                <span aria-hidden="true">↗</span>
+                <span className="arrow" aria-hidden="true" />
               </h3>
               <p>{candidate.summary}</p>
             </a>

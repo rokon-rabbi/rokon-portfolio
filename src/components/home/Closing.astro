@@ -1,0 +1,25 @@
+---
+import { BRACE_PATH, BRACE_VIEWBOX } from "@/design/brace";
+import { PROFILE } from "@/data/profile";
+import { CONTACT_DETAILS, emailHref } from "@/data/contact";
+
+const { email, linkedin } = CONTACT_DETAILS;
+const github = PROFILE.contacts.find((contact) => contact.id === "github");
+---
+<section id="contact" class="closing" data-closing aria-labelledby="contact-heading">
+  <div class="site-container closing-inner">
+    <h2 id="contact-heading" class="closing-title">
+      <span class="closing-brace" data-anchor="closing-open" aria-hidden="true"><svg viewBox={BRACE_VIEWBOX} fill="none"><path d={BRACE_PATH} /></svg></span>
+      <span class="closing-word" data-closing-word>Let’s talk.</span>
+      <span class="closing-brace closing-brace-close" data-anchor="closing-close" aria-hidden="true"><svg viewBox={BRACE_VIEWBOX} fill="none"><path d={BRACE_PATH} /></svg></span>
+    </h2>
+    <p class="closing-text" data-closing-rise>I’m glad to hear about a role, a project, or a problem you are stuck on. Email is the quickest way to reach me.</p>
+    <div class="closing-actions" data-closing-rise>
+      {email
+        ? <a class="button button-primary button-lg" href={emailHref(email)} data-magnetic>{email}</a>
+        : <a class="button button-primary button-lg" href="/contact" data-magnetic>Get in touch <span class="arrow arrow-right" aria-hidden="true"></span></a>}
+      {linkedin && <a class="button button-outline button-lg" href={linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span class="arrow" aria-hidden="true"></span></a>}
+      {github && <a class="button button-outline button-lg" href={github.url} target="_blank" rel="noopener noreferrer">GitHub <span class="arrow" aria-hidden="true"></span></a>}
+    </div>
+  </div>
+</section>

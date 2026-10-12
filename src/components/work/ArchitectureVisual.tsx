@@ -31,7 +31,7 @@ export function ArchitectureVisual({
         {diagram.edges.map((edge) => (
           <li key={`${edge.from}-${edge.to}`}>
             <span>
-              {name(edge.from)} <span aria-hidden="true">→</span>
+              {name(edge.from)} <span className="arrow arrow-right" aria-hidden="true" />
               <span className="sr-only"> connects to </span> {name(edge.to)}
             </span>
             <span className="metadata">{edge.label}</span>

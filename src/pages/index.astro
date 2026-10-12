@@ -1,13 +1,18 @@
 ---
 export const prerender = true;
 import Layout from "../layouts/Layout.astro";
-import HomePage from "@/components/HomePage";
+import Hero from "@/components/home/Hero.astro";
+import Work from "@/components/home/Work.astro";
+import Experience from "@/components/home/Experience.astro";
+import Stack from "@/components/home/Stack.astro";
+import Writing from "@/components/home/Writing.astro";
+import About from "@/components/home/About.astro";
+import Closing from "@/components/home/Closing.astro";
 import { validatePortfolioContent } from "@/lib/portfolio-content";
-import { DATA } from "@/data/resume";
 import { getPublishedPosts } from "@/lib/blog";
-import "@/styles/profile-pages.css";
+import "@/styles/home.css";
 validatePortfolioContent();
-const articles = (await getPublishedPosts()).slice(0, 3).map(post => ({
+const articles = (await getPublishedPosts()).slice(0, 3).map((post) => ({
   id: post.id,
   title: post.data.title,
   summary: post.data.description,
@@ -15,7 +20,14 @@ const articles = (await getPublishedPosts()).slice(0, 3).map(post => ({
 }));
 ---
 
-<Layout>
-  <HomePage data={DATA} articles={articles} />
-  <script>import "../scripts/systems-hero";</script>
+<Layout bleed intro>
+  <div class="stage" data-stage aria-hidden="true"></div>
+  <Hero />
+  <Experience />
+  <Stack />
+  <Work />
+  {articles.length > 0 && <Writing articles={articles} />}
+  <About />
+  <Closing />
+  <script>import "../scripts/home";</script>
 </Layout>

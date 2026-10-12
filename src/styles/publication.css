@@ -575,3 +575,72 @@
     }
   }
 }
+
+/* The publication on the site's paper-and-ink scale. */
+@layer utilities {
+  .publication-title {
+    max-width: 14em;
+    font-size: var(--text-display);
+    line-height: 1.03;
+    letter-spacing: -0.035em;
+    margin-top: 1.25rem;
+  }
+  .publication-intro,
+  .article-deck {
+    max-width: 38rem;
+    color: var(--soft-foreground);
+    font-size: clamp(1.0625rem, 1rem + 0.45vw, 1.25rem);
+    line-height: 1.55;
+  }
+  .publication-edition {
+    gap: 0.5rem;
+  }
+  .archive-tags .filter-control {
+    border-color: var(--border);
+    border-radius: 999px;
+    color: var(--soft-foreground);
+    font-size: 0.875rem;
+  }
+  .archive-tags .filter-control:hover {
+    border-color: var(--foreground);
+    color: var(--foreground);
+  }
+  .archive-tags [aria-current="page"],
+  .archive-tags [aria-current="page"]:hover {
+    background: var(--foreground);
+    border-color: var(--foreground);
+    color: var(--background);
+  }
+  .archive-tags span {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .empty-mark {
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .article-byline {
+    color: var(--muted-foreground);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .article-preview-notice {
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+  }
+  .publication-colophon h2 {
+    font-size: var(--text-title);
+  }
+  .article-header h1 {
+    max-width: 18em;
+    font-size: var(--text-display);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+}
+

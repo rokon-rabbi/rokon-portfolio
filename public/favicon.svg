@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#18181b"/>
-  <text x="16" y="22" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="white" text-anchor="middle">R</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#111111"/><g fill="none" stroke="#FFFCF5" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"><path transform="translate(11.5 12) scale(.18)" d="M66 12Q40 12 40 38V86Q40 110 12 112Q40 114 40 138V186Q40 212 66 212"/><path transform="translate(52.5 12) scale(-.18 .18)" d="M66 12Q40 12 40 38V86Q40 110 12 112Q40 114 40 138V186Q40 212 66 212"/></g></svg>

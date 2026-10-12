@@ -14,8 +14,8 @@ const date = new Date(`${article.date}T00:00:00Z`);
     <span class="metadata">{article.readingMinutes} min read</span>
   </div>
   <div class="publication-card-copy">
-    <p class="eyebrow">{featured ? "Featured note / " : ""}{BLOG_TOPICS[article.topic]}</p>
-    <h2><a href={article.href}>{article.title}<span aria-hidden="true"> ↗</span></a></h2>
+    <p class="eyebrow">{BLOG_TOPICS[article.topic]}</p>
+    <h2><a href={article.href}>{article.title}</a></h2>
     <p class="publication-description">{article.description}</p>
     <div class="publication-tags">{article.tags.map((tag) => <a href={tagHref(tag)} class="technical-badge">{tagLabel(tag)}</a>)}</div>
     {article.updatedDate && article.updatedDate !== article.date && <p class="metadata">Updated <time datetime={article.updatedDate}>{blogDate(article.updatedDate)}</time></p>}

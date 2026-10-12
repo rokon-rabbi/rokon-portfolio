@@ -1,8 +1,8 @@
 ---
 export const prerender = true;
 import Layout from "@/layouts/Layout.astro";
-import ResumeLinks from "@/components/design/ResumeLinks.astro";
 import { PROFILE } from "@/data/profile";
+import { LOCATION } from "@/data/about";
 import { CONTACT_DETAILS, emailHref } from "@/data/contact";
 import "@/styles/profile-pages.css";
 const github = PROFILE.contacts.find((contact) => contact.id === "github")!;
@@ -10,15 +10,28 @@ const { email, linkedin } = CONTACT_DETAILS;
 ---
 <Layout title="Contact" description="Connect with Rokon about full-stack software engineering, collaboration, or a software engineering role.">
   <div class="profile-page contact-page">
-    <header class="contact-masthead" data-motion="reveal"><p class="eyebrow">Contact / Start a conversation</p><h1 class="profile-title">Good software starts<br />with <span class="text-primary">a conversation.</span></h1><p class="profile-introduction">Have a project to discuss, an engineering role in mind, or a technical idea to exchange? I’d be glad to hear the context.</p></header>
-    <section class="contact-desk" aria-labelledby="contact-options-heading">
-      <div class="contact-desk-main"><p class="eyebrow">Let’s connect</p><h2 id="contact-options-heading">A little context.<br />A good starting point.</h2><p class="profile-body">Tell me about your team or project, what you’re working toward, and where you think I could contribute.</p>
-        {email ? <><a class="contact-email" href={emailHref(email)}>{email}<span aria-hidden="true">↗</span></a><p class="metadata">Opens your email app.</p><div class="profile-actions"><a class="button button-primary button-lg" href={emailHref(email, "Let’s discuss a project")}>Discuss a project <span aria-hidden="true">↗</span></a><a class="button button-outline button-lg" href={emailHref(email, "Software engineering opportunity")}>Discuss a role <span aria-hidden="true">↗</span></a></div></> : <div class="profile-actions"><a class="button button-primary button-lg" href={github.url}>Visit my GitHub profile <span aria-hidden="true">↗</span></a></div>}
-      </div>
-      <aside class="contact-desk-aside" aria-label="Professional background"><div class="connection-drawing" aria-hidden="true"><svg viewBox="0 0 280 170" fill="none"><path d="M34 85H103L140 42H246M103 85L140 128H246" stroke="currentColor" stroke-width="1.5"/><circle cx="34" cy="85" r="10"/><circle cx="140" cy="42" r="7"/><circle cx="140" cy="128" r="7"/><circle cx="246" cy="42" r="10"/><circle cx="246" cy="128" r="10"/></svg></div><p class="metadata">{PROFILE.name}</p><p class="contact-aside-role">{PROFILE.headline}</p><p class="profile-body">Frontend applications.<br />REST APIs.<br />Software delivery.</p><a class="text-link" href="/about">More about my background <span aria-hidden="true">↗</span></a></aside>
+    <section class="contact-masthead" aria-labelledby="contact-title" data-motion="reveal">
+      <p class="eyebrow">Contact</p>
+      <h1 id="contact-title" class="profile-title">Tell me what you’re working on.</h1>
+      <p class="lede">A role, a project, or a technical question. A few lines about your team and what you need is a good start.</p>
     </section>
-
-    <nav class="contact-channels" aria-label="Professional profiles"><a class="contact-channel" href={github.url}><span class="eyebrow">01 / Source & projects</span><span class="channel-title">GitHub <span aria-hidden="true">↗</span></span><span class="metadata">rokon-rabbi · Explore the code and project context</span></a>{linkedin && <a class="contact-channel" href={linkedin}><span class="eyebrow">02 / Professional network</span><span class="channel-title">LinkedIn <span aria-hidden="true">↗</span></span><span class="metadata">Experience, connections, and professional conversations</span></a>}<a class="contact-channel" href="/work"><span class="eyebrow">{linkedin ? "03" : "02"} / Technical context</span><span class="channel-title">Selected work <span aria-hidden="true">↗</span></span><span class="metadata">Projects, decisions, and implementation details</span></a></nav>
-    <section class="contact-resume" aria-labelledby="contact-resume-heading"><div><p class="eyebrow">For a closer look</p><h2 id="contact-resume-heading">The professional overview.</h2><p class="profile-body">Experience, technical skills, and education in one place.</p></div><ResumeLinks /></section>
+    <section class="contact-desk" aria-labelledby="contact-options-heading">
+      <div class="contact-desk-main">
+        <h2 id="contact-options-heading" class="eyebrow">Email</h2>
+        {email
+          ? <>
+              <a class="contact-email" href={emailHref(email)}>{email}</a>
+              <p class="metadata contact-clock" data-local-clock data-time-zone={LOCATION.timeZone} hidden>It’s <time data-local-time></time> in {LOCATION.city} right now.</p>
+              <div class="profile-actions"><a class="button button-primary button-lg" href={emailHref(email, "Software engineering role")}>Write about a role <span class="arrow arrow-right" aria-hidden="true"></span></a><a class="button button-outline button-lg" href={emailHref(email, "A project")}>Write about a project <span class="arrow arrow-right" aria-hidden="true"></span></a></div>
+            </>
+          : <div class="profile-actions"><a class="button button-primary button-lg" href={github.url}>Visit my GitHub profile <span class="arrow" aria-hidden="true"></span></a></div>}
+      </div>
+      <nav class="contact-channels" aria-label="Elsewhere">
+        <a class="contact-channel" href={github.url}><span class="channel-title">GitHub</span><span class="metadata">rokon-rabbi · code and projects</span><span class="arrow" aria-hidden="true"></span></a>
+        {linkedin && <a class="contact-channel" href={linkedin}><span class="channel-title">LinkedIn</span><span class="metadata">Experience and background</span><span class="arrow" aria-hidden="true"></span></a>}
+        <a class="contact-channel" href="/work"><span class="channel-title">Work</span><span class="metadata">Projects and case studies</span><span class="arrow arrow-right" aria-hidden="true"></span></a>
+        <a class="contact-channel" href="/resume"><span class="channel-title">Résumé</span><span class="metadata">Experience, skills and education on one page</span><span class="arrow arrow-right" aria-hidden="true"></span></a>
+      </nav>
+    </section>
   </div>
 </Layout>

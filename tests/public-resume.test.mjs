@@ -21,6 +21,8 @@ test("public resume and professional contacts", async (t) => {
     "src/data/skills.ts",
     "src/data/about.ts",
     "src/data/contact.ts",
+    "src/data/case-studies.ts",
+    "src/data/projects.ts",
     "src/lib/portfolio-dates.ts",
     "src/lib/public-resume.ts",
     "src/lib/resume-pdf.ts",
@@ -49,7 +51,8 @@ test("public resume and professional contacts", async (t) => {
   const { createPublicResume, PublicResumeSchema, resumeText } =
     await load("lib/public-resume");
   const { renderResumePDF } = await load("lib/resume-pdf");
-  const { ContactDetailsSchema, emailHref } = await load("data/contact");
+  const { ContactDetailsSchema, CONTACT_DETAILS, emailHref } =
+    await load("data/contact");
   const { PROFILE } = await load("data/profile");
   const { EXPERIENCE } = await load("data/experience");
   const { SKILL_GROUPS } = await load("data/skills");
@@ -88,7 +91,7 @@ test("public resume and professional contacts", async (t) => {
         })),
         SKILL_GROUPS.map((group) => ({ ...group, ...privateFields })),
         { ...EDUCATION, ...privateFields },
-        { email: null, linkedin: null, ...privateFields },
+        { ...CONTACT_DETAILS, ...privateFields },
       );
       const surfaces =
         JSON.stringify(projected) +
@@ -151,6 +154,10 @@ test("public resume and professional contacts", async (t) => {
         /\/Length (\d+) >>\nstream\n([\s\S]*?)endstream/g,
       ))
         assert.equal(match[2].length, Number(match[1]));
+      // One page, and the stack is named on the line under the name.
+      assert.equal(Number(pdf.match(/\/Count (\d+)/)[1]), 1);
+      assert.ok(resumeText(resume).includes(" | Java • Spring Boot • Angular"));
+      assert.ok(pdf.includes("Java \\225 Spring Boot \\225 Angular"));
       for (const text of [
         resume.name,
         "Karooth IT",

@@ -8,7 +8,7 @@ test("production blog surfaces keep unapproved drafts unpublished", async (t) =>
     () => {
       const html = readFileSync(new URL("blog/index.html", dist), "utf8");
       assert.ok(html.includes("No published notes yet."));
-      assert.ok(html.includes("Engineering publication"));
+      assert.ok(html.includes("Notes from the work."));
       assert.ok(html.includes('type="application/rss+xml"'));
       assert.ok(html.includes('href="/rss.xml"'));
       assert.equal(html.includes("data-blog-entry="), false);

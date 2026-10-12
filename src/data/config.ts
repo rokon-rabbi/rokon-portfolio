@@ -30,7 +30,7 @@ export const CONFIG = {
   // SEO Settings
   // ---------------------------------------------------------------------------
   seo: {
-    titleTemplate: "%s | %n", // %s = page title, %n = DATA.name
+    titleTemplate: "%s | %n", // %s = page title, %n = DATA.displayName
     twitterCard: "summary" as const,
     robots: "index, follow",
   },

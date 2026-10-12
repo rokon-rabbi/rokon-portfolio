@@ -18,25 +18,22 @@ export default function WorkPortfolio({
         aria-labelledby="work-page-title"
         data-motion="intro"
       >
-        <p className="eyebrow">Work / Personal & open source</p>
-        <h1 id="work-page-title">
-          Selected systems.
-          <br />
-          <span>Considered solutions.</span>
-        </h1>
+        <p className="eyebrow">Work</p>
+        <h1 id="work-page-title">Things I’ve built.</h1>
         <div className="work-header-bottom">
-          <p>
-            Personal projects and open-source repositories, with technical
-            context from public source code and clear contribution boundaries.
+          <p className="lede">
+            Personal projects, each with its code and a case study written
+            from the public source.
           </p>
-          <a href="/#work" className="text-link">
-            Professional experience <span aria-hidden="true">↗</span>
+          <a href="/#experience" className="text-link">
+            Professional experience{" "}
+            <span className="arrow arrow-right" aria-hidden="true" />
           </a>
         </div>
       </section>
       <section
         className="work-portfolio-list"
-        aria-label="Repository-backed projects"
+        aria-label="Projects with a case study"
       >
         {reviewed.map((project, index) => (
           <FeaturedProject
@@ -54,8 +51,9 @@ export default function WorkPortfolio({
           aria-labelledby="briefs-heading"
           data-motion="reveal"
         >
-          <p className="eyebrow">In the project notebook</p>
-          <h2 id="briefs-heading">The next story needs its details.</h2>
+          <div className="work-section-top">
+            <h2 id="briefs-heading">Still to write up</h2>
+          </div>
           {briefs.map((project) => (
             <article key={project.id} className="work-brief">
               <div>
@@ -72,7 +70,8 @@ export default function WorkPortfolio({
                 className="text-link"
                 aria-label={`View project brief: ${project.title}`}
               >
-                View project brief <span aria-hidden="true">↗</span>
+                View project brief{" "}
+                <span className="arrow arrow-right" aria-hidden="true" />
               </a>
             </article>
           ))}
@@ -84,14 +83,14 @@ export default function WorkPortfolio({
         aria-labelledby="employer-work-heading"
       >
         <div>
-          <p className="eyebrow">Professional contributions</p>
-          <h2 id="employer-work-heading">Engineering with a team.</h2>
+          <h2 id="employer-work-heading">Work with a team</h2>
           <p>
-            Employer-related work is presented separately as professional
-            experience.
+            What I build at work belongs to my employers, so it is described
+            under experience and not shown here.
           </p>
-          <a href="/#work" className="text-link">
-            Read my experience <span aria-hidden="true">↗</span>
+          <a href="/#experience" className="text-link">
+            Read my experience{" "}
+            <span className="arrow arrow-right" aria-hidden="true" />
           </a>
         </div>
         <ul>

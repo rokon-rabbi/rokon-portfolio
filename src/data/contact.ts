@@ -14,9 +14,10 @@ export const ContactDetailsSchema = z
   })
   .strict();
 
+// Both are the public destinations shown on Rokon's previous portfolio.
 export const CONTACT_DETAILS = ContactDetailsSchema.parse({
-  email: null,
-  linkedin: null,
+  email: "rokonrabbi21@gmail.com",
+  linkedin: "https://www.linkedin.com/in/rokon1/",
 });
 
 export function emailHref(email: string, subject = "") {

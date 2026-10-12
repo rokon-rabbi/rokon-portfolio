@@ -1,100 +1,124 @@
-/** Feature illustrations, not product screenshots or runtime architecture claims. */
+/**
+ * What stands in for a screenshot when a project has none: the routes its
+ * API exposes, or the equation its desktop tool balances. Both are drawn
+ * from the reviewed source, and neither is a capture of the running product.
+ */
+
+// EventController.java and HelpRequestController.java, as reviewed.
+const ROUTES = [
+  {
+    label: "Events",
+    routes: [
+      ["POST", "/api/events", ""],
+      ["GET", "/api/events", "?category&location"],
+      ["POST", "/api/events/{eventId}/join", ""],
+    ],
+  },
+  {
+    label: "Help requests",
+    routes: [
+      ["POST", "/api/help-requests", ""],
+      ["GET", "/api/help-requests/{id}", ""],
+      ["PATCH", "/api/help-requests/{id}/status", ""],
+    ],
+  },
+] as const;
+
+function Bar({ address }: { address: string }) {
+  return (
+    <div className="frame-bar">
+      <span className="frame-dots" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </span>
+      <span className="frame-address">{address}</span>
+    </div>
+  );
+}
+
 export function ProjectPreview({ id }: { id: string }) {
   if (id === "community-driven-social-volunteering-platform") {
     return (
       <figure
-        className="project-preview volunteer-preview"
+        className="frame project-visual"
         data-motion="reveal"
+        aria-label="The event and help-request routes of the volunteering platform’s API"
       >
-        <div className="preview-label metadata">
-          <span>01 / Community workflows</span>
-          <span aria-hidden="true">↗</span>
-        </div>
-        <div className="workflow-diagram" aria-hidden="true">
-          <div className="workflow-origin">
-            <span className="diagram-symbol">◎</span>
-            <span>Community</span>
-          </div>
-          <div className="workflow-branches">
-            <div className="workflow-node">
-              <span className="metadata">Events</span>
-              <strong>Discover. Join.</strong>
-              <span className="workflow-track">
-                <i />
-                <i />
-                <i />
-              </span>
+        <Bar address="hands-on / REST API" />
+        <div className="frame-view sheet">
+          {ROUTES.map((group) => (
+            <div className="sheet-group" key={group.label}>
+              <p className="sheet-label">{group.label}</p>
+              {group.routes.map(([method, path, query]) => (
+                <p className="route" key={`${method} ${path}`}>
+                  <span className="route-method">{method}</span>
+                  <span className="route-path">
+                    {path}
+                    {query && <em>{query}</em>}
+                  </span>
+                </p>
+              ))}
             </div>
-            <div className="workflow-node">
-              <span className="metadata">Help requests</span>
-              <strong>Request. Update.</strong>
-              <span className="workflow-track secondary-track">
-                <i />
-                <i />
-                <i />
-              </span>
-            </div>
-          </div>
-          <div className="workflow-foundation metadata">
-            <span>React client</span>
-            <span>Spring Boot APIs</span>
+          ))}
+          <p className="sheet-layers">
+            <span>React</span>
+            <i aria-hidden="true" />
+            <span>Spring Boot</span>
+            <i aria-hidden="true" />
             <span>PostgreSQL</span>
-          </div>
+          </p>
         </div>
-        <figcaption className="metadata">
-          Feature illustration / Event & help-request flows
-        </figcaption>
       </figure>
     );
   }
-  if (id !== "chemistry-calculator") {
+  if (id === "chemistry-calculator") {
     return (
-      <figure className="project-preview" data-motion="reveal">
-        <p className="metadata">Engineering project</p>
-        <span className="writing-glyph" aria-hidden="true">
-          [ / ]
-        </span>
-        <figcaption className="metadata">
-          Conceptual illustration / Repository overview
-        </figcaption>
+      <figure
+        className="frame project-visual"
+        data-motion="reveal"
+        aria-label="An illustration of the equation balancer: hydrogen and oxygen balanced into water"
+      >
+        <Bar address="Chemistry Calculator / Equation balance" />
+        <div className="frame-view equation-panel">
+          <div className="equation-fields" aria-hidden="true">
+            <p className="equation-field">
+              Reactants <b>H2 + O2</b>
+            </p>
+            <p className="equation-field">
+              Products <b>H2O</b>
+            </p>
+          </div>
+          <p className="equation" aria-hidden="true">
+            <span>
+              <small>2</small>H<sub>2</sub>
+            </span>
+            <b>+</b>
+            <span>
+              O<sub>2</sub>
+            </span>
+            <b>→</b>
+            <span>
+              <small>2</small>H<sub>2</sub>O
+            </span>
+          </p>
+          <p className="equation-caption">
+            Illustration of the balancer, not a capture of the app.
+          </p>
+        </div>
       </figure>
     );
   }
   return (
-    <figure className="project-preview chemistry-preview" data-motion="reveal">
-      <div className="preview-label metadata">
-        <span>02 / Chemistry tools</span>
-        <span aria-hidden="true">＋</span>
+    <figure className="frame project-visual" data-motion="reveal">
+      <Bar address="project" />
+      <div className="frame-view equation-panel">
+        <p className="equation" aria-hidden="true">
+          <small>{"{"}</small>
+          <b>…</b>
+          <small>{"}"}</small>
+        </p>
       </div>
-      <div className="chemistry-diagram" aria-hidden="true">
-        <span className="metadata equation-label">Equation balancing</span>
-        <div className="equation">
-          <span>
-            <small>2</small>H<sub>2</sub>
-          </span>
-          <b>+</b>
-          <span>
-            O<sub>2</sub>
-          </span>
-          <b>→</b>
-          <span>
-            <small>2</small>H<sub>2</sub>O
-          </span>
-        </div>
-        <div className="molecule">
-          <i />
-          <i />
-          <i />
-          <span />
-        </div>
-        <div className="chemistry-tools metadata">
-          <span>Equation balancing</span>
-          <span>Molar mass</span>
-        </div>
-      </div>
-      <figcaption className="metadata">
-        Feature illustration / Java & Swing desktop tools
-      </figcaption>
     </figure>
   );
 }

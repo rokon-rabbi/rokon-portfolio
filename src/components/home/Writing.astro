@@ -1,0 +1,28 @@
+---
+interface Props {
+  articles: { id: string; title: string; summary: string; publishedAt: string }[];
+}
+const { articles } = Astro.props;
+const day = (value: string) =>
+  new Date(`${value}T00:00:00Z`).toLocaleDateString("en", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
+---
+<section id="writing" class="home-section" aria-labelledby="writing-heading">
+  <div class="site-container split">
+    <div class="split-side">
+      <p class="eyebrow" data-rise>Writing</p>
+      <h2 id="writing-heading" class="section-title" data-lines>Notes from the work.</h2>
+      <p data-rise><a class="text-link" href="/blog">All notes <span class="arrow arrow-right" aria-hidden="true"></span></a></p>
+    </div>
+    <div>
+      {articles.map((article) => (
+        <article class="blog-card" data-rise>
+          <time class="metadata" datetime={article.publishedAt}>{day(article.publishedAt)}</time>
+          <div>
+            <h3><a class="blog-card-title" href={`/blog/${article.id}`}>{article.title}</a></h3>
+            {article.summary && <p class="mt-2">{article.summary}</p>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

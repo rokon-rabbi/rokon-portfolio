@@ -14,7 +14,7 @@ export function EmptyState({ title, description, href, label }: EmptyProps) {
       <p>{description}</p>
       {href && label && (
         <a className="text-link w-fit" href={href}>
-          {label} <span aria-hidden="true">↗</span>
+          {label} <span className="arrow" aria-hidden="true" />
         </a>
       )}
     </div>

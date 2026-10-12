@@ -44,7 +44,7 @@ test("generated project routes", async (t) => {
   await t.test(
     "the portfolio and exactly the three requested project pages are prerendered",
     () => {
-      assert.ok(page("/work").includes("Selected systems."));
+      assert.ok(page("/work").includes("Things I’ve built."));
       assert.deepEqual(
         readdirSync(resolve(root, "work"))
           .filter((entry) => entry !== "index.html")

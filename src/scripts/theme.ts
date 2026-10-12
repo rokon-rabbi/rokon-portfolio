@@ -1,6 +1,6 @@
-// The head bootstrap and this controller share saved choice > system preference.
+// The head bootstrap and this controller share one rule: the saved choice,
+// otherwise light. The site is designed light first; dark is opt-in.
 const root = document.documentElement;
-const system = window.matchMedia("(prefers-color-scheme: dark)");
 let saved: "light" | "dark" | null = null;
 try {
   const value = localStorage.getItem("theme");
@@ -15,7 +15,7 @@ function apply() {
   // Change theme atomically: hover color transitions must not interpolate
   // between a light foreground and the already-switched dark canvas.
   root.dataset.themeChanging = "";
-  const mode = saved ?? (system.matches ? "dark" : "light");
+  const mode = saved ?? "light";
   root.dataset.theme = mode;
   root.classList.toggle("dark", mode === "dark");
   root.style.colorScheme = mode;
@@ -44,9 +44,6 @@ controls.forEach((control) =>
     apply();
   }),
 );
-system.addEventListener("change", () => {
-  if (!saved) apply();
-});
 window.addEventListener("storage", (event) => {
   if (event.key !== "theme" && event.key !== null) return;
   saved =

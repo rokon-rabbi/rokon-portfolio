@@ -1,0 +1,101 @@
+/**
+ * Homepage enhancement. The page is complete without any of this. GSAP and
+ * three.js are fetched only when motion is welcome; the entrance waits a
+ * moment for the scene so both start together, and goes ahead without it if
+ * the scene is slow or unavailable.
+ */
+import { createStagePose } from "../lib/stage-pose";
+import type { BracePair, BraceScene } from "../lib/brace-scene";
+
+const root = document.documentElement;
+const page = document.getElementById("main-content");
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+const pose = createStagePose();
+let scene: BraceScene | undefined;
+let disposeMotion: (() => void) | undefined;
+let generation = 0;
+
+const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+const returning =
+  !!location.hash || performance.getEntriesByType("navigation").some((entry) => (entry as PerformanceNavigationTiming).type === "back_forward");
+const anchor = (name: string) => document.querySelector<HTMLElement>(`[data-anchor='${name}']`);
+
+function dropScene() {
+  scene?.dispose();
+  scene = undefined;
+  root.classList.remove("stage-live");
+}
+
+/** Resolves once the scene has drawn, or straight away if there is none. */
+async function startScene(ticket: number) {
+  const host = document.querySelector<HTMLElement>("[data-stage]");
+  const pairs: BracePair[] = [];
+  for (const [open, close, pairPose] of [
+    [anchor("brace-open"), anchor("brace-close"), pose.hero],
+    [anchor("closing-open"), anchor("closing-close"), pose.closing],
+  ] as const)
+    if (open && close) pairs.push({ open, close, pose: pairPose });
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  if (!host || !pairs.length || connection?.saveData) return;
+  try {
+    const { createBraceScene } = await import("../lib/brace-scene");
+    if (ticket !== generation || reduced.matches) return;
+    await new Promise<void>((resolve) => {
+      scene = createBraceScene(host, {
+        pairs,
+        onReady: () => {
+          if (ticket === generation) root.classList.add("stage-live");
+          resolve();
+        },
+        onUnavailable: () => {
+          dropScene();
+          resolve();
+        },
+      });
+      if (!scene) resolve();
+    });
+  } catch (error) {
+    console.warn("The scene is unavailable; the page shows its own braces.", error);
+    dropScene();
+  }
+}
+
+async function start(restored: boolean) {
+  if (!page || reduced.matches) {
+    root.classList.remove("intro-pending");
+    return;
+  }
+  const ticket = ++generation;
+  // On a first visit the braces start out of sight, so the scene cannot show
+  // them at rest before the entrance begins.
+  pose.hero.scale = restored ? 1 : 0;
+  try {
+    const sceneReady = startScene(ticket);
+    const [{ createHomeMotion }] = await Promise.all([import("../lib/home-motion"), document.fonts.ready, Promise.race([sceneReady, wait(1200)])]);
+    if (ticket !== generation || reduced.matches) return;
+    disposeMotion = createHomeMotion(page, pose, { restored });
+  } catch (error) {
+    console.warn("Motion unavailable; the finished page remains.", error);
+    pose.hero.scale = 1;
+  } finally {
+    root.classList.remove("intro-pending");
+  }
+}
+
+function stop() {
+  generation++;
+  disposeMotion?.();
+  disposeMotion = undefined;
+  dropScene();
+}
+
+void start(returning);
+reduced.addEventListener("change", () => {
+  stop();
+  void start(true);
+});
+window.addEventListener("pagehide", stop);
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) void start(true);
+});
+if (import.meta.hot) import.meta.hot.dispose(stop);

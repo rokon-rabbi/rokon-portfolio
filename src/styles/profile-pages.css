@@ -1,452 +1,321 @@
+/* About, Contact and the résumé page share this file. */
 @layer components {
   .profile-page {
     min-width: 0;
   }
+  .profile-title {
+    max-width: 16em;
+    margin-block: 1.25rem 1.5rem;
+    font-size: var(--text-display);
+    line-height: 1.03;
+    letter-spacing: -0.035em;
+  }
   .profile-masthead {
     display: grid;
-    gap: 3rem;
-    padding-block: 0.5rem 4rem;
-  }
-  .profile-title {
-    font-size: clamp(2.75rem, 5.5vw, 5.75rem);
-    line-height: 1.04;
-    letter-spacing: -0.05em;
-    margin-block: 1.5rem 2rem;
-    overflow-wrap: anywhere;
-  }
-  .profile-introduction {
-    max-width: 56ch;
-    color: var(--muted-foreground);
-    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
-    line-height: 1.85;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+    padding-bottom: clamp(3.5rem, 8vw, 6rem);
   }
   .resume-links {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1rem 1.5rem;
+    gap: 0.75rem 1.5rem;
     margin-top: 2rem;
   }
   .resume-links .text-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.3rem;
     min-height: 2.75rem;
-    font-size: 0.875rem;
   }
-  .profile-identity {
-    padding: 2rem;
+  /* The portrait stands in a quiet paper card; no frame around the person. */
+  .profile-portrait {
+    width: clamp(14rem, 28vw, 22rem);
+    max-width: 100%;
+    margin: 0;
+  }
+  .profile-portrait-frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
     border: 1px solid var(--border);
+    border-radius: 1.25rem;
     background: var(--muted);
-    align-self: start;
-  }
-  .identity-drawing {
-    aspect-ratio: 1.4;
-    display: grid;
-    place-items: center;
-    position: relative;
     overflow: hidden;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.5rem;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 2rem 2rem;
   }
-  .identity-drawing > span {
-    font-family: var(--font-display);
-    font-size: clamp(7rem, 11vw, 11rem);
-    line-height: 1;
-    letter-spacing: -0.1em;
-    position: relative;
-    z-index: 1;
-  }
-  .identity-drawing i {
+  .profile-portrait img {
     position: absolute;
-    width: 0.5rem;
-    height: 0.5rem;
-    background: var(--primary);
-    top: 25%;
-    left: 15%;
+    inset: auto 0 0;
+    width: 100%;
+    height: 96%;
+    object-fit: cover;
+    object-position: 50% 0%;
   }
-  .identity-drawing i:nth-of-type(2) {
-    left: auto;
-    right: 15%;
-    top: 70%;
+  .profile-portrait figcaption {
+    display: grid;
+    gap: 0.125rem;
+    margin-top: 1rem;
   }
-  .identity-drawing i:nth-of-type(3) {
-    left: auto;
-    right: 15%;
-    top: 25%;
-    background: var(--warm-decorative);
+  .profile-portrait figcaption strong {
+    font-weight: 600;
   }
-  .identity-name {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    margin-bottom: 0.25rem;
-  }
-  .identity-rule {
-    border-top: 1px solid var(--border);
-    margin-block: 1.5rem;
-  }
-  .identity-scope {
+  .profile-portrait figcaption span {
+    color: var(--muted-foreground);
     font-size: 0.875rem;
-    margin-top: 0.5rem;
   }
+
   .profile-section {
     border-top: 1px solid var(--border);
-    padding-block: clamp(3rem, 7vw, 6rem);
+    padding-block: clamp(3rem, 6vw, 5rem);
   }
   .profile-split {
     display: grid;
-    gap: 2.5rem;
+    gap: 2rem;
   }
   .profile-section h2,
-  .profile-closing h2,
-  .contact-desk h2 {
-    font-size: clamp(2rem, 3.8vw, 3.5rem);
+  .profile-closing h2 {
     margin-top: 1rem;
+    font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
   }
   .profile-body {
-    color: var(--muted-foreground);
-    max-width: 62ch;
-    line-height: 1.85;
-  }
-  .profile-section-label .profile-body {
-    margin-top: 1.5rem;
-    max-width: 32ch;
+    max-width: 38rem;
+    color: var(--soft-foreground);
   }
   .profile-section-content > p + p {
     margin-top: 1rem;
   }
-  .principle-list {
+  .principle-list,
+  .focus-list {
+    display: grid;
     margin-top: 2rem;
     list-style: none;
-    padding: 0;
   }
-  .principle-list li {
+  .profile-section-content + .focus-list,
+  .profile-split > .focus-list {
+    margin-top: 0;
+  }
+  .principle-list li,
+  .focus-list li {
     display: grid;
-    grid-template-columns: 1.75rem minmax(0, 1fr);
-    gap: 1rem;
-    padding-block: 1.5rem;
+    gap: 0.375rem;
+    padding-block: 1.25rem;
     border-top: 1px solid var(--border);
   }
-  .principle-list li > span {
-    padding-top: 0.25rem;
+  .focus-list li:first-child {
+    padding-top: 0;
+    border-top: 0;
   }
-  .principle-list h3 {
-    font-size: 1.375rem;
-    margin-bottom: 0.5rem;
+  .principle-list h3,
+  .focus-list h3 {
+    font-size: 1.1875rem;
   }
-  .principle-list p {
-    font-size: 0.9375rem;
-    color: var(--muted-foreground);
+  .principle-list p,
+  .focus-list p {
+    max-width: 36rem;
+    color: var(--soft-foreground);
   }
   .career-list {
+    display: grid;
+    gap: 2.5rem;
     list-style: none;
-    padding: 0 0 0 1.75rem;
-    border-left: 1px solid var(--border);
-    margin-left: 0.4rem;
   }
-  .career-entry {
-    position: relative;
-    padding-bottom: 3rem;
-  }
-  .career-entry:last-child {
-    padding-bottom: 0;
-  }
-  .career-marker {
-    position: absolute;
-    left: -2.15rem;
-    top: 0.4rem;
-    height: 0.75rem;
-    width: 0.75rem;
-    background: var(--background);
-    border: 2px solid var(--primary);
-    border-radius: 50%;
-  }
-  .career-entry:first-child .career-marker {
-    background: var(--primary);
-  }
-  .career-entry h3 {
-    font-size: clamp(1.5rem, 2.4vw, 2rem);
-    margin-block: 0.75rem 0.5rem;
-  }
-  .career-company {
-    color: var(--primary);
-    margin-bottom: 1rem;
-  }
-  .career-contributions {
-    color: var(--muted-foreground);
-    list-style: disc;
-    padding-left: 1.2rem;
-    font-size: 0.9375rem;
-    margin-block: 1rem;
-  }
-  .career-contributions li {
-    padding-left: 0.25rem;
-    margin-bottom: 0.5rem;
-  }
-  .profile-section-top {
-    display: grid;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-  }
-  .focus-grid {
-    display: grid;
-    gap: 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .focus-item {
-    min-width: 0;
-    padding-block: 2rem;
+  .career-entry + .career-entry {
+    padding-top: 2.5rem;
     border-top: 1px solid var(--border);
   }
-  .focus-item h3 {
-    font-size: 1.75rem;
-    max-width: 16ch;
-    margin-block: 1.5rem 1rem;
+  .career-entry h3 {
+    margin-top: 0.5rem;
+    font-size: var(--text-title);
   }
-  .focus-item p {
-    color: var(--muted-foreground);
+  .career-company {
+    margin-block: 0.3rem 1rem;
+    color: var(--soft-foreground);
+  }
+  .career-contributions {
+    display: grid;
+    gap: 0.375rem;
+    max-width: 38rem;
+    margin-top: 0.875rem;
+    padding-left: 1.125rem;
+    list-style: disc;
+    color: var(--soft-foreground);
     font-size: 0.9375rem;
-    max-width: 40ch;
   }
-  .education-entry {
-    border-left: 2px solid var(--primary);
-    padding: 1.5rem 2rem;
-    background: var(--muted);
-    align-self: start;
+  .career-contributions li::marker {
+    color: var(--input);
   }
   .education-entry h3 {
-    font-size: clamp(2.5rem, 4vw, 4rem);
-    margin-block: 1rem;
-  }
-  .education-entry .metadata {
-    margin-top: 0.75rem;
+    margin-block: 0.5rem 0.375rem;
+    font-size: var(--text-title);
   }
   .profile-skills {
     display: grid;
-    gap: 1.5rem;
   }
   .profile-skills > div {
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 1.5rem;
+    display: grid;
+    gap: 0.625rem;
+    padding-block: 1.125rem;
+    border-top: 1px solid var(--border);
+  }
+  .profile-skills > div:first-child {
+    padding-top: 0;
+    border-top: 0;
   }
   .profile-skills dt {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+    font-weight: 600;
   }
   .skill-badges {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    margin-top: 1rem;
+  }
+  .profile-skills .skill-badges {
+    margin-top: 0;
   }
   .development-interests {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
   }
   .development-interests h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.1875rem;
   }
   .development-interests ul {
-    list-style: disc;
-    padding-left: 1.2rem;
-    color: var(--muted-foreground);
-    font-size: 0.9375rem;
     display: grid;
-    gap: 0.5rem;
+    gap: 0.375rem;
+    padding-left: 1.125rem;
+    list-style: disc;
+    color: var(--soft-foreground);
+  }
+  .development-interests li::marker {
+    color: var(--input);
   }
   .profile-closing {
     display: grid;
-    gap: 2rem;
-    border-block: 1px solid var(--border);
-    background: var(--muted);
-    padding: clamp(1.5rem, 4vw, 3rem);
+    gap: 1.5rem 3rem;
+    align-items: end;
+    border-top: 1px solid var(--border);
+    padding-top: clamp(3rem, 6vw, 5rem);
+  }
+  .profile-closing h2 {
+    margin-top: 0;
+    font-size: var(--text-heading);
   }
   .profile-actions {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 1rem 1.5rem;
-    margin-top: 2rem;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin-top: 1.5rem;
   }
   .profile-actions > .text-link {
-    min-height: 2.75rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.3rem;
+    min-height: 2.75rem;
   }
+
+  /* ---- Contact --------------------------------------------------------- */
   .contact-masthead {
-    padding-block: 0.5rem 3.5rem;
-  }
-  .contact-masthead .profile-title {
-    max-width: 20ch;
+    padding-bottom: clamp(3rem, 6vw, 4.5rem);
   }
   .contact-desk {
     display: grid;
-    border: 1px solid var(--border);
+    gap: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid var(--border);
+    padding-top: clamp(2.5rem, 5vw, 4rem);
   }
   .contact-desk-main {
-    padding: clamp(1.5rem, 4vw, 3.5rem);
+    display: grid;
+    justify-items: start;
+    align-content: start;
     min-width: 0;
   }
-  .contact-desk-main > .profile-body {
-    margin-top: 1.5rem;
-  }
   .contact-email {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    width: fit-content;
+    display: inline-block;
     max-width: 100%;
-    margin-block: 2.5rem 0.5rem;
-    color: var(--primary);
-    font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2.5vw, 2.1rem);
-    line-height: 1.4;
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
+    margin-top: 1rem;
+    color: var(--foreground);
+    font-size: clamp(1.5rem, 0.9rem + 3vw, 3rem);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
     overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+    transition:
+      color var(--duration-fast) var(--ease-ui),
+      text-decoration-color var(--duration-fast) var(--ease-ui);
   }
-  .contact-desk-aside {
-    padding: clamp(1.5rem, 3vw, 3rem);
-    background: var(--muted);
-    border-top: 1px solid var(--border);
-  }
-  .connection-drawing {
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.5rem;
+  .contact-email:hover {
     color: var(--primary);
+    text-decoration-color: currentColor;
   }
-  .connection-drawing svg {
-    width: 100%;
-    max-height: 11rem;
-  }
-  .connection-drawing circle {
-    fill: var(--background);
-    stroke: currentColor;
-    stroke-width: 1.5;
-  }
-  .connection-drawing circle:first-of-type {
-    fill: var(--primary);
-  }
-  .contact-aside-role {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    line-height: 1.35;
-    margin-block: 0.5rem 1.5rem;
-  }
-  .contact-desk-aside > .text-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-    min-height: 2.75rem;
-    font-size: 0.875rem;
+  .contact-clock {
+    margin-top: 1rem;
   }
   .contact-channels {
     display: grid;
-    margin-block: 2.5rem;
-    border-bottom: 1px solid var(--border);
+    align-content: start;
   }
   .contact-channel {
     display: grid;
-    gap: 1rem;
-    padding-block: 2rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.125rem 1rem;
+    padding-block: 1.125rem;
     border-top: 1px solid var(--border);
-    color: var(--foreground);
     text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-ui);
+  }
+  .contact-channel:last-child {
+    border-bottom: 1px solid var(--border);
   }
   .channel-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    font-family: var(--font-display);
-    font-size: 2rem;
-    line-height: 1.3;
+    font-size: 1.1875rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
   }
-  .channel-title > span {
+  .contact-channel .metadata {
+    grid-column: 1;
+  }
+  .contact-channel .arrow {
+    grid-area: 1 / 2 / span 2;
+    width: 1.125rem;
+    height: 1.125rem;
+    color: var(--input);
+    transition:
+      color var(--duration-fast) var(--ease-ui),
+      transform var(--duration-fast) var(--ease-ui);
+  }
+  .contact-channel:hover .channel-title,
+  .contact-channel:hover .arrow {
     color: var(--primary);
   }
-  .contact-channel:hover .channel-title {
-    color: var(--primary);
-  }
-  .contact-resume {
-    display: grid;
-    gap: 1.5rem;
-    padding-block: 2rem 0;
-  }
-  .contact-resume h2 {
-    font-size: clamp(1.75rem, 2.7vw, 2.5rem);
-    margin-block: 0.75rem;
-  }
-  .contact-resume .resume-links {
-    margin-top: 0;
-  }
+
   @media (min-width: 48rem) {
     .profile-masthead {
-      grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.4fr);
-      gap: 3rem;
-    }
-    .profile-masthead .profile-title {
-      font-size: clamp(2.75rem, 4.6vw, 4.75rem);
+      grid-template-columns: minmax(0, 1fr) auto;
     }
     .profile-split {
-      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
-      gap: clamp(3rem, 7vw, 7rem);
-    }
-    .profile-section-top {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 0.65fr);
-      align-items: end;
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
       gap: 3rem;
     }
-    .focus-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .focus-item {
-      padding: 2rem;
-      border-left: 1px solid var(--border);
-    }
-    .focus-item:first-child {
-      padding-left: 0;
-      border-left: 0;
-    }
-    .focus-item:last-child {
-      padding-right: 0;
+    .profile-section-label h2 {
+      max-width: 9em;
     }
     .profile-closing {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      align-items: center;
-      gap: 3rem;
     }
+    .profile-closing .profile-actions {
+      margin-top: 1.25rem;
+    }
+  }
+  @media (min-width: 60rem) {
     .contact-desk {
-      grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.45fr);
-    }
-    .contact-desk-aside {
-      border-top: 0;
-      border-left: 1px solid var(--border);
-    }
-    .contact-channels {
-      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-    }
-    .contact-channel {
-      padding-inline: 2rem;
-      border-left: 1px solid var(--border);
-    }
-    .contact-channel:first-child {
-      padding-left: 0;
-      border-left: 0;
-    }
-    .contact-channel:last-child {
-      padding-right: 0;
-    }
-    .contact-resume {
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     }
   }
 }

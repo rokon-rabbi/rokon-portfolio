@@ -32,10 +32,10 @@ const jsonLd = JSON.stringify({
 <Layout title={article.title} description={article.description} image={article.coverImage} imageAlt={article.coverAlt} canonicalURL={canonicalURL} noindex={preview} article={preview ? undefined : { publishedTime: article.date, modifiedTime: article.updatedDate ?? article.date, author: article.author, tags: article.tags.map(tagLabel) }}>
   <article class="publication-article" aria-labelledby="article-title">
     {!preview && <script is:inline data-article-schema type="application/ld+json" set:html={jsonLd} />}
-    {preview && <aside class="article-preview-notice"><p class="eyebrow">Local draft preview / Unpublished</p><p>This text is awaiting approval. The examples describe proposed engineering patterns, not verified personal project outcomes.</p></aside>}
-    <a class="text-link article-back" href="/blog">← All engineering notes</a>
+    {preview && <aside class="article-preview-notice"><p class="eyebrow">Local draft preview, unpublished</p><p>This text is awaiting approval. The examples describe proposed engineering patterns, not verified personal project outcomes.</p></aside>}
+    <a class="text-link article-back" href="/blog">All notes</a>
     <header class="article-header">
-      <p class="eyebrow">{BLOG_TOPICS[article.topic]} / Engineering note</p>
+      <p class="eyebrow">{BLOG_TOPICS[article.topic]}</p>
       <h1 id="article-title">{article.title}</h1>
       <p class="article-deck">{article.description}</p>
       <div class="article-byline"><span>{article.author}</span><span>{preview ? "Proposed date" : "Published"} <time datetime={article.date}>{blogDate(article.date)}</time></span>{article.updatedDate && article.updatedDate !== article.date && <span>Updated <time datetime={article.updatedDate}>{blogDate(article.updatedDate)}</time></span>}<span>{article.readingMinutes} min read <span class="sr-only">(estimate)</span></span></div>
@@ -44,17 +44,17 @@ const jsonLd = JSON.stringify({
     {article.coverImage && <figure class="article-cover"><img src={article.coverImage} alt={article.coverAlt} width="1600" height="900" fetchpriority="high" decoding="async" /><figcaption class="metadata">{article.coverAlt}</figcaption></figure>}
     <div class="article-layout">
       <aside class="article-margin">
-        {toc.length > 0 && <nav class="article-toc" aria-label="Table of contents"><p class="eyebrow">In this note</p><ol>{toc.map((heading) => <li class:list={{ "toc-subheading": heading.depth === 3 }}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol><a class="text-link toc-start" href="#article-body">Start reading ↓</a></nav>}
+        {toc.length > 0 && <nav class="article-toc" aria-label="Table of contents"><p class="eyebrow">In this note</p><ol>{toc.map((heading) => <li class:list={{ "toc-subheading": heading.depth === 3 }}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol><a class="text-link toc-start" href="#article-body">Start reading <span class="arrow arrow-down" aria-hidden="true"></span></a></nav>}
       </aside>
       <div id="article-body" class="prose article-prose" tabindex="-1"><Content components={mdxComponents} /></div>
     </div>
     {!preview && <>
       {(previous || next) && <nav class="article-pagination" aria-label="Previous and next articles">
-        {previous && <a href={articleHref(previous.id)}><span class="metadata">← Previous note</span><span>{previous.data.title}</span></a>}
-        {next && <a href={articleHref(next.id)}><span class="metadata">Next note →</span><span>{next.data.title}</span></a>}
+        {previous && <a href={articleHref(previous.id)}><span class="metadata">Previous note</span><span>{previous.data.title}</span></a>}
+        {next && <a href={articleHref(next.id)}><span class="metadata">Next note</span><span>{next.data.title}</span></a>}
       </nav>}
-      {related.length > 0 && <section class="article-related" aria-labelledby="related-title"><p class="eyebrow">Continue exploring</p><h2 id="related-title" class="section-title">Connected ideas.</h2>{related.map((entry) => <ArticleCard article={entry} />)}</section>}
-      <aside class="article-subscribe"><p>More considered notes, as they are published.</p><a class="text-link" href="/rss.xml">Follow via RSS ↗</a></aside>
+      {related.length > 0 && <section class="article-related" aria-labelledby="related-title"><h2 id="related-title" class="section-title">Related notes</h2>{related.map((entry) => <ArticleCard article={entry} />)}</section>}
+      <aside class="article-subscribe"><p>New notes arrive by RSS as they are published.</p><a class="text-link" href="/rss.xml">Follow via RSS <span class="arrow" aria-hidden="true"></span></a></aside>
     </>}
   </article>
   <script>import "../../scripts/article";</script>

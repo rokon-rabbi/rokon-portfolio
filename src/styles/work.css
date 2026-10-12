@@ -1,217 +1,199 @@
+/* The work index and the case-study pages. Project cards and frames are in
+   global.css, because the homepage shows them too. */
 @layer components {
-  .project-title-link {
-    color: var(--foreground);
-    text-decoration: none;
-  }
-  .project-title-link:hover {
-    text-decoration: underline;
-    text-decoration-color: var(--primary);
-  }
   .work-page-header {
-    margin-bottom: clamp(3rem, 7vw, 6rem);
+    margin-bottom: clamp(3rem, 7vw, 5rem);
   }
   .work-page-header h1 {
-    font-size: clamp(3rem, 7vw, 6.5rem);
-    margin-block: 1.25rem 2rem;
+    margin-block: 1.25rem 1.5rem;
+    font-size: var(--text-display);
     line-height: 1.03;
-  }
-  .work-page-header h1 span {
-    color: var(--primary);
+    letter-spacing: -0.035em;
   }
   .work-header-bottom {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
     justify-content: space-between;
-    gap: 1.5rem 3rem;
-  }
-  .work-header-bottom p {
-    color: var(--muted-foreground);
-    max-width: 55ch;
+    gap: 1rem 3rem;
   }
   .work-header-bottom a {
-    min-height: 2.75rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.875rem;
+    gap: 0.3rem;
+    min-height: 2.75rem;
   }
-  .work-portfolio-list .featured-project:first-child {
-    padding-top: 3rem;
-  }
-  .work-briefs {
+  .work-briefs,
+  .work-employer-context {
     margin-top: var(--section-space);
   }
-  .work-briefs > h2 {
+  .work-section-top {
+    display: grid;
+    gap: 0.75rem 3rem;
+    align-items: end;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .work-section-top h2,
+  .work-employer-context h2 {
     font-size: var(--text-heading);
-    margin-block: 1rem 2rem;
-    max-width: 19ch;
+  }
+  .work-section-top p {
+    max-width: 30rem;
+    color: var(--soft-foreground);
   }
   .work-brief {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem 3rem;
-    padding-block: 2rem;
+    gap: 1rem 3rem;
+    padding-block: 1.75rem;
     border-block: 1px solid var(--border);
   }
   .work-brief h3 {
+    margin-block: 0.875rem 0.5rem;
     font-size: var(--text-title);
-    margin-block: 1rem;
   }
   .work-brief p {
-    color: var(--muted-foreground);
-    max-width: 58ch;
-    font-size: 0.875rem;
+    max-width: 36rem;
+    color: var(--soft-foreground);
+    font-size: 0.9375rem;
   }
   .work-brief a {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.3rem;
     min-height: 2.75rem;
-    font-size: 0.875rem;
   }
   .work-employer-context {
     display: grid;
     gap: 2rem;
-    margin-top: var(--section-space);
     padding-top: 2.5rem;
     border-top: 1px solid var(--border);
   }
-  .work-employer-context h2 {
-    font-size: var(--text-title);
-    margin-block: 1rem;
-  }
-  .work-employer-context p:not(.metadata):not(.eyebrow) {
-    color: var(--muted-foreground);
-    font-size: 0.875rem;
-    max-width: 52ch;
+  .work-employer-context > div > p {
+    max-width: 26rem;
+    margin-block: 1rem 0.5rem;
+    color: var(--soft-foreground);
   }
   .work-employer-context a {
     display: inline-flex;
     align-items: center;
+    gap: 0.3rem;
     min-height: 2.75rem;
-    gap: 0.75rem;
-    margin-top: 0.75rem;
-    font-size: 0.875rem;
   }
   .work-employer-context ul {
     display: grid;
-    gap: 1.75rem;
   }
   .work-employer-context li {
+    padding-block: 1.5rem;
     border-top: 1px solid var(--border);
-    padding-top: 1.5rem;
+  }
+  .work-employer-context li:first-child {
+    padding-top: 0;
+    border-top: 0;
   }
   .work-employer-context li h3 {
-    font-size: 1.375rem;
-    margin-block: 0.75rem;
+    margin-block: 0.375rem 0.5rem;
+    font-size: var(--text-title);
   }
+  .work-employer-context li p:not(.metadata) {
+    max-width: 34rem;
+    color: var(--soft-foreground);
+  }
+
+  /* ---- Case study ------------------------------------------------------ */
   .work-breadcrumb {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem 0.75rem;
-    font-size: 0.75rem;
+    gap: 0.25rem 0.625rem;
+    margin-bottom: 1.5rem;
     color: var(--muted-foreground);
-    margin-bottom: 2rem;
+    font-size: 0.875rem;
   }
   .work-breadcrumb a {
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
   }
-  .work-breadcrumb > span:last-child {
-    max-width: 65ch;
-  }
   .case-kicker {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 0.75rem 1rem;
   }
   .case-study-header h1 {
-    font-size: clamp(2.625rem, 6.3vw, 6rem);
+    max-width: 18em;
+    margin-block: 1.25rem 1.5rem;
+    font-size: var(--text-display);
     line-height: 1.04;
-    max-width: 23ch;
-    margin-block: 1.5rem 2rem;
+    letter-spacing: -0.035em;
     overflow-wrap: anywhere;
   }
   .case-overview {
-    font-size: clamp(1.125rem, 2vw, 1.375rem);
-    color: var(--muted-foreground);
-    max-width: 67ch;
+    max-width: 42rem;
+    color: var(--soft-foreground);
+    font-size: clamp(1.0625rem, 1rem + 0.45vw, 1.25rem);
+    line-height: 1.55;
   }
   .case-facts {
     display: grid;
-    gap: 1.5rem;
+    gap: 1.25rem;
     margin-top: 2rem;
     padding-block: 1.5rem;
     border-block: 1px solid var(--border);
   }
   .case-facts dt {
+    margin-bottom: 0.25rem;
     color: var(--muted-foreground);
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
+    font-size: 0.8125rem;
   }
   .case-facts dd {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
   }
   .case-header-links {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 1.5rem;
+    margin-top: 1.75rem;
+  }
+  .case-brief-note,
+  .case-gap {
+    padding: 0.875rem 1.125rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--muted);
   }
   .case-brief-note {
-    border-left: 2px solid var(--secondary);
-    padding: 1rem 1.25rem;
+    max-width: 40rem;
     margin-top: 1.5rem;
-    max-width: 65ch;
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
+    color: var(--soft-foreground);
+    font-size: 0.9375rem;
   }
   .case-study-cover {
     margin-top: 2.5rem;
   }
-  .case-study-cover .project-preview {
-    min-height: clamp(24rem, 40vw, 35rem);
-  }
-  .case-study-cover .workflow-diagram {
-    max-width: 45rem;
-    width: 100%;
-    align-self: center;
-  }
-  .case-study-cover .chemistry-diagram {
-    align-self: center;
-  }
-  .case-study-cover .equation {
-    font-size: clamp(1.625rem, 6vw, 4.5rem);
-  }
-  .case-study-cover .workflow-origin {
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-  }
-  .case-study-cover .workflow-node strong {
-    font-size: clamp(1.125rem, 2.5vw, 2rem);
+  .case-study-cover .project-visual {
+    height: clamp(20rem, 42vw, 30rem);
   }
   .case-study-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 2.5rem;
-    margin-top: clamp(3rem, 7vw, 6rem);
+    margin-top: clamp(3rem, 7vw, 5rem);
   }
   .case-contents {
     align-self: start;
-    border-top: 1px solid var(--border);
     padding-top: 1rem;
+    border-top: 1px solid var(--border);
   }
   .case-contents > p {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
   }
   .case-contents ol {
     display: grid;
@@ -220,32 +202,24 @@
   }
   .case-contents li a {
     display: flex;
-    align-items: start;
-    gap: 0.5rem;
-    min-height: 2.75rem;
-    padding-block: 0.65rem;
-    color: var(--muted-foreground);
-    font-size: 0.75rem;
-    line-height: 1.55;
-  }
-  .case-contents li a span {
-    font-family: var(--font-mono);
-    color: var(--primary);
-    font-size: 0.625rem;
-    padding-top: 0.1rem;
+    align-items: center;
+    min-height: 2.5rem;
+    color: var(--soft-foreground);
+    font-size: 0.9375rem;
+    line-height: 1.35;
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-ui);
   }
   .case-contents li a:hover {
-    color: var(--foreground);
-    text-decoration: underline;
-    text-decoration-color: var(--primary);
+    color: var(--primary);
   }
   .case-back {
     display: inline-flex;
     align-items: center;
+    gap: 0.3rem;
     min-height: 2.75rem;
-    gap: 0.75rem;
-    font-size: 0.75rem;
     margin-top: 0.75rem;
+    font-size: 0.9375rem;
   }
   .case-study-body {
     min-width: 0;
@@ -253,10 +227,10 @@
   .case-section {
     padding-block: 2.5rem;
     border-top: 1px solid var(--border);
-    scroll-margin-top: 1.5rem;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
   }
   .case-section:first-child {
-    padding-top: 1.25rem;
+    padding-top: 1rem;
   }
   .case-section-kicker {
     display: flex;
@@ -264,103 +238,93 @@
     justify-content: space-between;
     gap: 1rem;
   }
-  .case-section-kicker .metadata {
-    font-size: 0.625rem;
-  }
   .case-section > h2 {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    margin-block: 1rem 1.5rem;
+    margin-block: 0.5rem 1.25rem;
+    font-size: clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem);
   }
   .case-claim {
-    color: var(--muted-foreground);
-    max-width: 66ch;
-    font-size: 1rem;
-    margin-bottom: 1rem;
+    max-width: 40rem;
+    margin-bottom: 0.875rem;
   }
   .case-gap {
+    max-width: 40rem;
     margin-top: 1.5rem;
-    padding-left: 1.25rem;
-    border-left: 2px solid var(--secondary);
   }
   .case-gap .metadata {
-    color: var(--secondary);
-    font-size: 0.625rem;
+    color: var(--warm);
+    font-weight: 600;
   }
   .case-gap p {
-    margin-top: 0.5rem;
-    color: var(--muted-foreground);
-    font-size: 0.875rem;
-    max-width: 63ch;
+    margin-top: 0.25rem;
+    color: var(--soft-foreground);
+    font-size: 0.9375rem;
   }
   .case-technologies {
     margin-block: 2rem;
   }
   .case-technologies h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.875rem;
+    font-size: 1.1875rem;
   }
   .architecture-visual {
-    padding: clamp(1.25rem, 3vw, 2rem);
-    background: var(--card);
-    border: 1px solid var(--border);
     margin-top: 2rem;
-  }
-  .architecture-title .metadata {
-    font-size: 0.625rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--border);
+    border-radius: 0.875rem;
+    background: var(--card);
+    box-shadow: var(--shadow-frame);
   }
   .architecture-title h3 {
-    font-size: clamp(1.375rem, 2.4vw, 1.875rem);
-    margin-top: 0.75rem;
+    margin-top: 0.375rem;
+    font-size: var(--text-title);
   }
   .architecture-nodes {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 0.75rem;
-    margin-top: 2rem;
+    margin-top: 1.75rem;
   }
   .architecture-nodes li {
-    border: 1px solid var(--input);
-    padding: 1.25rem;
-    background: var(--background);
     min-width: 0;
+    padding: 1.125rem;
+    border: 1px solid var(--border);
+    border-radius: 0.625rem;
+    background: var(--background);
   }
   .architecture-node-index {
-    color: var(--primary);
+    display: none;
   }
   .architecture-nodes h4 {
-    font-size: 1.125rem;
-    margin-block: 0.75rem;
+    margin-bottom: 0.375rem;
+    font-size: 1.0625rem;
   }
   .architecture-nodes p {
-    font-size: 0.75rem;
-    line-height: 1.6;
     color: var(--muted-foreground);
+    font-size: 0.875rem;
+    line-height: 1.5;
     overflow-wrap: anywhere;
   }
   .architecture-edges {
     margin-top: 1.5rem;
-    font-size: 0.75rem;
+    font-size: 0.9375rem;
   }
   .architecture-edges li {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 0.5rem 1rem;
-    border-top: 1px solid var(--border);
+    gap: 0.25rem 1rem;
     padding-block: 0.75rem;
+    border-top: 1px solid var(--border);
   }
-  .architecture-edges li > span:first-child > span[aria-hidden] {
+  .architecture-edges .arrow {
+    margin-inline: 0.375rem;
     color: var(--primary);
-    margin-inline: 0.5rem;
-  }
-  .architecture-edges .metadata {
-    font-size: 0.625rem;
   }
   .architecture-visual figcaption {
     margin-top: 1.25rem;
     color: var(--muted-foreground);
-    font-size: 0.75rem;
-    line-height: 1.7;
+    font-size: 0.8125rem;
+    line-height: 1.6;
   }
   .case-code {
     margin-top: 2rem;
@@ -373,31 +337,34 @@
     gap: 0.75rem;
   }
   .case-code h3 {
-    font-size: 1.25rem;
+    font-size: 1.1875rem;
   }
   .case-code pre {
-    background: var(--muted);
+    margin-top: 0.875rem;
+    padding: 1.125rem 1.25rem;
     border: 1px solid var(--border);
-    padding: 1.25rem;
-    margin-top: 1rem;
-    overflow-x: auto;
+    border-radius: 0.75rem;
+    background: var(--muted);
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    line-height: 1.8;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    overflow-x: auto;
   }
   .case-code code {
     font: inherit;
   }
   .case-code figcaption {
-    color: var(--muted-foreground);
-    font-size: 0.75rem;
+    max-width: 40rem;
     margin-top: 0.75rem;
-    max-width: 65ch;
+    color: var(--muted-foreground);
+    font-size: 0.8125rem;
   }
   .case-media {
-    border: 1px solid var(--border);
     margin-top: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 0.875rem;
     background: var(--card);
+    overflow: hidden;
   }
   .case-media img {
     width: 100%;
@@ -406,29 +373,26 @@
   }
   .case-media figcaption {
     display: grid;
-    gap: 0.5rem;
+    gap: 0.375rem;
     padding: 1rem;
+    color: var(--soft-foreground);
     font-size: 0.875rem;
-    color: var(--muted-foreground);
-  }
-  .case-evidence > .metadata {
-    font-size: 0.625rem;
   }
   .case-evidence-gaps {
     margin-top: 1.5rem;
   }
   .case-evidence-gaps li {
     display: grid;
-    gap: 0.5rem;
-    padding-block: 1rem;
+    gap: 0.25rem;
+    padding-block: 0.875rem;
     border-top: 1px solid var(--border);
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
   }
   .case-evidence-gaps strong {
-    font-weight: 500;
+    font-weight: 600;
   }
   .case-evidence-gaps span {
-    color: var(--muted-foreground);
+    color: var(--soft-foreground);
   }
   .case-metrics {
     display: grid;
@@ -440,94 +404,103 @@
     font-size: 0.875rem;
   }
   .case-metrics strong {
-    font-family: var(--font-display);
     font-size: 2.5rem;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: -0.03em;
   }
   .case-metrics dd p {
+    color: var(--soft-foreground);
     font-size: 0.875rem;
-    color: var(--muted-foreground);
   }
   .case-references {
     margin-top: 3rem;
-    scroll-margin-top: 1.5rem;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
   }
   .case-references h3 {
-    font-size: 1.375rem;
+    font-size: 1.1875rem;
   }
   .case-reference-intro {
-    color: var(--muted-foreground);
-    font-size: 0.875rem;
-    margin-block: 1rem 1.5rem;
+    max-width: 40rem;
+    margin-block: 0.75rem 1.25rem;
+    color: var(--soft-foreground);
+    font-size: 0.9375rem;
   }
   .case-references details {
     border-top: 1px solid var(--border);
-    font-size: 0.8125rem;
+    font-size: 0.9375rem;
   }
   .case-references summary {
     min-height: 2.75rem;
     padding-block: 0.75rem;
   }
   .case-references details > p {
-    color: var(--muted-foreground);
-    margin-block: 0.5rem 1rem;
+    max-width: 40rem;
+    margin-block: 0.25rem 1rem;
+    color: var(--soft-foreground);
   }
   .case-references ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
+    gap: 0.25rem 1.5rem;
     padding-bottom: 1rem;
   }
   .case-references li a {
     display: inline-flex;
     align-items: center;
+    gap: 0.3rem;
     min-height: 2.75rem;
-    gap: 0.5rem;
     overflow-wrap: anywhere;
   }
   .related-projects {
     display: grid;
     gap: 2rem;
-    border-top: 1px solid var(--border);
     margin-top: var(--section-space);
     padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
   }
   .related-heading h2 {
-    font-size: var(--text-title);
-    margin-block: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: var(--text-heading);
   }
   .related-heading a {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.3rem;
     min-height: 2.75rem;
-    font-size: 0.875rem;
   }
   .related-project-list {
     display: grid;
-    gap: 1.5rem;
   }
   .related-project-list > a {
     display: block;
+    padding-block: 1.5rem;
     border-top: 1px solid var(--border);
-    padding-top: 1.5rem;
+    text-decoration: none;
+  }
+  .related-project-list > a:first-child {
+    padding-top: 0;
+    border-top: 0;
   }
   .related-project-list h3 {
-    font-size: clamp(1.375rem, 2.3vw, 1.75rem);
-    margin-block: 0.75rem 1rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-block: 0.375rem 0.5rem;
+    font-size: var(--text-title);
+    transition: color var(--duration-fast) var(--ease-ui);
   }
-  .related-project-list h3 span {
+  .related-project-list h3 .arrow {
+    -webkit-mask-image: var(--arrow-right);
+    mask-image: var(--arrow-right);
+    color: var(--input);
+  }
+  .related-project-list > a:hover h3,
+  .related-project-list > a:hover h3 .arrow {
     color: var(--primary);
-    margin-left: 0.75rem;
-  }
-  .related-project-list > a:hover h3 {
-    text-decoration: underline;
-    text-decoration-color: var(--primary);
   }
   .related-project-list p {
-    color: var(--muted-foreground);
-    font-size: 0.875rem;
-    max-width: 55ch;
+    max-width: 36rem;
+    color: var(--soft-foreground);
   }
   @media (min-width: 40rem) {
     .case-facts {
@@ -538,36 +511,39 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .case-evidence-gaps li {
-      grid-template-columns: 7rem minmax(0, 1fr);
+      grid-template-columns: 8rem minmax(0, 1fr);
       gap: 1.5rem;
+    }
+  }
+  @media (min-width: 48rem) {
+    .work-section-top {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+    }
+    .work-section-top > :only-child {
+      grid-column: 1 / -1;
     }
   }
   @media (min-width: 64rem) {
     .work-employer-context {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-      gap: 4rem;
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      gap: 3rem;
     }
     .case-study-layout {
-      grid-template-columns: 15rem minmax(0, 1fr);
+      grid-template-columns: 14rem minmax(0, 1fr);
       gap: 4rem;
     }
     .case-contents {
       position: sticky;
-      top: 8rem;
-      max-height: calc(100dvh - 9rem);
+      top: calc(var(--header-height) + 2rem);
+      max-height: calc(100dvh - var(--header-height) - 3rem);
       overflow-y: auto;
-      scrollbar-gutter: stable;
     }
     .case-contents ol {
       grid-template-columns: minmax(0, 1fr);
     }
     .related-projects {
-      grid-template-columns: 15rem minmax(0, 1fr);
-      gap: 4rem;
-    }
-    .related-project-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 2rem;
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      gap: 3rem;
     }
   }
 }

@@ -195,6 +195,8 @@ export const ProfileSchema = z
     displayName: text,
     initials: text,
     headline: text,
+    /** The few technologies named beside the title on the résumé. */
+    primaryStack: z.array(text).min(1).readonly(),
     description: text,
     summary: text,
     technicalHighlights: z.array(ClaimSchema).readonly(),

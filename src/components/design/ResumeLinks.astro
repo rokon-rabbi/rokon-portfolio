@@ -3,6 +3,6 @@ interface Props { compact?: boolean; }
 const { compact = false } = Astro.props;
 ---
 <div class:list={["resume-links", { "resume-links-compact": compact }]}>
-  <a class="button button-outline" href="/resume">View resume <span aria-hidden="true">↗</span></a>
-  <a class="text-link" href="/resume/rokon-resume.pdf" download="Rokon-Resume.pdf">Download PDF <span aria-hidden="true">↓</span><span class="sr-only"> — professional resume</span></a>
+  <a class="button button-outline" href="/resume">View résumé <span class="arrow arrow-right" aria-hidden="true"></span></a>
+  <a class="text-link" href="/resume/rokon-resume.pdf" download="Rokon-Resume.pdf">Download PDF <span class="arrow arrow-down" aria-hidden="true"></span><span class="sr-only"> — professional resume</span></a>
 </div>

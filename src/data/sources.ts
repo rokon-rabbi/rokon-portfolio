@@ -8,6 +8,8 @@ export const SOURCE_IDS = [
   "chemistry-repository",
   "chemistry-code",
   "chemistry-panels",
+  "previous-portfolio",
+  "user-infrastructure-brief",
 ] as const;
 export type SourceId = (typeof SOURCE_IDS)[number];
 
@@ -25,12 +27,28 @@ const chemistry =
   "https://github.com/rokon-rabbi/chemistry-calculator/blob/a8ebfc9c694907611e5f8fd1ad388cc65ae78bb9";
 
 export const SOURCES = {
+  "user-infrastructure-brief": {
+    label: "Rokon's note on his production and infrastructure work",
+    kind: "user-confirmation",
+    reviewedAt: "2026-10-12",
+    urls: [],
+    scope:
+      "Work on production-grade Linux VPS servers: Jenkins integrated into the project, Docker, Redis, SeaweedFS buckets, open-source Metabase, Nginx, HAProxy and Linux configuration. Placed under his current role. No architecture, scale or measured results were supplied, so none are stated.",
+  },
+  "previous-portfolio": {
+    label: "Rokon's previous portfolio",
+    kind: "user-confirmation",
+    reviewedAt: "2026-10-12",
+    urls: ["https://rokonuzzaaman.web.app/"],
+    scope:
+      "Degree and years of study; public email and LinkedIn; city. Used on Rokon's instruction. Phone number, street address, academic results and the projects listed there are not carried over.",
+  },
   "user-about-contact-brief": {
     label: "User's About, Contact, and public resume instruction",
     kind: "user-confirmation",
     reviewedAt: "2026-10-10",
     urls: [],
-    scope: "Education at NSTU and authorization to publish a professional-only resume. No degree, graduation status, dates, email, or LinkedIn URL supplied. CV remains unavailable.",
+    scope: "Education at NSTU and authorization to publish a professional-only resume. Degree, years, email and LinkedIn come from the previous-portfolio source. CV remains unavailable.",
   },
   "nstu-institution-name": {
     label: "NSTU official institution website",
