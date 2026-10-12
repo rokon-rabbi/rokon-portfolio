@@ -1,22 +1,25 @@
 ---
-import { FeaturedProject } from "@/components/design/FeaturedProject";
 import { DATA } from "@/data/resume";
 import { workHref } from "@/lib/work";
 
 const projects = DATA.projects.filter((project) => project.featured);
 ---
 <section id="projects" class="home-section" aria-labelledby="projects-heading">
-  <div class="site-container">
-    <div class="section-top">
-      <div>
-        <p class="eyebrow" data-rise>Projects</p>
-        <h2 id="projects-heading" class="section-title" data-lines>Things I’ve built on my own time.</h2>
-      </div>
-      <p class="section-note" data-rise>Outside of work. Each one has its code and a case study written from the public source.</p>
-    </div>
-    <div class="featured-projects">
-      {projects.map((project) => <FeaturedProject project={project} caseStudyHref={workHref(project)} />)}
-    </div>
-    <p class="section-after" data-rise><a class="button button-outline" href="/work">Projects and case studies <span class="arrow arrow-right" aria-hidden="true"></span></a></p>
-  </div>
+  <h2 id="projects-heading">Projects</h2>
+  <ul class="rows">
+    {projects.map((project) => (
+      <li class="row">
+        <p class="row-label">{project.attribution.kind === "fork" ? "Team project, forked" : "Personal project"}</p>
+        <div class="row-body">
+          <h3><a class="row-title-link" href={workHref(project)}>{project.title}</a></h3>
+          <p class="row-text">{project.summary}</p>
+          <ul class="tools" aria-label="Technologies">{project.technologies.map((technology) => <li>{technology}</li>)}</ul>
+          <p class="link-row">
+            <a class="text-link" href={workHref(project)} aria-label={`Read case study: ${project.title}`}>Case study <span class="arrow arrow-right" aria-hidden="true"></span></a>
+            {project.links.map((link) => <a class="text-link" href={link.url} target="_blank" rel="noopener noreferrer" aria-label={`${link.label}: ${project.title}`}>{link.label} <span class="arrow" aria-hidden="true"></span></a>)}
+          </p>
+        </div>
+      </li>
+    ))}
+  </ul>
 </section>

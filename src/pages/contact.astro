@@ -22,9 +22,9 @@ const { email, linkedin } = CONTACT_DETAILS;
           ? <>
               <a class="contact-email" href={emailHref(email)}>{email}</a>
               <p class="metadata contact-clock" data-local-clock data-time-zone={LOCATION.timeZone} hidden>It’s <time data-local-time></time> in {LOCATION.city} right now.</p>
-              <div class="profile-actions"><a class="button button-primary button-lg" href={emailHref(email, "Software engineering role")}>Write about a role <span class="arrow arrow-right" aria-hidden="true"></span></a><a class="button button-outline button-lg" href={emailHref(email, "A project")}>Write about a project <span class="arrow arrow-right" aria-hidden="true"></span></a></div>
+              <div class="profile-actions"><a class="button button-primary" href={emailHref(email, "Software engineering role")}>Write about a role <span class="arrow arrow-right" aria-hidden="true"></span></a><a class="button button-outline" href={emailHref(email, "A project")}>Write about a project <span class="arrow arrow-right" aria-hidden="true"></span></a></div>
             </>
-          : <div class="profile-actions"><a class="button button-primary button-lg" href={github.url}>Visit my GitHub profile <span class="arrow" aria-hidden="true"></span></a></div>}
+          : <div class="profile-actions"><a class="button button-primary" href={github.url}>Visit my GitHub profile <span class="arrow" aria-hidden="true"></span></a></div>}
       </div>
       <nav class="contact-channels" aria-label="Elsewhere">
         <a class="contact-channel" href={github.url}><span class="channel-title">GitHub</span><span class="metadata">rokon-rabbi · code and projects</span><span class="arrow" aria-hidden="true"></span></a>

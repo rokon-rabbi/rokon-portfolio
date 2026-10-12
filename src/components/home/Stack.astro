@@ -1,37 +1,14 @@
 ---
-import Tokens from "./Tokens.astro";
 import { SKILL_GROUPS } from "@/data/skills";
-
-// What the work at each layer has been. Scope is drawn from the confirmed
-// profile and employment records, as the tools are.
-const layers = {
-  backend: { kind: "api", text: "REST APIs with Java and Spring Boot, and the integration between them and the applications that call them." },
-  frontend: { kind: "screen", text: "Applications for real workflows: beneficiary registration, and the student, parent and administrator sides of a school platform." },
-  "data-and-messaging": { kind: "data", text: "Search and asynchronous processing inside an enterprise system, on relational data." },
-  delivery: { kind: "pipeline", text: "Jenkins integrated into the project, and Docker containers, so a commit becomes a running release the same way each time." },
-  infrastructure: { kind: "server", text: "Production-grade Linux VPS servers: system configuration, Nginx and HAProxy in front of the applications, SeaweedFS buckets, and open-source Metabase for reporting." },
-} as const;
 ---
 <section id="stack" class="home-section" aria-labelledby="stack-heading">
-  <div class="site-container">
-    <div class="section-top">
-      <div>
-        <p class="eyebrow" data-rise>Stack</p>
-        <h2 id="stack-heading" class="section-title" data-lines>What I work with, from the API to the server.</h2>
+  <h2 id="stack-heading">Stack</h2>
+  <dl class="rows rows-tight">
+    {SKILL_GROUPS.map((group) => (
+      <div class="row">
+        <dt class="row-label">{group.label}</dt>
+        <dd class="stack-tools">{group.skills.join(", ")}</dd>
       </div>
-    </div>
-    <ol class="layers">
-      {SKILL_GROUPS.map((group) => {
-        const layer = layers[group.id];
-        return (
-          <li class="layer">
-            <span class="layer-rule" data-rule aria-hidden="true"></span>
-            <h3 data-rise><Tokens kind={layer.kind} />{group.label}</h3>
-            <p class="layer-text" data-rise>{layer.text}</p>
-            <ul class="layer-tools" data-rise aria-label={`${group.label} tools`}>{group.skills.map((skill) => <li>{skill}</li>)}</ul>
-          </li>
-        );
-      })}
-    </ol>
-  </div>
+    ))}
+  </dl>
 </section>

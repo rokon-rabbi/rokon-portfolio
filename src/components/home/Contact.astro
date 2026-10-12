@@ -1,0 +1,18 @@
+---
+import { PROFILE } from "@/data/profile";
+import { CONTACT_DETAILS, emailHref } from "@/data/contact";
+
+const { email, linkedin } = CONTACT_DETAILS;
+const github = PROFILE.contacts.find((contact) => contact.id === "github");
+---
+<section id="contact" class="home-section" aria-labelledby="contact-heading">
+  <h2 id="contact-heading">Contact</h2>
+  <p class="contact-text">I’m glad to hear about a role, a project, or a problem you are stuck on. Email is the quickest way to reach me.</p>
+  <p class="link-row">
+    {email
+      ? <a class="text-link" href={emailHref(email)}>{email}</a>
+      : <a class="text-link" href="/contact">Get in touch <span class="arrow arrow-right" aria-hidden="true"></span></a>}
+    {linkedin && <a class="text-link" href={linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span class="arrow" aria-hidden="true"></span></a>}
+    {github && <a class="text-link" href={github.url} target="_blank" rel="noopener noreferrer">GitHub <span class="arrow" aria-hidden="true"></span></a>}
+  </p>
+</section>

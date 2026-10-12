@@ -2,12 +2,12 @@
 export const prerender = true;
 import Layout from "../layouts/Layout.astro";
 import Hero from "@/components/home/Hero.astro";
-import Work from "@/components/home/Work.astro";
 import Experience from "@/components/home/Experience.astro";
 import Stack from "@/components/home/Stack.astro";
+import Work from "@/components/home/Work.astro";
 import Writing from "@/components/home/Writing.astro";
-import About from "@/components/home/About.astro";
-import Closing from "@/components/home/Closing.astro";
+import Education from "@/components/home/Education.astro";
+import Contact from "@/components/home/Contact.astro";
 import { validatePortfolioContent } from "@/lib/portfolio-content";
 import { getPublishedPosts } from "@/lib/blog";
 import "@/styles/home.css";
@@ -15,19 +15,16 @@ validatePortfolioContent();
 const articles = (await getPublishedPosts()).slice(0, 3).map((post) => ({
   id: post.id,
   title: post.data.title,
-  summary: post.data.description,
   publishedAt: post.data.date,
 }));
 ---
 
-<Layout bleed intro>
-  <div class="stage" data-stage aria-hidden="true"></div>
+<Layout>
   <Hero />
   <Experience />
   <Stack />
   <Work />
   {articles.length > 0 && <Writing articles={articles} />}
-  <About />
-  <Closing />
-  <script>import "../scripts/home";</script>
+  <Education />
+  <Contact />
 </Layout>

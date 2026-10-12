@@ -1,5 +1,4 @@
 import type { Project } from "@/schemas/portfolio";
-import { ProjectPreview } from "./ProjectPreview";
 
 export function FeaturedProject({
   project,
@@ -18,7 +17,6 @@ export function FeaturedProject({
       className="featured-project"
       aria-labelledby={`project-${project.id}`}
     >
-      <ProjectPreview id={project.id} />
       <div className="featured-project-copy" data-motion="reveal">
         <div className="project-heading">
           <Heading id={`project-${project.id}`} className="project-title">

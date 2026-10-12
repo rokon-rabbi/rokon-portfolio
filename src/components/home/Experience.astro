@@ -5,29 +5,18 @@ const month = (value: string) =>
   new Intl.DateTimeFormat("en", { month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}-01T00:00:00Z`));
 ---
 <section id="experience" class="home-section" aria-labelledby="experience-heading">
-  <div class="site-container split">
-    <div class="split-side">
-      <p class="eyebrow" data-rise>Experience</p>
-      <h2 id="experience-heading" class="section-title" data-lines>Where I’ve worked.</h2>
-      <p class="section-note" data-rise>Two teams so far: an enterprise information system, and a learning platform for a family of schools.</p>
-      <p data-rise><a class="text-link" href="/resume">Read the résumé <span class="arrow arrow-right" aria-hidden="true"></span></a></p>
-    </div>
-    <ol class="roles">
-      {EXPERIENCE.map((role) => (
-        <li class="role">
-          <span class="role-rule" data-rule aria-hidden="true"></span>
-          <p class="role-period" data-rise>
-            <time datetime={role.start}>{month(role.start)}</time> – {role.end ? <time datetime={role.end}>{month(role.end)}</time> : <span class="role-now"><i aria-hidden="true"></i>Now</span>}
-          </p>
-          <div class="role-body" data-rise>
-            <h3>{role.company}</h3>
-            <p class="role-title">{role.title}</p>
-            <p class="role-summary">{role.summary}</p>
-            <ul class="role-points">{role.contributions.map((claim) => <li>{claim.text}</li>)}</ul>
-            {role.technologies.length > 0 && <ul class="badge-list role-tools" aria-label="Technologies">{role.technologies.map((skill) => <li class="technical-badge">{skill}</li>)}</ul>}
-          </div>
-        </li>
-      ))}
-    </ol>
-  </div>
+  <h2 id="experience-heading">Experience</h2>
+  <ol class="rows">
+    {EXPERIENCE.map((role) => (
+      <li class="row">
+        <p class="row-label"><time datetime={role.start}>{month(role.start)}</time> – {role.end ? <time datetime={role.end}>{month(role.end)}</time> : "Now"}</p>
+        <div class="row-body">
+          <h3>{role.title}</h3>
+          <p class="row-sub">{role.company}</p>
+          <ul class="row-points">{role.contributions.map((claim) => <li>{claim.text}</li>)}</ul>
+          {role.technologies.length > 0 && <ul class="tools" aria-label="Technologies">{role.technologies.map((skill) => <li>{skill}</li>)}</ul>}
+        </div>
+      </li>
+    ))}
+  </ol>
 </section>

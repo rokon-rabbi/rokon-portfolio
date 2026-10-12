@@ -10,13 +10,13 @@ const links = [
   { label: "About", href: "/about", current: path === "/about" || path === "/about/" },
   { label: "Writing", href: "/blog", current: path.startsWith("/blog") },
   { label: "Résumé", href: "/resume", current: path.startsWith("/resume") },
+  { label: "Contact", href: "/contact", current: /^\/contact\/?$/.test(path) },
 ];
-const contactCurrent = /^\/contact\/?$/.test(path) ? "page" : undefined;
 // Rokon's logo, cut to its outline so it can take the page's ink in either
 // theme. Rendered at three times its display size to stay sharp.
 const mark = await getImage({ src: markSource, width: 252, format: "png" });
 ---
-<header class="site-header" data-site-header>
+<header class="site-header">
   <div class="site-container header-inner">
     <a class="brand" href="/" aria-label={`${PROFILE.name} — home`} aria-current={path === "/" ? "page" : undefined}>
       <span class="brand-mark" style={`--mark:url(${mark.src})`} aria-hidden="true"></span>
@@ -27,24 +27,16 @@ const mark = await getImage({ src: markSource, width: 252, format: "png" });
     </nav>
     <div class="header-actions">
       <ThemeSwitch compact />
-      <a href="/contact" class="button button-primary button-sm header-contact" aria-current={contactCurrent}>Let’s talk</a>
       <details class="mobile-nav" data-mobile-nav>
         <summary aria-label="Open navigation menu"><span class="menu-label">Menu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M5 8.5h14M9 15.5h10" /></svg></summary>
         <nav class="mobile-nav-panel" aria-label="Mobile primary">
           {links.map((link) => <a class="nav-link" href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}<span class="arrow arrow-right" aria-hidden="true"></span></a>)}
-          <a class="nav-link" href="/contact" aria-current={contactCurrent}>Let’s talk<span class="arrow arrow-right" aria-hidden="true"></span></a>
         </nav>
       </details>
     </div>
   </div>
 </header>
 <script>
-  const header = document.querySelector<HTMLElement>("[data-site-header]");
-  // The header is part of the page until you scroll; then it draws its rule.
-  const mark = () => header?.classList.toggle("is-scrolled", window.scrollY > 8);
-  mark();
-  window.addEventListener("scroll", mark, { passive: true });
-
   const menu = document.querySelector<HTMLDetailsElement>("[data-mobile-nav]");
   const trigger = menu?.querySelector("summary");
   let menuHasFocus = false;
@@ -67,7 +59,7 @@ const mark = await getImage({ src: markSource, width: 252, format: "png" });
       if (!menu.contains(document.activeElement)) close();
     }, 0);
   });
-  const desktop = window.matchMedia("(min-width: 60rem)");
+  const desktop = window.matchMedia("(min-width: 40rem)");
   desktop.addEventListener("change", () => {
     const focusInMenu = menuHasFocus || !!menu?.contains(document.activeElement);
     close();

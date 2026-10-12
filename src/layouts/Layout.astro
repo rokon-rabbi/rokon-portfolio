@@ -6,7 +6,7 @@ import SiteHeader from "@/components/design/SiteHeader.astro";
 import SiteFooter from "@/components/design/SiteFooter.astro";
 import { THEME_CSS } from "@/design/tokens";
 import { canonicalUrl, pageSchema, serializeSchema, socialPreviewImage } from "@/lib/seo";
-import sansFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url";
+import sansFont from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
 
 interface Props {
   title?: string;
@@ -16,17 +16,11 @@ interface Props {
   article?: { publishedTime: string; modifiedTime: string; author: string; tags: string[] };
   canonicalURL?: string;
   noindex?: boolean;
-  /** The page places its own containers, so sections can run edge to edge. */
-  bleed?: boolean;
-  /** The page opens with an entrance; its first screen waits for the motion module. */
-  intro?: boolean;
 }
 
 const {
   title,
   noindex = false,
-  bleed = false,
-  intro = false,
   description = DATA.description,
   image,
   imageAlt,
@@ -66,18 +60,6 @@ const { baseFontSize } = CONFIG.typography;
         document.documentElement.style.colorScheme = mode;
       })();
     </script>
-    {intro && (
-      <script is:inline>
-        // The first screen starts hidden only when motion is welcome. If the
-        // motion module never arrives, the finished page appears on its own.
-        (function () {
-          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-          var root = document.documentElement;
-          root.classList.add("intro-pending");
-          setTimeout(function () { root.classList.remove("intro-pending"); }, 2400);
-        })();
-      </script>
-    )}
     <style is:inline set:html={THEME_CSS}></style>
 
     <!-- Favicon -->
@@ -124,7 +106,7 @@ const { baseFontSize } = CONFIG.typography;
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
     <SiteHeader />
-    <main id="main-content" class={bleed ? "page-bleed" : "site-container page-content"} tabindex="-1"><slot /></main>
+    <main id="main-content" class="site-container page-content" tabindex="-1"><slot /></main>
     <SiteFooter />
     <script>import "../scripts/theme";</script>
     <script>import "../scripts/motion";</script>

@@ -1,42 +1,16 @@
 ---
-import { getImage } from "astro:assets";
 import { PROFILE } from "@/data/profile";
-import { LOCATION } from "@/data/about";
 import { CONTACT_DETAILS, emailHref } from "@/data/contact";
-import markSource from "@/assets/brand/rokon-mark-mask.png";
-
-const mark = await getImage({ src: markSource, width: 252, format: "png" });
 ---
 <footer class="site-footer">
-  <div class="site-container footer-grid">
-    <div>
-      <a href="/" class="footer-brand"><span class="brand-mark" style={`--mark:url(${mark.src})`} aria-hidden="true"></span><span>rokon</span></a>
-      <p class="footer-note">Full-stack software engineer, working from {LOCATION.city}.</p>
-      <p class="footer-clock" data-local-clock data-time-zone={LOCATION.timeZone} hidden><i aria-hidden="true"></i><span>It’s <time data-local-time></time> in {LOCATION.city}</span></p>
-    </div>
-    <nav class="footer-column" aria-label="Footer">
-      <h2>Site</h2>
-      <div class="footer-links">
-        <a href="/work">Work</a>
-        <a href="/about">About</a>
-        <a href="/blog">Writing</a>
-        <a href="/resume">Résumé</a>
-        <a href="/contact">Contact</a>
-      </div>
+  <div class="site-container footer-inner">
+    <span>© {new Date().getUTCFullYear()} {PROFILE.name}</span>
+    <nav class="footer-links" aria-label="Elsewhere">
+      {PROFILE.contacts.map((contact) => <a href={contact.url} target="_blank" rel="noopener noreferrer">{contact.label} <span class="arrow" aria-hidden="true"></span></a>)}
+      {CONTACT_DETAILS.linkedin && <a href={CONTACT_DETAILS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span class="arrow" aria-hidden="true"></span></a>}
+      {CONTACT_DETAILS.email && <a href={emailHref(CONTACT_DETAILS.email)}>Email</a>}
+      <a href="/rss.xml">RSS</a>
     </nav>
-    <nav class="footer-column" aria-label="Elsewhere">
-      <h2>Elsewhere</h2>
-      <div class="footer-links">
-        {PROFILE.contacts.map((contact) => <a href={contact.url} target="_blank" rel="noopener noreferrer">{contact.label} <span class="arrow" aria-hidden="true"></span></a>)}
-        {CONTACT_DETAILS.linkedin && <a href={CONTACT_DETAILS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span class="arrow" aria-hidden="true"></span></a>}
-        {CONTACT_DETAILS.email && <a href={emailHref(CONTACT_DETAILS.email)}>Email</a>}
-        <a href="/rss.xml">RSS</a>
-      </div>
-    </nav>
-  </div>
-  <div class="site-container footer-bottom">
-    <span class="metadata">© {new Date().getUTCFullYear()} {PROFILE.name}</span>
-    <span class="metadata"><a href="/design-system">Design system</a> · <a href="#main-content">Back to top</a></span>
   </div>
 </footer>
 <script>

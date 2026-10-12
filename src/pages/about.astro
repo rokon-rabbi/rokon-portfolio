@@ -3,7 +3,7 @@ export const prerender = true;
 import { getImage } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";
 import ResumeLinks from "@/components/design/ResumeLinks.astro";
-import { ABOUT, EDUCATION, LOCATION } from "@/data/about";
+import { ABOUT, EDUCATION } from "@/data/about";
 import { PROFILE } from "@/data/profile";
 import { EXPERIENCE } from "@/data/experience";
 import { SKILL_GROUPS } from "@/data/skills";
@@ -13,9 +13,9 @@ import { validatePortfolioContent } from "@/lib/portfolio-content";
 import portrait from "@/assets/brand/rokon-cutout.webp";
 import "@/styles/profile-pages.css";
 validatePortfolioContent();
-// Shown at 352 CSS pixels at most; twice that for sharp screens.
-const small = await getImage({ src: portrait, width: 400, format: "webp", quality: 82 });
-const large = await getImage({ src: portrait, width: 800, format: "webp", quality: 80 });
+// Shown at 160 CSS pixels at most; twice that for sharp screens.
+const small = await getImage({ src: portrait, width: 160, format: "webp", quality: 84 });
+const large = await getImage({ src: portrait, width: 320, format: "webp", quality: 82 });
 ---
 <Layout title="About" description="Meet Rokon, a full-stack software engineer working across frontend applications, backend systems, and software delivery.">
   <div class="profile-page">
@@ -27,13 +27,12 @@ const large = await getImage({ src: portrait, width: 800, format: "webp", qualit
         <ResumeLinks />
       </div>
       <figure class="profile-portrait">
-        <div class="profile-portrait-frame"><img src={small.src} srcset={`${small.src} 400w, ${large.src} 800w`} sizes="(min-width: 48rem) 22rem, 16rem" width={small.attributes.width} height={small.attributes.height} alt={`Portrait of ${PROFILE.name}`} fetchpriority="high" decoding="async" /></div>
-        <figcaption><strong>{PROFILE.name}</strong><span>Full-stack software engineer, {LOCATION.city}</span></figcaption>
+        <div class="profile-portrait-frame"><img src={small.src} srcset={`${small.src} 160w, ${large.src} 320w`} sizes="(min-width: 40rem) 10rem, 8.5rem" width={small.attributes.width} height={small.attributes.height} alt={`Portrait of ${PROFILE.name}`} fetchpriority="high" decoding="async" /></div>
       </figure>
     </section>
 
     <section class="profile-section profile-split" aria-labelledby="approach-heading">
-      <div class="profile-section-label"><p class="eyebrow">Approach</p><h2 id="approach-heading">How I like to work.</h2></div>
+      <div class="profile-section-label"><h2 id="approach-heading">How I like to work.</h2></div>
       <div class="profile-section-content">
         <p class="profile-body">{ABOUT.context}</p>
         <p class="profile-body">That work spans user-facing features, backend integration, and delivery. I try to keep the whole workflow in view and make each part easier to understand.</p>
@@ -42,22 +41,22 @@ const large = await getImage({ src: portrait, width: 800, format: "webp", qualit
     </section>
 
     <section class="profile-section profile-split" aria-labelledby="career-heading">
-      <div class="profile-section-label"><p class="eyebrow">Career</p><h2 id="career-heading">Where I’ve worked.</h2></div>
+      <div class="profile-section-label"><h2 id="career-heading">Where I’ve worked.</h2></div>
       <ol class="career-list">{EXPERIENCE.map((role) => <li class="career-entry"><p class="metadata"><time datetime={role.start}>{formatEmploymentMonth(role.start)}</time> – {role.end ? <time datetime={role.end}>{formatEmploymentMonth(role.end)}</time> : "Present"}</p><h3>{role.company}</h3><p class="career-company">{role.title}</p><p class="profile-body">{role.summary}</p><ul class="career-contributions">{role.contributions.map((claim) => <li>{claim.text}</li>)}</ul>{role.technologies.length > 0 && <div class="skill-badges">{role.technologies.map((skill) => <span class="technical-badge">{skill}</span>)}</div>}</li>)}</ol>
     </section>
 
     <section class="profile-section profile-split" aria-labelledby="focus-heading">
-      <div class="profile-section-label"><p class="eyebrow">Focus</p><h2 id="focus-heading">What I’m getting better at.</h2></div>
+      <div class="profile-section-label"><h2 id="focus-heading">What I’m getting better at.</h2></div>
       <ul class="focus-list">{ABOUT.focus.map((focus) => <li><h3>{focus.title}</h3><p>{focus.text}</p></li>)}</ul>
     </section>
 
     <section class="profile-section profile-split" aria-labelledby="education-heading">
-      <div class="profile-section-label"><p class="eyebrow">Education</p><h2 id="education-heading">Where I studied.</h2></div>
+      <div class="profile-section-label"><h2 id="education-heading">Where I studied.</h2></div>
       <div class="education-entry">{EDUCATION.period && <p class="metadata">{EDUCATION.period}</p>}<h3>{EDUCATION.degree ?? "NSTU"}</h3><p class="profile-body">{EDUCATION.institution}</p></div>
     </section>
 
     <section class="profile-section profile-split" aria-labelledby="skills-heading">
-      <div class="profile-section-label"><p class="eyebrow">Toolkit</p><h2 id="skills-heading">What I reach for.</h2></div>
+      <div class="profile-section-label"><h2 id="skills-heading">What I reach for.</h2></div>
       <div><dl class="profile-skills">{SKILL_GROUPS.map((group) => <div><dt>{group.label}</dt><dd class="skill-badges">{group.skills.map((skill) => <span class="technical-badge">{skill}</span>)}</dd></div>)}</dl><div class="development-interests"><h3>Things I want to keep exploring</h3><ul>{ABOUT.interests.map((interest) => <li>{interest}</li>)}</ul></div></div>
     </section>
 
