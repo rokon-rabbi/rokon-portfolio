@@ -484,11 +484,15 @@
     border-bottom-color: transparent;
     backdrop-filter: none;
   }
+  /* The cover's name passes under here on its way out: the links keep a solid
+     ground and the letters dissolve along the lower edge. */
   .site-header[data-tone="stage"].is-scrolled {
     background: linear-gradient(
-      color-mix(in srgb, var(--stage) 92%, transparent),
-      color-mix(in srgb, var(--stage) 0%, transparent)
-    );
+        color-mix(in srgb, var(--stage) 96%, transparent),
+        color-mix(in srgb, var(--stage) 90%, transparent) 58%,
+        color-mix(in srgb, var(--stage) 0%, transparent)
+      )
+      no-repeat;
   }
   .header-inner {
     display: flex;

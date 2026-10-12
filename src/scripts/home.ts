@@ -28,17 +28,17 @@ function dropScene() {
 /** Resolves once the scene has drawn, or straight away if there is none. */
 async function startScene(ticket: number) {
   const host = document.querySelector<HTMLElement>("[data-stage]");
-  const figure = document.querySelector<HTMLElement>("[data-anchor='figure']");
+  const open = document.querySelector<HTMLElement>("[data-anchor='brace-open']");
+  const close = document.querySelector<HTMLElement>("[data-anchor='brace-close']");
   const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-  if (!host || !figure || !host.dataset.photo || connection?.saveData) return;
+  if (!host || !open || !close || connection?.saveData) return;
   try {
     const { createBraceScene } = await import("../lib/brace-scene");
     if (ticket !== generation || reduced.matches) return;
     await new Promise<void>((resolve) => {
       scene = createBraceScene(host, {
-        figure,
+        cover: { open, close },
         closing: document.querySelector<HTMLElement>("[data-anchor='closing']"),
-        photo: host.dataset.photo!,
         pose,
         onReady: () => {
           if (ticket === generation) root.classList.add("stage-live");
@@ -52,7 +52,7 @@ async function startScene(ticket: number) {
       if (!scene) resolve();
     });
   } catch (error) {
-    console.warn("The scene is unavailable; the page shows its own picture.", error);
+    console.warn("The scene is unavailable; the page shows its own braces.", error);
     dropScene();
   }
 }
@@ -63,6 +63,9 @@ async function start(restored: boolean) {
     return;
   }
   const ticket = ++generation;
+  // On a first visit the braces start out of sight, so the scene cannot show
+  // them at rest before the entrance begins.
+  pose.hero.scale = restored ? 1 : 0;
   try {
     const sceneReady = startScene(ticket);
     const [{ createHomeMotion }] = await Promise.all([import("../lib/home-motion"), document.fonts.ready, Promise.race([sceneReady, wait(1200)])]);
@@ -70,6 +73,7 @@ async function start(restored: boolean) {
     disposeMotion = createHomeMotion(page, pose, { restored });
   } catch (error) {
     console.warn("Motion unavailable; the finished page remains.", error);
+    pose.hero.scale = 1;
   } finally {
     root.classList.remove("intro-pending");
   }

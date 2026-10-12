@@ -34,40 +34,41 @@ export function createHomeMotion(root: HTMLElement, pose: StagePose, options: Ho
   const context = gsap.context(() => {
     const cover = one("[data-cover]");
     const word = one("[data-cover-word]");
-    const figure = one("[data-cover-figure]");
     const glow = one("[data-cover-glow]");
 
-    // ---- Entrance: the name rises letter by letter from the middle out, he
-    // steps up into it, and the braces swing open either side of him.
-    if (cover && word && figure) {
-      const letters = SplitText.create(word, { type: "chars", mask: "chars", aria: "none" });
+    // ---- Entrance: he says hello first. The braces arrive shut where his
+    // name will stand, as they sit in his logo; they part, and the name rises
+    // in the space they open, from the middle letter outwards.
+    if (cover && word) {
+      const hello = all("[data-cover-hello]");
+      const letters = all("[data-cover-letter]");
+      const stop = all("[data-cover-stop]");
       const notes = all(".cover [data-intro]");
       if (options.restored) {
-        gsap.set([word, figure, glow, ...notes], { opacity: 1 });
+        gsap.set([word, ...notes], { opacity: 1 });
       } else {
-        gsap.set(pose.hero, { scale: 0, open: -0.26, turn: -2.6, figure: 0 });
+        gsap.set(pose.hero, { scale: 0, open: -1, turn: -1.3 });
         gsap
           .timeline({ defaults: { ease: EASE, duration: PACE } })
-          .set([word, figure], { opacity: 1 })
-          .from(letters.chars, { yPercent: 108, duration: 1.3, stagger: { each: 0.04, from: "center" } }, 0.05)
-          .fromTo(glow, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.8 }, 0.1)
-          .from(figure, { y: () => figure.offsetHeight * 0.08, duration: 1.4 }, 0.3)
-          .from(".cover-photo, .cover-brace", { autoAlpha: 0, duration: 0.9, ease: "power2.out" }, 0.3)
-          .to(pose.hero, { figure: 1, duration: 0.9, ease: "power2.out" }, 0.3)
-          .to(pose.hero, { scale: 1, duration: 1.2, ease: "back.out(1.5)" }, 0.5)
-          .to(pose.hero, { open: 0, turn: 0, duration: 1.6 }, 0.5)
-          .fromTo(notes, { y: 28, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.07 }, 0.75);
+          .set(word, { opacity: 1 })
+          .fromTo(glow, { opacity: 0 }, { opacity: 1, duration: 1.8, ease: "power2.out" }, 0.1)
+          .from(hello, { yPercent: 118 }, 0.1)
+          .from(".cover-brace", { autoAlpha: 0, duration: 0.9, ease: "power2.out" }, 0.3)
+          .to(pose.hero, { scale: 1, turn: 0, duration: 0.9, ease: "back.out(1.5)" }, 0.3)
+          .to(pose.hero, { open: 0, duration: 1.2 }, 0.62)
+          .from(letters, { yPercent: 118, stagger: { each: 0.06, from: "center" } }, 0.7)
+          .from(stop, { scale: 0, duration: 0.6, ease: "back.out(2.6)" }, 1.3)
+          .fromTo(notes, { y: 24, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.07 }, 0.95);
       }
 
-      // ---- Leaving the cover: the name climbs away, he lags behind the
-      // scroll, and the braces part and turn as if to let the page through.
+      // ---- Leaving the cover: the greeting climbs away and the braces turn
+      // edge-on as if to let the page through. The words under it are gone
+      // in the first third of the way, before they could reach the header.
       gsap
-        .timeline({ defaults: { ease: "none" }, scrollTrigger: { trigger: cover, start: "top top", end: "bottom top", scrub: 0.6 } })
-        .to(word, { yPercent: -34 }, 0)
-        .to(figure, { yPercent: 10 }, 0)
+        .timeline({ defaults: { ease: "none", duration: 1 }, scrollTrigger: { trigger: cover, start: "top top", end: "bottom top", scrub: 0.6 } })
+        .to(word, { yPercent: -60 }, 0)
         .to(pose.hero, { away: 1 }, 0)
-        .to(".cover-notes, .cover-scroll", { yPercent: -30, autoAlpha: 0, duration: 0.45 }, 0)
-        .to(glow, { scale: 1.3 }, 0);
+        .to(".cover-body, .cover-facts", { y: -36, autoAlpha: 0, duration: 0.3 }, 0);
     }
 
     // ---- Headings arrive a line at a time, from behind their own baseline.
@@ -243,7 +244,7 @@ export function createHomeMotion(root: HTMLElement, pose: StagePose, options: Ho
   return () => {
     cleanups.forEach((cleanup) => cleanup());
     context.revert();
-    Object.assign(pose.hero, { scale: 1, open: 0, turn: 0, away: 0, figure: 1 });
+    Object.assign(pose.hero, { scale: 1, open: 0, turn: 0, away: 0 });
     Object.assign(pose.closing, { scale: 1, open: 0, turn: 0 });
   };
 }

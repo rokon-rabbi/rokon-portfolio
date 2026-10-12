@@ -1,6 +1,5 @@
 ---
 export const prerender = true;
-import { getImage } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Hero from "@/components/home/Hero.astro";
 import Statement from "@/components/home/Statement.astro";
@@ -11,19 +10,14 @@ import Principles from "@/components/home/Principles.astro";
 import Closing from "@/components/home/Closing.astro";
 import { validatePortfolioContent } from "@/lib/portfolio-content";
 import { DATA } from "@/data/resume";
-import cutoutSource from "@/assets/brand/rokon-cutout.webp";
 import "@/styles/home.css";
 
 validatePortfolioContent();
-// The cover shows the portrait at up to about 900px tall; 1280px wide keeps it
-// sharp on dense screens. It is also the texture the scene draws.
-const image = await getImage({ src: cutoutSource, width: 1280, format: "webp", quality: 84 });
-const portrait = { src: image.src, width: Number(image.attributes.width), height: Number(image.attributes.height) };
 ---
 
-<Layout bleed stage intro preloadImage={portrait.src}>
-  <div class="stage-canvas" data-stage data-photo={portrait.src} aria-hidden="true"></div>
-  <Hero portrait={portrait} />
+<Layout bleed stage intro>
+  <div class="stage-canvas" data-stage aria-hidden="true"></div>
+  <Hero />
   <div class="sheet" data-sheet>
     <Statement />
     <Experience />

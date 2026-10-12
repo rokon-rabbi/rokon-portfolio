@@ -29,139 +29,145 @@
   }
 
   /* ---- Cover ---------------------------------------------------------- */
-  /* One set of measurements drives the whole composition. The name is sized
-     to span the page; the figure is as tall as the space under the name
-     allows; the name then sits so the top of his hair overlaps its letters.
-     --name-ems is the measured width of the word at this weight and width. */
+  /* He says hello, and the name he goes by stands between the two braces from
+     his logo. Then what he does, the way to his work, and three facts along
+     the bottom edge. Everything starts on the left edge the header starts on
+     and stops on the right edge it stops on.
+
+     The greeting takes its size from the room there is: from the width, until
+     the window is short, and then from the height, so a wide, short laptop
+     window still shows the whole cover. */
   .cover {
-    --name-ems: 5.66;
-    --name-size: min(calc((100cqi - 2 * var(--page-gutter)) / var(--name-ems)), 34svh);
-    --name-gap: clamp(0.5rem, 1.6svh, 1.25rem);
-    /* The name runs to the gutters; the notes sit under its first and last
-       letters, in the corners of the cover. */
-    --cover-inset: calc(var(--page-gutter) + var(--name-size) * 0.045);
-    --figure-h: min(58svh, calc(96cqi / 0.983));
-    --figure-w: calc(var(--figure-h) * 0.983);
-    /* Share of the figure's height that fades out at the bottom. */
-    --figure-fade: 0.24;
     position: relative;
     z-index: 1;
-    container-type: inline-size;
     display: flex;
     flex-direction: column;
     min-height: 100svh;
-    padding-top: calc(var(--header-height) + var(--name-gap));
+    padding-top: var(--header-height);
     overflow: clip;
     color: var(--stage-foreground);
   }
+  /* One light behind the greeting and a fainter one in the far corner. */
   .cover-glow {
     position: absolute;
-    left: 50%;
-    top: calc(var(--header-height) + var(--name-size) * 0.4);
-    width: calc(var(--figure-w) * 1.9);
-    aspect-ratio: 1;
-    translate: -50% 0;
-    background: radial-gradient(
-      closest-side,
-      color-mix(in srgb, var(--brand-deep) 46%, transparent),
-      color-mix(in srgb, var(--brand-deep) 14%, transparent) 56%,
-      transparent
-    );
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 62% 58% at 26% 40%,
+        color-mix(in srgb, var(--brand-deep) 30%, transparent),
+        color-mix(in srgb, var(--brand-deep) 9%, transparent) 55%,
+        transparent
+      ),
+      radial-gradient(ellipse 46% 52% at 96% 4%, color-mix(in srgb, var(--brand-deep) 15%, transparent), transparent 72%);
     pointer-events: none;
   }
-  .cover-name {
+  /* The container the sizes below are measured against, and the layout
+     inside it: a container cannot lay itself out from its own query. */
+  .cover-inner {
     position: relative;
-    margin: 0 var(--page-gutter);
-    font-size: var(--name-size);
-    line-height: 0.8;
-    letter-spacing: 0;
-    text-align: center;
-    text-wrap: nowrap;
+    container-type: inline-size;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
   }
-  .cover-name-word {
-    display: block;
+  .cover-grid {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  /* The words sit a little above the middle of the room they have. */
+  .cover-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: clamp(1.75rem, 5svh, 3.5rem) clamp(2.25rem, 8svh, 5.5rem);
+  }
+  .cover-title {
+    --title-size: clamp(3.5rem, min(23cqi, 13svh), 6.5rem);
+    font-size: var(--title-size);
     font-weight: 800;
     font-stretch: 75%;
-    letter-spacing: -0.012em;
-    text-transform: uppercase;
+    line-height: 0.98;
+    letter-spacing: -0.018em;
+  }
+  .cover-title-words {
+    display: block;
     white-space: nowrap;
   }
-  .cover-name-word > div {
-    /* Letters split for the entrance keep the masthead's tight line. */
-    line-height: 0.8;
+  /* The greeting is quieter than the name it introduces. */
+  .cover-hi {
+    display: block;
+    color: color-mix(in srgb, var(--stage-foreground) 62%, transparent);
   }
-  .cover-figure {
-    position: relative;
-    flex: none;
-    width: var(--figure-w);
-    height: var(--figure-h);
-    /* The face sits a little left of the picture's centre; this centres it. */
-    margin: calc(var(--name-size) * -0.3 - var(--figure-h) * 0.06) auto 0;
-    left: calc(var(--figure-w) * 0.04);
+  .cover-name {
+    display: inline-block;
   }
-  .cover-photo {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    -webkit-mask-image: linear-gradient(#000 calc(100% - var(--figure-fade) * 100%), transparent);
-    mask-image: linear-gradient(#000 calc(100% - var(--figure-fade) * 100%), transparent);
+  /* A window that words and letters rise through on the way in. It is drawn
+     wider than its box, so it never trims a comma or a round letter at rest,
+     and it leaves the baseline alone. */
+  .cover-mask {
+    clip-path: inset(-0.12em -0.08em -0.22em);
   }
-  /* The braces from the logo, either side of his head. The scene draws the
-     same two shapes in the same places. */
+  .cover-name .cover-mask,
+  .cover-mask > span,
+  .cover-stop {
+    display: inline-block;
+  }
+  /* The gap the line leaves for each brace: as tall as a brace should stand
+     beside the letters, and centred on the capital. The scene measures these
+     two boxes and draws its braces in them (src/lib/brace-scene.ts). */
+  .cover-brace-slot {
+    display: inline-block;
+    width: 0.36em;
+    height: 1.02em;
+    margin-right: 0.035em;
+    vertical-align: -0.17em;
+  }
+  .cover-mask ~ .cover-brace-slot {
+    margin-inline: 0.035em 0;
+  }
   .cover-brace {
-    position: absolute;
-    top: 10%;
-    height: 40%;
+    display: block;
+    height: 100%;
+    margin-inline: auto;
     aspect-ratio: 78 / 224;
     overflow: visible;
     fill: none;
-    stroke-width: 23;
+    stroke-width: 30;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
   .cover-brace-open {
-    left: 15%;
-    translate: -50% 0;
     stroke: var(--brand);
   }
   .cover-brace-close {
-    left: 77%;
-    translate: -50% 0;
     scale: -1 1;
     stroke: var(--brand-deep);
   }
-  .stage-live :is(.cover-photo, .cover-brace, .closing-brace) {
+  .stage-live :is(.cover-brace, .closing-brace) {
     opacity: 0;
   }
-  .cover-notes {
-    position: relative;
-    display: grid;
-    gap: 1.75rem;
-    margin-top: calc(var(--figure-h) * -0.13);
-    padding: 0 var(--cover-inset) clamp(2rem, 6svh, 3rem);
-  }
-  .cover-role {
-    color: var(--brand);
-    font-size: 0.9375rem;
+  /* What he does, in a speaking voice: his title in the brand's mint, then
+     the sentence. */
+  .cover-lede {
+    max-width: 22em;
+    margin-top: clamp(1rem, 3.2svh, 1.875rem);
+    font-size: clamp(1.4375rem, min(3.3cqi, 5.6svh), 2.75rem);
     font-weight: 600;
-  }
-  .cover-line {
-    max-width: 18ch;
-    margin-top: 0.625rem;
-    font-size: clamp(1.625rem, 6.4cqi, 2.25rem);
-    font-weight: 650;
     font-stretch: var(--width-heading);
-    line-height: 1.08;
+    line-height: 1.12;
     letter-spacing: var(--tracking-heading);
     text-wrap: balance;
+  }
+  .cover-lede span {
+    color: var(--brand);
   }
   .cover-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.625rem;
-    margin-top: 1.5rem;
+    margin-top: clamp(1.5rem, 4.6svh, 2.75rem);
   }
   .cover .button .arrow,
   .closing .button .arrow {
@@ -193,26 +199,36 @@
   .closing :focus-visible {
     outline-color: var(--brand);
   }
-  .cover-aside {
+  /* Three facts. On a phone they are rows under a hairline; from a tablet up,
+     columns under it, the first on the left edge and the last on the right;
+     on a wide screen, a column beside his words. */
+  .cover-facts {
     display: grid;
-    gap: 0.625rem;
+    padding-bottom: clamp(0.75rem, 3svh, 1.75rem);
+    border-top: 1px solid var(--stage-line);
     color: var(--stage-muted);
     font-size: 0.9375rem;
     line-height: 1.5;
   }
-  .cover-now {
+  .cover-fact {
     display: grid;
-    gap: 0.25rem;
-    padding-top: 1.25rem;
+    grid-template-columns: 5.75rem minmax(0, 1fr);
+    column-gap: 1rem;
+    padding-block: 0.8125rem;
+  }
+  .cover-fact + .cover-fact {
     border-top: 1px solid var(--stage-line);
   }
-  .cover-now > span:last-child {
-    max-width: 34ch;
-  }
-  .cover-now-label {
-    display: inline-flex;
+  .cover-fact dt {
+    display: flex;
     align-items: center;
+    align-self: start;
     gap: 0.5rem;
+    font-size: 0.875rem;
+    line-height: calc(0.9375 / 0.875 * 1.5);
+  }
+  .cover-fact strong {
+    display: block;
     color: var(--stage-foreground);
     font-weight: 600;
   }
@@ -224,108 +240,92 @@
     box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand) 60%, transparent);
     animation: now-pulse 2.4s var(--ease-out) infinite;
   }
-  .cover-aka {
-    color: var(--stage-muted);
-  }
-  .cover-scroll {
-    display: none;
-  }
 
-  /* Landscape screens get the full cover: one screen tall, the figure
-     standing on its bottom edge, the notes in the two lower corners. */
-  @media (min-width: 64rem) and (min-aspect-ratio: 5/4) {
-    .cover {
-      --cover-h: max(100svh, 36rem);
-      --figure-h: min(
-        calc((var(--cover-h) - var(--header-height) - var(--name-gap) - var(--name-size) * 0.5) / 0.94),
-        calc(46cqi / 0.983)
-      );
-      --figure-fade: 0;
+  /* On the narrowest phones the two buttons still share a line. */
+  @container (max-width: 21rem) {
+    .cover-actions .button {
+      padding-inline: 1.125rem;
+    }
+  }
+  /* With room for it, the greeting is one line. --title-ems is its measured
+     width in ems at this weight and width, with a little to spare. */
+  @container (min-width: 40rem) {
+    .cover-title {
+      --title-ems: 5.6;
+      --title-size: clamp(4rem, min(calc(82cqi / var(--title-ems)), 17svh), 10.5rem);
+    }
+    .cover-hi {
+      display: inline-block;
+    }
+    .cover-lede {
+      font-size: clamp(1.4375rem, min(4.2cqi, 5.6svh), 2.75rem);
+    }
+  }
+  @container (min-width: 46rem) {
+    .cover-facts {
+      grid-template-columns: repeat(3, auto);
+      justify-content: space-between;
+      column-gap: clamp(1.5rem, 4cqi, 3.5rem);
+      padding-top: clamp(0.875rem, 2.6svh, 1.25rem);
+    }
+    .cover-fact {
       display: block;
-      height: var(--cover-h);
-      min-height: 0;
+      padding: 0;
+    }
+    .cover-fact + .cover-fact {
+      border-top: 0;
+    }
+    .cover-fact dt {
+      margin-bottom: 0.25rem;
+    }
+  }
+  /* On a wide screen the facts stand beside his words, as a column that ends
+     on the right edge and on the line the buttons stand on. */
+  @container (min-width: 62rem) {
+    .cover-grid {
+      --facts-width: 21rem;
+      --facts-gap: clamp(2rem, 5cqi, 5rem);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) var(--facts-width);
+      align-content: center;
+      align-items: end;
+      column-gap: var(--facts-gap);
+      padding-block: clamp(1.75rem, 5svh, 3.5rem) clamp(2.5rem, 10svh, 7rem);
+    }
+    .cover-main {
+      display: block;
+      padding-block: 0;
+    }
+    /* The greeting keeps to its own column. */
+    .cover-title {
+      --title-size: clamp(4rem, min(calc((100cqi - var(--facts-width) - var(--facts-gap)) / var(--title-ems)), 17svh), 10.5rem);
+    }
+    .cover-lede {
+      font-size: clamp(1.4375rem, min(3.3cqi, 5.6svh), 2.75rem);
+    }
+    .cover-facts {
+      grid-template-columns: none;
+      justify-content: stretch;
+      padding-block: 0;
+      border-top: 0;
+    }
+    .cover-fact {
+      padding-block: clamp(0.625rem, 2svh, 1rem);
+    }
+    .cover-fact:first-child {
       padding-top: 0;
     }
-    .cover-glow {
-      top: auto;
-      bottom: calc(var(--figure-h) * -0.28);
-    }
-    .cover-name {
-      position: absolute;
-      right: 0;
-      bottom: calc(var(--figure-h) * 0.94 - var(--name-size) * 0.3);
-      left: 0;
-    }
-    .cover-figure {
-      position: absolute;
-      bottom: 0;
-      left: calc(50% - var(--figure-w) * 0.46);
-      margin: 0;
-    }
-    .cover-notes {
-      position: absolute;
-      right: 0;
-      bottom: clamp(1.75rem, 5.5svh, 3.5rem);
-      left: 0;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin: 0;
+    .cover-fact:last-child {
       padding-bottom: 0;
-      pointer-events: none;
     }
-    .cover-lead,
-    .cover-aside {
-      pointer-events: auto;
-    }
-    /* Each corner ends where an arm begins. */
-    .cover-lead {
-      width: min(calc(50cqi - var(--figure-w) * 0.37 - var(--cover-inset) - 1.25rem), 27rem);
-    }
-    .cover-aside {
-      width: min(calc(50cqi - var(--figure-w) * 0.42 - var(--cover-inset) - 1.25rem), 19rem);
-    }
-    .cover-line {
-      max-width: none;
-      font-size: clamp(1.375rem, 2.25cqi, 2.125rem);
-    }
-    .cover-scroll {
-      position: absolute;
-      top: 46%;
-      right: calc(var(--cover-inset) - 0.875rem);
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;
-      min-width: 2.75rem;
-      padding-block: 0.5rem;
-      color: var(--stage-muted);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      text-decoration: none;
-      border-radius: var(--radius-sm);
-    }
-    .cover-scroll span {
-      writing-mode: vertical-rl;
-    }
-    .cover-scroll svg {
-      width: 1rem;
-      height: 2.5rem;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.25;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      animation: scroll-nudge 2.2s var(--ease-ui) infinite;
-    }
-    .cover-scroll:hover {
-      color: var(--stage-foreground);
+    .cover-fact + .cover-fact {
+      border-top: 1px solid var(--stage-line);
     }
   }
 
   /* While the entrance loads, the first screen waits out of sight. The class
      is only ever added when motion is welcome, and it removes itself. */
-  .intro-pending :is(.cover-name-word, .cover-figure, .cover-glow, .cover [data-intro]) {
+  .intro-pending :is(.cover-title-words, .cover [data-intro]) {
     opacity: 0;
   }
 
@@ -863,7 +863,7 @@
     aspect-ratio: 78 / 224;
     overflow: visible;
     fill: none;
-    stroke-width: 23;
+    stroke-width: 30;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
@@ -996,15 +996,6 @@
   70%,
   100% {
     box-shadow: 0 0 0 0.625rem transparent;
-  }
-}
-@keyframes scroll-nudge {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(0.375rem);
   }
 }
 

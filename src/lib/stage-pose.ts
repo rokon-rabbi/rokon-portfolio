@@ -7,14 +7,12 @@ export interface StagePose {
   hero: {
     /** Brace size, 0 to 1. */
     scale: number;
-    /** How far the braces stand apart from rest, in figure widths. */
+    /** -1 with the pair shut mid-line, as in his logo; 0 with each brace at its end of the name. */
     open: number;
     /** Extra turn about the vertical axis, in radians, mirrored per brace. */
     turn: number;
     /** 0 at the top of the page, 1 once the cover has scrolled away. */
     away: number;
-    /** Opacity of the figure. */
-    figure: number;
   };
   closing: {
     scale: number;
@@ -25,6 +23,6 @@ export interface StagePose {
 }
 
 export const createStagePose = (): StagePose => ({
-  hero: { scale: 1, open: 0, turn: 0, away: 0, figure: 1 },
+  hero: { scale: 1, open: 0, turn: 0, away: 0 },
   closing: { scale: 1, open: 0, turn: 0 },
 });

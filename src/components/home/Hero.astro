@@ -1,63 +1,73 @@
 ---
-// The cover. Rokon's name runs the width of the page like a masthead, and he
-// stands in front of it between the two braces from his logo. Those braces
-// are drawn here as an SVG; when three.js is available it takes over and the
-// same composition becomes a lit, moving scene. All facts come from the
-// content records.
+// The cover. He says hello in his own voice, and the name he goes by stands
+// between the two braces from his logo. Then what he does and the way to his
+// work, and along the bottom edge where he works now, where he worked before
+// and what he works with. There is no photo here: his portrait is on the
+// About page. The braces are drawn as SVG; when three.js is available it
+// draws them instead, lit and moving, in the same places. All facts come from
+// the content records.
 import { PROFILE } from "@/data/profile";
 import { BRACE_PATH, BRACE_VIEWBOX } from "@/design/brace";
 import { EXPERIENCE } from "@/data/experience";
+import { SKILL_GROUPS } from "@/data/skills";
 import { formatEmploymentMonth } from "@/lib/portfolio-dates";
 
-interface Props {
-  /** The cut-out portrait, already sized for the cover. */
-  portrait: { src: string; width: number; height: number };
-}
-const { portrait } = Astro.props;
-
 const current = EXPERIENCE.find((role) => role.end === null);
+const previous = EXPERIENCE.find((role) => role.end !== null);
 const github = PROFILE.contacts.find((contact) => contact.id === "github");
-// "Md. Rokonuzzaman" -> the masthead is the name without its honorific.
-const masthead = PROFILE.name.split(" ").slice(1).join(" ");
+// Each letter is its own box, so every one can rise from behind the baseline.
+const letters = [...PROFILE.displayName];
 const role = PROFILE.headline.charAt(0) + PROFILE.headline.slice(1).toLowerCase();
+const skills = (id: string, count?: number): readonly string[] => (SKILL_GROUPS.find((group) => group.id === id)?.skills ?? []).slice(0, count);
+const frontend = skills("frontend");
+const behind = [...skills("backend", 2), ...skills("data-and-messaging", 1), ...skills("delivery", 1)];
 ---
 <section id="top" class="cover" aria-labelledby="cover-title" data-header-tone="stage" data-cover>
   <div class="cover-glow" aria-hidden="true" data-cover-glow></div>
 
-  {/* The full name is read out once; the masthead is its picture. */}
-  <h1 id="cover-title" class="cover-name" data-cover-name>
-    <span class="sr-only">{PROFILE.name}</span><span class="cover-name-word" aria-hidden="true" data-cover-word>{masthead}</span>
-  </h1>
+  <div class="site-container cover-inner">
+    <div class="cover-grid">
+      <div class="cover-main">
+        {/* The greeting is read out once, with his full name; the line below is its picture. */}
+        <h1 id="cover-title" class="cover-title">
+          <span class="sr-only">Hi, I’m {PROFILE.displayName} ({PROFILE.name}).</span>
+          <span class="cover-title-words" aria-hidden="true" data-cover-word>
+            <span class="cover-hi cover-mask"><span data-cover-hello>Hi, I’m</span></span>
+            <span class="cover-name">
+              <span class="cover-brace-slot" data-anchor="brace-open"><svg class="cover-brace cover-brace-open" viewBox={BRACE_VIEWBOX} focusable="false"><path d={BRACE_PATH} /></svg></span><span class="cover-mask">{letters.map((letter) => <span data-cover-letter>{letter}</span>)}</span><span class="cover-brace-slot" data-anchor="brace-close"><svg class="cover-brace cover-brace-close" viewBox={BRACE_VIEWBOX} focusable="false"><path d={BRACE_PATH} /></svg></span><span class="cover-stop" data-cover-stop>.</span>
+            </span>
+          </span>
+        </h1>
 
-  <div class="cover-figure" data-anchor="figure" data-cover-figure>
-    <img class="cover-photo" src={portrait.src} width={portrait.width} height={portrait.height} alt={`Portrait of ${PROFILE.name}`} fetchpriority="high" decoding="async" />
-    <svg class="cover-brace cover-brace-open" viewBox={BRACE_VIEWBOX} aria-hidden="true" focusable="false"><path d={BRACE_PATH} /></svg>
-    <svg class="cover-brace cover-brace-close" viewBox={BRACE_VIEWBOX} aria-hidden="true" focusable="false"><path d={BRACE_PATH} /></svg>
-  </div>
-
-  <div class="cover-notes">
-    <div class="cover-lead">
-      <p class="cover-role" data-intro>{role}</p>
-      <p class="cover-line" data-intro>I build screens, APIs, and the pipelines that ship them.</p>
-      <div class="cover-actions" data-intro>
-        <a class="button button-brand button-lg" href="#projects" data-magnetic>See my work <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" /></svg></a>
-        {github && <a class="button button-lg cover-ghost" href={github.url} target="_blank" rel="noopener noreferrer">{github.label} <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></a>}
+        <div class="cover-body">
+          <p class="cover-lede" data-intro><span>{role}.</span> I build screens, APIs, and the pipelines that ship them.</p>
+          <div class="cover-actions" data-intro>
+            <a class="button button-brand button-lg" href="#projects" data-magnetic>See my work <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" /></svg></a>
+            {github && <a class="button button-lg cover-ghost" href={github.url} target="_blank" rel="noopener noreferrer">{github.label} <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></a>}
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="cover-aside">
-      {current && (
-        <p class="cover-now" data-intro>
-          <span class="cover-now-label"><span class="cover-now-dot" aria-hidden="true"></span>Now</span>
-          <span>{current.title} at {current.company}, since <time datetime={current.start}>{formatEmploymentMonth(current.start)}</time>.</span>
-        </p>
-      )}
-      <p class="cover-aka" data-intro>I go by {PROFILE.displayName}.</p>
+      <dl class="cover-facts">
+        {current && (
+          <div class="cover-fact" data-intro>
+            <dt><span class="cover-now-dot" aria-hidden="true"></span>Now</dt>
+            <dd><strong>{current.title}</strong> {current.company}, since <time datetime={current.start}>{formatEmploymentMonth(current.start)}</time></dd>
+          </div>
+        )}
+        {previous && (
+          <div class="cover-fact" data-intro>
+            <dt>Before</dt>
+            <dd><strong>{previous.title}</strong> {previous.company}</dd>
+          </div>
+        )}
+        {frontend.length > 0 && (
+          <div class="cover-fact" data-intro>
+            <dt>Works with</dt>
+            <dd><strong>{frontend.join(", ")}</strong> {behind.join(", ")}</dd>
+          </div>
+        )}
+      </dl>
     </div>
   </div>
-
-  <a class="cover-scroll" href="#about" data-intro>
-    <span>Scroll</span>
-    <svg viewBox="0 0 16 40" aria-hidden="true" focusable="false"><path d="M8 1v37M2.5 32.5 8 38l5.5-5.5" /></svg>
-  </a>
 </section>
