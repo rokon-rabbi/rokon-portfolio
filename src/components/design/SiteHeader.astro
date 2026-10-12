@@ -1,38 +1,74 @@
 ---
+import { getImage } from "astro:assets";
 import ThemeSwitch from "./ThemeSwitch.astro";
+import { PROFILE } from "@/data/profile";
+import markSource from "@/assets/brand/rokon-mark.png";
+import wordmarkSource from "@/assets/brand/rokon-wordmark.png";
+
 const path = Astro.url.pathname;
-const home = path === "/";
 const links = [
-  { label: "Overview", href: "/", current: home },
   { label: "Work", href: "/work", current: path === "/work" || path.startsWith("/work/") },
   { label: "About", href: "/about", current: path === "/about" || path === "/about/" },
-  { label: "Experience", href: "/#work", current: false },
+  { label: "Experience", href: "/#experience", current: false },
   { label: "Writing", href: "/blog", current: path.startsWith("/blog") },
 ];
+const contactCurrent = /^\/contact\/?$/.test(path) ? "page" : undefined;
+// The homepage opens on the dark stage; the header starts in its colours so
+// nothing flashes before the script has measured the page.
+const tone = path === "/" ? "stage" : undefined;
+// The logo is drawn stacked. In the header its two parts sit side by side,
+// each rendered at three times its display height so it stays sharp.
+const mark = await getImage({ src: markSource, height: 102, format: "webp" });
+const wordmark = await getImage({ src: wordmarkSource, height: 45, format: "webp" });
 ---
-<header class="site-header">
+<header class="site-header" data-site-header data-tone={tone}>
   <div class="site-container header-inner">
-    <a class="brand" href="/" aria-label="Rokon — home">
-      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 24V8h11a6 6 0 0 1 0 12H5m11-1 10 8" stroke="currentColor" stroke-width="2.5" /><path d="M23 4h5v5" stroke="currentColor" stroke-width="2" /></svg>
-      <span>rokon<span class="text-primary">.</span></span>
+    <a class="brand" href="/" aria-label={`${PROFILE.name} — home`} aria-current={path === "/" ? "page" : undefined}>
+      <img class="brand-mark" src={mark.src} width={mark.attributes.width} height={mark.attributes.height} alt="" decoding="async" />
+      <img class="brand-wordmark" src={wordmark.src} width={wordmark.attributes.width} height={wordmark.attributes.height} alt="" decoding="async" />
     </a>
     <nav class="desktop-nav" aria-label="Primary">
       {links.map((link) => <a class="nav-link" href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}</a>)}
     </nav>
     <div class="header-actions">
       <ThemeSwitch compact />
-      <a href="/contact" class="button button-outline header-contact" aria-current={/^\/contact\/?$/.test(path) ? "page" : undefined}>Let's connect <span aria-hidden="true">↗</span></a>
+      <a href="/contact" class="button button-primary header-contact" aria-current={contactCurrent}>Contact</a>
       <details class="mobile-nav" data-mobile-nav>
-        <summary aria-label="Open navigation menu"><span class="menu-label">Menu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 8h16M4 16h16" /></svg></summary>
+        <summary aria-label="Open navigation menu"><span class="menu-label">Menu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M5 8.5h14M9 15.5h10" /></svg></summary>
         <nav class="mobile-nav-panel" aria-label="Mobile primary">
-          {links.map((link) => <a class="nav-link" href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}<span aria-hidden="true">↗</span></a>)}
-          <a class="nav-link" href="/contact" aria-current={/^\/contact\/?$/.test(path) ? "page" : undefined}>Let's connect<span aria-hidden="true">↗</span></a>
+          {links.map((link) => <a class="nav-link" href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}<span aria-hidden="true">→</span></a>)}
+          <a class="nav-link" href="/contact" aria-current={contactCurrent}>Contact<span aria-hidden="true">→</span></a>
         </nav>
       </details>
     </div>
   </div>
 </header>
 <script>
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+  // Sections that are dark screens say so; the header matches whichever one it
+  // is over. It leaves on the way down and returns on the way up.
+  const stages = Array.from(document.querySelectorAll<HTMLElement>("[data-header-tone='stage']"));
+  let lastY = window.scrollY;
+  const mark = () => {
+    if (!header) return;
+    const y = window.scrollY;
+    const line = header.offsetHeight / 2;
+    const overStage = stages.some((stage) => {
+      const box = stage.getBoundingClientRect();
+      return box.top <= line && box.bottom > line;
+    });
+    if (overStage) header.dataset.tone = "stage";
+    else delete header.dataset.tone;
+    header.classList.toggle("is-scrolled", y > 8);
+    if (Math.abs(y - lastY) > 6) {
+      header.classList.toggle("is-away", y > lastY && y > 480);
+      lastY = y;
+    }
+  };
+  mark();
+  window.addEventListener("scroll", mark, { passive: true });
+  window.addEventListener("resize", mark, { passive: true });
+
   const menu = document.querySelector<HTMLDetailsElement>("[data-mobile-nav]");
   const trigger = menu?.querySelector("summary");
   let menuHasFocus = false;

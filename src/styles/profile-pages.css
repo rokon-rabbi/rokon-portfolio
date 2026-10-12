@@ -4,21 +4,24 @@
   }
   .profile-masthead {
     display: grid;
-    gap: 3rem;
-    padding-block: 0.5rem 4rem;
+    gap: clamp(2.5rem, 6vw, 4rem);
+    padding-block: 0.5rem clamp(3rem, 7vw, 5.5rem);
   }
   .profile-title {
-    font-size: clamp(2.75rem, 5.5vw, 5.75rem);
-    line-height: 1.04;
-    letter-spacing: -0.05em;
-    margin-block: 1.5rem 2rem;
+    max-width: 14ch;
+    margin-block: 1.25rem 1.75rem;
+    font-size: clamp(2.75rem, 7vw, 6rem);
+    font-weight: 750;
+    font-stretch: var(--width-display);
+    line-height: 0.94;
+    letter-spacing: var(--tracking-display);
     overflow-wrap: anywhere;
   }
   .profile-introduction {
-    max-width: 56ch;
+    max-width: 50ch;
     color: var(--muted-foreground);
-    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
-    line-height: 1.85;
+    font-size: var(--text-lede);
+    line-height: 1.55;
   }
   .resume-links {
     display: flex;
@@ -34,64 +37,131 @@
     min-height: 2.75rem;
     font-size: 0.875rem;
   }
-  .profile-identity {
-    padding: 2rem;
-    border: 1px solid var(--border);
-    background: var(--muted);
-    align-self: start;
-  }
-  .identity-drawing {
-    aspect-ratio: 1.4;
+  /* Two facts worth knowing before reading on. */
+  .profile-facts {
     display: grid;
-    place-items: center;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.5rem;
-    background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size: 2rem 2rem;
+    gap: 1.25rem 2.5rem;
+    max-width: 50ch;
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid color-mix(in srgb, var(--foreground) 22%, transparent);
   }
-  .identity-drawing > span {
-    font-family: var(--font-display);
-    font-size: clamp(7rem, 11vw, 11rem);
-    line-height: 1;
-    letter-spacing: -0.1em;
-    position: relative;
-    z-index: 1;
-  }
-  .identity-drawing i {
-    position: absolute;
-    width: 0.5rem;
-    height: 0.5rem;
-    background: var(--primary);
-    top: 25%;
-    left: 15%;
-  }
-  .identity-drawing i:nth-of-type(2) {
-    left: auto;
-    right: 15%;
-    top: 70%;
-  }
-  .identity-drawing i:nth-of-type(3) {
-    left: auto;
-    right: 15%;
-    top: 25%;
-    background: var(--warm-decorative);
-  }
-  .identity-name {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    margin-bottom: 0.25rem;
-  }
-  .identity-rule {
-    border-top: 1px solid var(--border);
-    margin-block: 1.5rem;
-  }
-  .identity-scope {
+  .profile-facts dt {
+    color: var(--muted-foreground);
     font-size: 0.875rem;
-    margin-top: 0.5rem;
+  }
+  .profile-facts dd {
+    margin-top: 0.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  /* The portrait, on the stage the homepage opens with: the cut-out figure,
+     a teal light behind him, and the logo's braces either side of his head.
+     The braces sit at the same places as on the cover (home.css). */
+  .portrait-card {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    max-width: 27rem;
+    aspect-ratio: 4 / 5;
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius-panel);
+    background: var(--stage);
+    box-shadow: 0 0 0 1px var(--stage-line) inset;
+    color: var(--stage-foreground);
+  }
+  .portrait-card::before {
+    content: "";
+    position: absolute;
+    inset: 6% -35% -30%;
+    z-index: -1;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--brand-deep) 52%, transparent),
+      color-mix(in srgb, var(--brand-deep) 14%, transparent) 58%,
+      transparent
+    );
+  }
+  /* Wider than the card and shifted so his face, a little left of the
+     picture's centre, lands on the card's centre line. */
+  .portrait-figure {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 114%;
+    aspect-ratio: 1966 / 2000;
+    translate: -46% 0;
+  }
+  .portrait-figure img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-mask-image: linear-gradient(#000 60%, transparent 97%);
+    mask-image: linear-gradient(#000 60%, transparent 97%);
+  }
+  .portrait-brace {
+    position: absolute;
+    top: 10%;
+    height: 40%;
+    aspect-ratio: 78 / 224;
+    overflow: visible;
+    fill: none;
+    stroke-width: 23;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    translate: -50% 0;
+    animation: brace-drift 5.5s ease-in-out infinite;
+    transition: left 640ms var(--ease-out);
+  }
+  .portrait-brace-open {
+    left: 15%;
+    stroke: var(--brand);
+  }
+  .portrait-brace-close {
+    left: 77%;
+    scale: -1 1;
+    stroke: var(--brand-deep);
+    animation-delay: -2.75s;
+  }
+  .portrait-caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    gap: 0.25rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+  .portrait-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 720;
+    font-stretch: var(--width-display);
+    line-height: 1;
+    letter-spacing: var(--tracking-heading);
+  }
+  .portrait-role {
+    color: var(--stage-muted);
+    font-size: 0.9375rem;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .portrait-card:hover .portrait-brace-open {
+      left: 11%;
+    }
+    .portrait-card:hover .portrait-brace-close {
+      left: 81%;
+    }
+  }
+  @media (forced-colors: active) {
+    .portrait-card {
+      border: 1px solid CanvasText;
+    }
+    .portrait-brace {
+      stroke: CanvasText;
+    }
   }
   .profile-section {
     border-top: 1px solid var(--border);
@@ -389,11 +459,17 @@
   }
   @media (min-width: 48rem) {
     .profile-masthead {
-      grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.4fr);
-      gap: 3rem;
+      grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 0.8fr);
+      align-items: center;
     }
     .profile-masthead .profile-title {
-      font-size: clamp(2.75rem, 4.6vw, 4.75rem);
+      font-size: clamp(2.75rem, 5.6vw, 5.5rem);
+    }
+    .portrait-card {
+      justify-self: end;
+    }
+    .profile-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .profile-split {
       grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
@@ -448,5 +524,15 @@
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
     }
+  }
+}
+
+@keyframes brace-drift {
+  0%,
+  100% {
+    translate: -50% 0;
+  }
+  50% {
+    translate: -50% -4%;
   }
 }

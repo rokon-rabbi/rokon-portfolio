@@ -1,0 +1,51 @@
+---
+// The skills record, in the order a request meets each layer: the screen
+// first, then what answers it, then where the data lives, then how all of it
+// ships. Every tool named here comes from that record.
+import { SKILL_GROUPS } from "@/data/skills";
+
+type GroupId = (typeof SKILL_GROUPS)[number]["id"];
+const what: Record<GroupId, string> = {
+  frontend: "The form, its validation, and the state on screen.",
+  backend: "What receives the request and decides what happens next.",
+  "data-and-messaging": "Where records live, and where work waits its turn.",
+  delivery: "How each of those layers gets built, tested and released.",
+};
+const layers = SKILL_GROUPS.map((group) => ({ ...group, what: what[group.id] }));
+const all = SKILL_GROUPS.flatMap((group) => group.skills as readonly string[]);
+const half = Math.ceil(all.length / 2);
+const rows = [all.slice(0, half), all.slice(half)];
+---
+<section id="stack" class="stack" aria-labelledby="stack-title">
+  <div class="marquee" aria-hidden="true" data-marquee>
+    {rows.map((row, index) => (
+      <div class="marquee-row" data-marquee-row data-direction={index % 2 === 0 ? "1" : "-1"}>
+        {[0, 1, 2].map(() => (
+          <span class="marquee-set">{row.map((skill) => <span class="marquee-word">{skill}<i></i></span>)}</span>
+        ))}
+      </div>
+    ))}
+  </div>
+
+  <div class="site-container band">
+    <header class="band-head">
+      <p class="tag"><span aria-hidden="true">&#123;</span> Stack <span aria-hidden="true">&#125;</span></p>
+      <h2 id="stack-title" class="band-title" data-lines>What I work with, from the screen down.</h2>
+    </header>
+
+    <ol class="layers">
+      {layers.map((layer) => (
+        <li class="layer">
+          <span class="rule" aria-hidden="true" data-rule></span>
+          <div class="layer-head" data-rise>
+            <h3 class="layer-name">{layer.label}</h3>
+            <p class="layer-what">{layer.what}</p>
+          </div>
+          <ul class="layer-tools" aria-label={`${layer.label} tools`} data-rise>
+            {layer.skills.map((skill) => <li>{skill}</li>)}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

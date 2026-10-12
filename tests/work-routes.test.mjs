@@ -88,7 +88,8 @@ test("generated project routes", async (t) => {
           if (url.origin !== "https://portfolio.test") continue;
           const target = url.pathname.replace(/\/$/, "") || "/";
           if (
-            target === "/favicon.svg" ||
+            target === "/favicon.png" ||
+            target === "/apple-touch-icon.png" ||
             target === "/rss.xml" ||
             target === "/resume/rokon-resume.pdf" ||
             target === "/resume/rokon-resume.txt" ||

@@ -1,0 +1,25 @@
+---
+// The last screen: back on the stage, one invitation, and the braces again.
+import { PROFILE } from "@/data/profile";
+import { BRACE_PATH, BRACE_VIEWBOX } from "@/design/brace";
+
+const github = PROFILE.contacts.find((contact) => contact.id === "github");
+---
+<section id="contact" class="closing" aria-labelledby="closing-title" data-header-tone="stage" data-closing>
+  <div class="closing-glow" aria-hidden="true"></div>
+  <div class="site-container closing-inner" data-closing-inner>
+    <p class="closing-text" data-closing-rise>Have a project, an engineering role, or a technical idea in mind? I’d be glad to hear the context.</p>
+    <h2 id="closing-title" class="closing-title">
+      <span class="closing-word" data-anchor="closing">
+        <svg class="closing-brace closing-brace-open" viewBox={BRACE_VIEWBOX} aria-hidden="true" focusable="false"><path d={BRACE_PATH} /></svg>
+        <span data-closing-word>Let’s talk.</span>
+        <svg class="closing-brace closing-brace-close" viewBox={BRACE_VIEWBOX} aria-hidden="true" focusable="false"><path d={BRACE_PATH} /></svg>
+      </span>
+    </h2>
+    <div class="closing-actions" data-closing-rise>
+      <a class="button button-brand button-lg" href="/contact" data-magnetic>Get in touch <span aria-hidden="true">→</span></a>
+      {github && <a class="button button-lg cover-ghost" href={github.url} target="_blank" rel="noopener noreferrer">{github.label} <span aria-hidden="true">↗</span></a>}
+      <a class="closing-link" href="/resume">Read my résumé</a>
+    </div>
+  </div>
+</section>

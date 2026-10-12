@@ -1,0 +1,1016 @@
+/* The homepage. It opens and closes on a dark stage; everything between is a
+   sheet of paper that slides over it. The stage holds one three.js scene,
+   fixed to the viewport, that the sheet covers and later uncovers.
+
+   Stacking, back to front: the stage's own content (1), the scene (2), the
+   sheet and the footer (3), the header (40). Nothing here hides content: the
+   page is complete before any script runs. */
+@layer components {
+  .page-stage {
+    position: relative;
+    margin-top: calc(var(--header-height) * -1);
+    padding-bottom: 0;
+    background: var(--stage);
+  }
+  .stage-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .stage-live .stage-canvas {
+    visibility: visible;
+  }
+  .stage-canvas canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ---- Cover ---------------------------------------------------------- */
+  /* One set of measurements drives the whole composition. The name is sized
+     to span the page; the figure is as tall as the space under the name
+     allows; the name then sits so the top of his hair overlaps its letters.
+     --name-ems is the measured width of the word at this weight and width. */
+  .cover {
+    --name-ems: 5.66;
+    --name-size: min(calc((100cqi - 2 * var(--page-gutter)) / var(--name-ems)), 34svh);
+    --name-gap: clamp(0.5rem, 1.6svh, 1.25rem);
+    /* The name runs to the gutters; the notes sit under its first and last
+       letters, in the corners of the cover. */
+    --cover-inset: calc(var(--page-gutter) + var(--name-size) * 0.045);
+    --figure-h: min(58svh, calc(96cqi / 0.983));
+    --figure-w: calc(var(--figure-h) * 0.983);
+    /* Share of the figure's height that fades out at the bottom. */
+    --figure-fade: 0.24;
+    position: relative;
+    z-index: 1;
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    padding-top: calc(var(--header-height) + var(--name-gap));
+    overflow: clip;
+    color: var(--stage-foreground);
+  }
+  .cover-glow {
+    position: absolute;
+    left: 50%;
+    top: calc(var(--header-height) + var(--name-size) * 0.4);
+    width: calc(var(--figure-w) * 1.9);
+    aspect-ratio: 1;
+    translate: -50% 0;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--brand-deep) 46%, transparent),
+      color-mix(in srgb, var(--brand-deep) 14%, transparent) 56%,
+      transparent
+    );
+    pointer-events: none;
+  }
+  .cover-name {
+    position: relative;
+    margin: 0 var(--page-gutter);
+    font-size: var(--name-size);
+    line-height: 0.8;
+    letter-spacing: 0;
+    text-align: center;
+    text-wrap: nowrap;
+  }
+  .cover-name-word {
+    display: block;
+    font-weight: 800;
+    font-stretch: 75%;
+    letter-spacing: -0.012em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .cover-name-word > div {
+    /* Letters split for the entrance keep the masthead's tight line. */
+    line-height: 0.8;
+  }
+  .cover-figure {
+    position: relative;
+    flex: none;
+    width: var(--figure-w);
+    height: var(--figure-h);
+    /* The face sits a little left of the picture's centre; this centres it. */
+    margin: calc(var(--name-size) * -0.3 - var(--figure-h) * 0.06) auto 0;
+    left: calc(var(--figure-w) * 0.04);
+  }
+  .cover-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-mask-image: linear-gradient(#000 calc(100% - var(--figure-fade) * 100%), transparent);
+    mask-image: linear-gradient(#000 calc(100% - var(--figure-fade) * 100%), transparent);
+  }
+  /* The braces from the logo, either side of his head. The scene draws the
+     same two shapes in the same places. */
+  .cover-brace {
+    position: absolute;
+    top: 10%;
+    height: 40%;
+    aspect-ratio: 78 / 224;
+    overflow: visible;
+    fill: none;
+    stroke-width: 23;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .cover-brace-open {
+    left: 15%;
+    translate: -50% 0;
+    stroke: var(--brand);
+  }
+  .cover-brace-close {
+    left: 77%;
+    translate: -50% 0;
+    scale: -1 1;
+    stroke: var(--brand-deep);
+  }
+  .stage-live :is(.cover-photo, .cover-brace, .closing-brace) {
+    opacity: 0;
+  }
+  .cover-notes {
+    position: relative;
+    display: grid;
+    gap: 1.75rem;
+    margin-top: calc(var(--figure-h) * -0.13);
+    padding: 0 var(--cover-inset) clamp(2rem, 6svh, 3rem);
+  }
+  .cover-role {
+    color: var(--brand);
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+  .cover-line {
+    max-width: 18ch;
+    margin-top: 0.625rem;
+    font-size: clamp(1.625rem, 6.4cqi, 2.25rem);
+    font-weight: 650;
+    font-stretch: var(--width-heading);
+    line-height: 1.08;
+    letter-spacing: var(--tracking-heading);
+    text-wrap: balance;
+  }
+  .cover-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-top: 1.5rem;
+  }
+  .cover .button .arrow,
+  .closing .button .arrow {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 320ms var(--ease-out);
+  }
+  .cover-ghost {
+    border-color: color-mix(in srgb, var(--stage-foreground) 34%, transparent);
+    color: var(--stage-foreground);
+  }
+  .cover-ghost:hover {
+    border-color: var(--stage-foreground);
+    background: var(--stage-foreground);
+    color: var(--stage);
+  }
+  .cover .button-brand:hover,
+  .closing .button-brand:hover {
+    background: var(--stage-foreground);
+    border-color: var(--stage-foreground);
+    color: var(--stage);
+  }
+  .cover :focus-visible,
+  .closing :focus-visible {
+    outline-color: var(--brand);
+  }
+  .cover-aside {
+    display: grid;
+    gap: 0.625rem;
+    color: var(--stage-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .cover-now {
+    display: grid;
+    gap: 0.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--stage-line);
+  }
+  .cover-now > span:last-child {
+    max-width: 34ch;
+  }
+  .cover-now-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--stage-foreground);
+    font-weight: 600;
+  }
+  .cover-now-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand) 60%, transparent);
+    animation: now-pulse 2.4s var(--ease-out) infinite;
+  }
+  .cover-aka {
+    color: var(--stage-muted);
+  }
+  .cover-scroll {
+    display: none;
+  }
+
+  /* Landscape screens get the full cover: one screen tall, the figure
+     standing on its bottom edge, the notes in the two lower corners. */
+  @media (min-width: 64rem) and (min-aspect-ratio: 5/4) {
+    .cover {
+      --cover-h: max(100svh, 36rem);
+      --figure-h: min(
+        calc((var(--cover-h) - var(--header-height) - var(--name-gap) - var(--name-size) * 0.5) / 0.94),
+        calc(46cqi / 0.983)
+      );
+      --figure-fade: 0;
+      display: block;
+      height: var(--cover-h);
+      min-height: 0;
+      padding-top: 0;
+    }
+    .cover-glow {
+      top: auto;
+      bottom: calc(var(--figure-h) * -0.28);
+    }
+    .cover-name {
+      position: absolute;
+      right: 0;
+      bottom: calc(var(--figure-h) * 0.94 - var(--name-size) * 0.3);
+      left: 0;
+    }
+    .cover-figure {
+      position: absolute;
+      bottom: 0;
+      left: calc(50% - var(--figure-w) * 0.46);
+      margin: 0;
+    }
+    .cover-notes {
+      position: absolute;
+      right: 0;
+      bottom: clamp(1.75rem, 5.5svh, 3.5rem);
+      left: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin: 0;
+      padding-bottom: 0;
+      pointer-events: none;
+    }
+    .cover-lead,
+    .cover-aside {
+      pointer-events: auto;
+    }
+    /* Each corner ends where an arm begins. */
+    .cover-lead {
+      width: min(calc(50cqi - var(--figure-w) * 0.37 - var(--cover-inset) - 1.25rem), 27rem);
+    }
+    .cover-aside {
+      width: min(calc(50cqi - var(--figure-w) * 0.42 - var(--cover-inset) - 1.25rem), 19rem);
+    }
+    .cover-line {
+      max-width: none;
+      font-size: clamp(1.375rem, 2.25cqi, 2.125rem);
+    }
+    .cover-scroll {
+      position: absolute;
+      top: 46%;
+      right: calc(var(--cover-inset) - 0.875rem);
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 2.75rem;
+      padding-block: 0.5rem;
+      color: var(--stage-muted);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+    }
+    .cover-scroll span {
+      writing-mode: vertical-rl;
+    }
+    .cover-scroll svg {
+      width: 1rem;
+      height: 2.5rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.25;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: scroll-nudge 2.2s var(--ease-ui) infinite;
+    }
+    .cover-scroll:hover {
+      color: var(--stage-foreground);
+    }
+  }
+
+  /* While the entrance loads, the first screen waits out of sight. The class
+     is only ever added when motion is welcome, and it removes itself. */
+  .intro-pending :is(.cover-name-word, .cover-figure, .cover-glow, .cover [data-intro]) {
+    opacity: 0;
+  }
+
+  /* ---- Sheet ---------------------------------------------------------- */
+  .sheet {
+    position: relative;
+    z-index: 3;
+    background: var(--background);
+    color: var(--foreground);
+    border-radius: var(--radius-panel);
+  }
+  .band {
+    padding-block: clamp(5rem, 11vw, 10.5rem);
+  }
+  .band + .band {
+    padding-top: 0;
+  }
+  .band-head,
+  .band-head-split > div:first-child {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .band-head {
+    margin-bottom: clamp(2.75rem, 6vw, 5.5rem);
+  }
+  .band-title {
+    max-width: 15ch;
+    font-size: clamp(2.625rem, 6.6vw, 6rem);
+    font-weight: 750;
+    font-stretch: var(--width-display);
+    line-height: 0.93;
+    letter-spacing: var(--tracking-display);
+  }
+  .band-side {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    max-width: 34ch;
+    color: var(--muted-foreground);
+    font-size: var(--text-lede);
+    line-height: 1.5;
+  }
+  .section-link {
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration-thickness: 1.5px;
+  }
+  .rule {
+    display: block;
+    height: 1px;
+    background: color-mix(in srgb, var(--foreground) 22%, transparent);
+    transform-origin: left center;
+  }
+
+  /* ---- About ---------------------------------------------------------- */
+  .statement-grid {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .statement-text {
+    max-width: 24ch;
+    font-size: clamp(1.875rem, 4.7vw, 4.25rem);
+    font-weight: 650;
+    font-stretch: var(--width-heading);
+    line-height: 1.04;
+    letter-spacing: var(--tracking-display);
+    text-wrap: pretty;
+  }
+  .statement-more {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    max-width: 46ch;
+    margin-top: clamp(0.5rem, 2vw, 1.5rem);
+    color: var(--muted-foreground);
+    font-size: var(--text-lede);
+    line-height: 1.55;
+  }
+  .statement-school {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+
+  /* ---- Experience ----------------------------------------------------- */
+  .roles {
+    display: grid;
+  }
+  .role {
+    display: grid;
+    gap: 1rem;
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .role .rule {
+    margin-bottom: clamp(1rem, 2.2vw, 1.75rem);
+  }
+  .role-when {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.875rem;
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+  .live-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4375rem;
+    padding: 0.1875rem 0.625rem;
+    border-radius: 0.375rem;
+    background: var(--brand);
+    color: var(--brand-ink);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .live-tag > span {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .role-company {
+    font-size: clamp(1.75rem, 3.5vw, 3rem);
+    font-weight: 720;
+    font-stretch: var(--width-display);
+    line-height: 1;
+    letter-spacing: var(--tracking-heading);
+  }
+  .role-title {
+    margin-top: 0.625rem;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .role-summary {
+    font-size: var(--text-lede);
+    line-height: 1.5;
+  }
+  .role-points {
+    display: grid;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+    color: var(--muted-foreground);
+  }
+  .role-points li {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  .role-points li::before {
+    content: "";
+    position: absolute;
+    top: 0.72em;
+    left: 0;
+    width: 0.75rem;
+    height: 2px;
+    background: var(--brand-deep);
+  }
+  .role-tools {
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+  .role-tools span {
+    color: var(--muted-foreground);
+    font-weight: 400;
+  }
+
+  /* ---- Projects ------------------------------------------------------- */
+  .builds {
+    display: grid;
+  }
+  .build {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3rem);
+    padding-bottom: clamp(3.5rem, 8vw, 7rem);
+  }
+  .build:last-child {
+    padding-bottom: 0;
+  }
+  .build .rule {
+    margin-bottom: clamp(0.25rem, 1.5vw, 1rem);
+  }
+  .build-kind {
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+  .build-name {
+    margin-top: 0.75rem;
+    font-size: clamp(2rem, 4.6vw, 4rem);
+    font-weight: 740;
+    font-stretch: var(--width-display);
+    line-height: 0.96;
+    letter-spacing: var(--tracking-display);
+  }
+  .build-name a {
+    color: inherit;
+    text-decoration: none;
+    transition: font-stretch 520ms var(--ease-out);
+  }
+  .build-about {
+    max-width: 46ch;
+    margin-top: 1.5rem;
+    color: var(--muted-foreground);
+    font-size: var(--text-lede);
+    line-height: 1.5;
+  }
+  .build-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 1.5rem;
+  }
+  .build-stack li {
+    padding: 0.25rem 0.6875rem;
+    border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .build-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin-top: 2rem;
+  }
+  .build-actions .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3125rem;
+    min-height: 2.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+  .window-wrap {
+    perspective: 1200px;
+    min-width: 0;
+  }
+  .window {
+    position: relative;
+    border-radius: 1.125rem;
+    background: var(--stage);
+    color: var(--stage-foreground);
+    box-shadow:
+      0 1px 0 0 color-mix(in srgb, var(--stage-foreground) 14%, transparent) inset,
+      0 40px 70px -40px color-mix(in srgb, var(--stage) 70%, transparent);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  /* A light that follows the pointer across the window. */
+  .window::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      22rem circle at var(--light-x, 70%) var(--light-y, 0%),
+      color-mix(in srgb, var(--brand) 20%, transparent),
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+  .window-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem 1.125rem;
+    border-bottom: 1px solid var(--stage-line);
+    color: var(--stage-muted);
+    font-size: 0.8125rem;
+  }
+  .window-dots {
+    display: inline-flex;
+    gap: 0.375rem;
+  }
+  .window-dots i {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    background: var(--stage-line);
+  }
+  .window-dots i:first-child {
+    background: var(--brand);
+  }
+  .window-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .window-language {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .window-code {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: clamp(1.5rem, 3.4vw, 2.75rem) clamp(1.125rem, 2.4vw, 1.75rem);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: clamp(0.8125rem, 1.25vw, 1.0625rem);
+    line-height: 1.9;
+    tab-size: 2;
+  }
+  .window-code:focus-visible {
+    outline-offset: -4px;
+    outline-color: var(--brand);
+  }
+  .window-code .verb {
+    color: var(--brand);
+    font-weight: 500;
+  }
+  .window-code .slot {
+    color: var(--warm-decorative);
+  }
+  .window-note {
+    position: relative;
+    z-index: 1;
+    padding: 1rem 1.125rem 1.125rem;
+    border-top: 1px solid var(--stage-line);
+    color: var(--stage-muted);
+    font-size: 0.8125rem;
+    line-height: 1.55;
+  }
+
+  /* ---- Stack ---------------------------------------------------------- */
+  /* Two lines of the same names passing each other: one narrow and heavy,
+     one wide and light. The same typeface at both ends of its range. */
+  .marquee {
+    display: grid;
+    gap: clamp(0.25rem, 1vw, 0.75rem);
+    padding-block: clamp(1.75rem, 4vw, 3.25rem);
+    background: var(--stage);
+    color: var(--stage-foreground);
+    overflow: clip;
+  }
+  .marquee-row {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+  .marquee-set {
+    display: flex;
+    flex: none;
+  }
+  .marquee-word {
+    display: inline-flex;
+    align-items: center;
+    font-size: clamp(2.75rem, 8.4vw, 7.5rem);
+    font-weight: 800;
+    font-stretch: 75%;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .marquee-word i {
+    width: 0.16em;
+    height: 0.16em;
+    margin-inline: 0.3em;
+    border-radius: 50%;
+    background: var(--brand);
+  }
+  .marquee-row:nth-child(2) .marquee-word {
+    color: var(--brand);
+    font-weight: 300;
+    font-stretch: 125%;
+    letter-spacing: 0;
+  }
+  .marquee-row:nth-child(2) .marquee-word i {
+    background: var(--stage-foreground);
+  }
+  .layers {
+    display: grid;
+  }
+  .layer {
+    display: grid;
+    gap: 1rem;
+    padding-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+  .layer .rule {
+    margin-bottom: clamp(0.5rem, 1.6vw, 1.25rem);
+  }
+  .layer-name {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    font-weight: 650;
+    font-stretch: 100%;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+  .layer-what {
+    max-width: 30ch;
+    margin-top: 0.25rem;
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .layer-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.125em 0.55em;
+    font-size: clamp(1.75rem, 4.3vw, 3.75rem);
+    font-weight: 720;
+    font-stretch: var(--width-display);
+    line-height: 1.02;
+    letter-spacing: var(--tracking-display);
+  }
+  .layer-tools li {
+    transition:
+      color 320ms var(--ease-ui),
+      font-stretch 520ms var(--ease-out);
+  }
+  .layer-tools li:not(:last-child)::after {
+    content: "/";
+    margin-left: 0.55em;
+    color: color-mix(in srgb, var(--foreground) 22%, transparent);
+    font-weight: 300;
+  }
+
+  /* ---- Principles ----------------------------------------------------- */
+  .cards {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .card {
+    position: sticky;
+    top: calc(var(--header-height) + 1rem + var(--i) * 0.875rem);
+  }
+  .card-face {
+    display: grid;
+    align-content: space-between;
+    gap: 2.5rem;
+    min-height: min(27rem, 58svh);
+    padding: clamp(1.75rem, 5vw, 4.25rem);
+    border-radius: var(--radius-panel);
+    background: var(--card);
+    box-shadow: 0 0 0 1px var(--border) inset;
+    transform-origin: 50% 0;
+    will-change: transform;
+  }
+  .card:nth-child(2) .card-face {
+    background: var(--brand);
+    box-shadow: none;
+    color: var(--brand-ink);
+  }
+  .card:nth-child(3) .card-face {
+    background: var(--stage);
+    box-shadow: none;
+    color: var(--stage-foreground);
+  }
+  .card-title {
+    max-width: 12ch;
+    font-size: clamp(2.25rem, 6vw, 5.5rem);
+    font-weight: 760;
+    font-stretch: var(--width-display);
+    line-height: 0.93;
+    letter-spacing: var(--tracking-display);
+  }
+  .card-text {
+    max-width: 36ch;
+    font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
+    line-height: 1.45;
+  }
+  .card:nth-child(1) .card-text {
+    color: var(--muted-foreground);
+  }
+  .card:nth-child(3) .card-text {
+    color: var(--stage-muted);
+  }
+
+  /* ---- Closing -------------------------------------------------------- */
+  .closing {
+    position: relative;
+    z-index: 1;
+    container-type: inline-size;
+    display: grid;
+    place-items: center;
+    min-height: 100svh;
+    padding-block: clamp(6rem, 14vw, 10rem) clamp(4rem, 9vw, 7rem);
+    overflow: clip;
+    color: var(--stage-foreground);
+    text-align: center;
+  }
+  .closing-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(120cqi, 70rem);
+    aspect-ratio: 1.4;
+    translate: -50% -50%;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--brand-deep) 40%, transparent),
+      color-mix(in srgb, var(--brand-deep) 10%, transparent) 60%,
+      transparent
+    );
+    pointer-events: none;
+  }
+  .closing-inner {
+    position: relative;
+    display: grid;
+    justify-items: center;
+  }
+  .closing-text {
+    max-width: 34ch;
+    color: var(--stage-muted);
+    font-size: var(--text-lede);
+    line-height: 1.5;
+  }
+  /* --word-ems: measured width of the words, plus room for a brace each side. */
+  .closing-title {
+    --word-ems: 4.9;
+    margin-block: clamp(1.75rem, 5vw, 3.5rem) clamp(2rem, 5vw, 3.75rem);
+    font-size: min(calc((100cqi - 2 * var(--page-gutter)) / var(--word-ems)), 13.5rem);
+    font-weight: 800;
+    font-stretch: 75%;
+    line-height: 0.85;
+    letter-spacing: -0.012em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .closing-word {
+    position: relative;
+    display: inline-block;
+  }
+  .closing-brace {
+    position: absolute;
+    top: 50%;
+    height: 1.18em;
+    aspect-ratio: 78 / 224;
+    overflow: visible;
+    fill: none;
+    stroke-width: 23;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .closing-brace-open {
+    right: calc(100% + 0.16em);
+    translate: 0 -54%;
+    stroke: var(--brand);
+  }
+  .closing-brace-close {
+    left: calc(100% + 0.16em);
+    translate: 0 -54%;
+    scale: -1 1;
+    stroke: var(--brand-deep);
+  }
+  .closing-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem 1rem;
+  }
+  .closing-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 0.5rem;
+    color: var(--stage-foreground);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.3em;
+    border-radius: var(--radius-sm);
+  }
+  .closing-link:hover {
+    color: var(--brand);
+  }
+
+  /* ---- Wider screens -------------------------------------------------- */
+  @media (min-width: 48rem) {
+    .statement-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3.2fr);
+      column-gap: var(--grid-gap);
+    }
+    .statement-grid > .tag {
+      align-self: start;
+      padding-top: 0.75em;
+    }
+    .statement-more {
+      grid-column: 2;
+    }
+    .band-head-split {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      align-items: end;
+      column-gap: clamp(2rem, 5vw, 5rem);
+    }
+    .band-head-split > .band-side {
+      justify-self: end;
+      padding-bottom: 0.5rem;
+    }
+    .layer {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3.2fr);
+      column-gap: var(--grid-gap);
+    }
+    .layer .rule {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (min-width: 64rem) {
+    .role {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr) minmax(0, 1.65fr);
+      column-gap: var(--grid-gap);
+    }
+    .role .rule {
+      grid-column: 1 / -1;
+    }
+    .role-when {
+      align-self: start;
+      padding-top: 0.5rem;
+    }
+    .build {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: clamp(2.5rem, 6vw, 6rem);
+      align-items: center;
+    }
+    .build .rule {
+      grid-column: 1 / -1;
+    }
+    .build:nth-child(even) .build-copy {
+      order: 2;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .button:hover .arrow {
+      transform: translateY(2px);
+    }
+    .cover-ghost:hover .arrow {
+      transform: translate(2px, -2px);
+    }
+    .build-name a:hover {
+      font-stretch: 96%;
+    }
+    .layer:hover .layer-tools li {
+      color: var(--primary);
+      font-stretch: 92%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card {
+      position: static;
+    }
+  }
+  @media (forced-colors: active) {
+    .cover-brace,
+    .closing-brace {
+      stroke: CanvasText;
+    }
+    .live-tag,
+    .card-face,
+    .window {
+      border: 1px solid CanvasText;
+    }
+  }
+}
+
+@keyframes now-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--brand) 60%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 0.625rem transparent;
+  }
+}
+@keyframes scroll-nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.375rem);
+  }
+}
+
+/* Lines split for their entrance are clipped by a mask; tight headings need
+   room under the baseline or the mask trims their descenders. */
+.line-mask {
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}

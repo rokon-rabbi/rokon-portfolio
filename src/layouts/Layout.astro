@@ -6,7 +6,7 @@ import SiteHeader from "@/components/design/SiteHeader.astro";
 import SiteFooter from "@/components/design/SiteFooter.astro";
 import { THEME_CSS } from "@/design/tokens";
 import { canonicalUrl, pageSchema, serializeSchema, socialPreviewImage } from "@/lib/seo";
-import outfitFont from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
+import sansFont from "@fontsource-variable/mona-sans/files/mona-sans-latin-wdth-normal.woff2?url";
 
 interface Props {
   title?: string;
@@ -16,11 +16,23 @@ interface Props {
   article?: { publishedTime: string; modifiedTime: string; author: string; tags: string[] };
   canonicalURL?: string;
   noindex?: boolean;
+  /** The page places its own containers, so sections can run edge to edge. */
+  bleed?: boolean;
+  /** The page opens on the dark stage and slides under the header. */
+  stage?: boolean;
+  /** The page opens with an entrance; its first screen waits for the motion module. */
+  intro?: boolean;
+  /** An image the first screen depends on. */
+  preloadImage?: string;
 }
 
 const {
   title,
   noindex = false,
+  bleed = false,
+  stage = false,
+  intro = false,
+  preloadImage,
   description = DATA.description,
   image,
   imageAlt,
@@ -48,22 +60,36 @@ const { baseFontSize } = CONFIG.typography;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="preload" href={outfitFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={sansFont} as="font" type="font/woff2" crossorigin />
+    {preloadImage && <link rel="preload" href={preloadImage} as="image" fetchpriority="high" />}
 
     <script is:inline>
       (function () {
         var saved = null;
         try { var value = localStorage.getItem("theme"); if (value === "dark" || value === "light") saved = value; } catch (_) {}
-        var mode = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        var mode = saved || "light";
         document.documentElement.dataset.theme = mode;
         document.documentElement.classList.toggle("dark", mode === "dark");
         document.documentElement.style.colorScheme = mode;
       })();
     </script>
+    {intro && (
+      <script is:inline>
+        // The first screen starts hidden only when motion is welcome. If the
+        // motion module never arrives, the finished page appears on its own.
+        (function () {
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          var root = document.documentElement;
+          root.classList.add("intro-pending");
+          setTimeout(function () { root.classList.remove("intro-pending"); }, 2400);
+        })();
+      </script>
+    )}
     <style is:inline set:html={THEME_CSS}></style>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- Primary meta -->
     <title>{pageTitle}</title>
@@ -106,7 +132,7 @@ const { baseFontSize } = CONFIG.typography;
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
     <SiteHeader />
-    <main id="main-content" class="site-container page-content" tabindex="-1"><slot /></main>
+    <main id="main-content" class:list={[bleed ? "page-bleed" : "site-container page-content", { "page-stage": stage }]} tabindex="-1"><slot /></main>
     <SiteFooter />
     <script>import "../scripts/theme";</script>
     <script>import "../scripts/motion";</script>

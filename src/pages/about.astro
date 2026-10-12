@@ -1,5 +1,6 @@
 ---
 export const prerender = true;
+import { getImage } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";
 import ResumeLinks from "@/components/design/ResumeLinks.astro";
 import { ABOUT, EDUCATION } from "@/data/about";
@@ -9,26 +10,40 @@ import { SKILL_GROUPS } from "@/data/skills";
 import { CONTACT_DETAILS } from "@/data/contact";
 import { formatEmploymentMonth } from "@/lib/portfolio-dates";
 import { validatePortfolioContent } from "@/lib/portfolio-content";
+import { BRACE_PATH, BRACE_VIEWBOX } from "@/design/brace";
+import cutoutSource from "@/assets/brand/rokon-cutout.webp";
 import "@/styles/profile-pages.css";
 validatePortfolioContent();
+
+// The card shows the portrait at up to about 500px wide.
+const portrait = await getImage({ src: cutoutSource, width: 1000, format: "webp", quality: 84 });
+const current = EXPERIENCE.find((role) => role.end === null);
 ---
 <Layout title="About" description="Meet Rokon, a full-stack software engineer working across frontend applications, backend systems, and software delivery.">
   <div class="profile-page">
     <header class="profile-masthead" data-motion="reveal">
-      <div>
-        <p class="eyebrow">About / The person behind the work</p>
-        <h1 class="profile-title">A thoughtful approach.<br /><span class="text-primary">A connected perspective.</span></h1>
+      <div class="profile-masthead-copy">
+        <p class="tag"><span aria-hidden="true">&#123;</span> About <span aria-hidden="true">&#125;</span></p>
+        <h1 class="profile-title">I care about how the pieces fit together.</h1>
         <p class="profile-introduction">{ABOUT.introduction}</p>
         <ResumeLinks />
+        <dl class="profile-facts">
+          {current && <div><dt>Now</dt><dd>{current.title} at {current.company}</dd></div>}
+          <div><dt>Studied at</dt><dd>{EDUCATION.institution}</dd></div>
+        </dl>
       </div>
-      <aside class="profile-identity" aria-label="Professional identity">
-        <div class="identity-drawing" aria-hidden="true"><span>R<span class="text-primary">.</span></span><i></i><i></i><i></i></div>
-        <p class="identity-name">{PROFILE.name}</p>
-        <p class="metadata">{PROFILE.headline}</p>
-        <div class="identity-rule"></div>
-        <p class="eyebrow">Working across</p>
-        <p class="identity-scope">Interfaces. Systems. Delivery.</p>
-      </aside>
+      {/* The same picture as the homepage cover: Rokon between his logo's braces. */}
+      <figure class="portrait-card">
+        <div class="portrait-figure">
+          <img src={portrait.src} width={portrait.attributes.width} height={portrait.attributes.height} alt={`Portrait of ${PROFILE.name}`} fetchpriority="high" decoding="async" />
+          <svg class="portrait-brace portrait-brace-open" viewBox={BRACE_VIEWBOX} aria-hidden="true" focusable="false"><path d={BRACE_PATH} /></svg>
+          <svg class="portrait-brace portrait-brace-close" viewBox={BRACE_VIEWBOX} aria-hidden="true" focusable="false"><path d={BRACE_PATH} /></svg>
+        </div>
+        <figcaption class="portrait-caption">
+          <span class="portrait-name">{PROFILE.name}</span>
+          <span class="portrait-role">{PROFILE.headline}</span>
+        </figcaption>
+      </figure>
     </header>
 
     <section class="profile-section profile-split" aria-labelledby="approach-heading">

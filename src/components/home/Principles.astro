@@ -1,0 +1,24 @@
+---
+// Three working principles from the about record. They stack as you scroll:
+// each one arrives on top of the last.
+import { ABOUT } from "@/data/about";
+---
+<section id="principles" class="band principles" aria-labelledby="principles-title">
+  <div class="site-container">
+    <header class="band-head">
+      <p class="tag"><span aria-hidden="true">&#123;</span> Principles <span aria-hidden="true">&#125;</span></p>
+      <h2 id="principles-title" class="band-title" data-lines>How I like to work.</h2>
+    </header>
+
+    <ol class="cards" data-cards>
+      {ABOUT.principles.map((principle, index) => (
+        <li class="card" data-card style={`--i:${index}`}>
+          <div class="card-face" data-card-face>
+            <h3 class="card-title">{principle.title}</h3>
+            <p class="card-text">{principle.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

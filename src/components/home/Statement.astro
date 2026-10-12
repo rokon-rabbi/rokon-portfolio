@@ -1,0 +1,15 @@
+---
+// The about record, set large enough to be read as you scroll past it.
+import { ABOUT, EDUCATION } from "@/data/about";
+---
+<section id="about" class="band statement" aria-labelledby="statement-title">
+  <div class="site-container statement-grid">
+    <h2 id="statement-title" class="tag"><span aria-hidden="true">&#123;</span> About <span aria-hidden="true">&#125;</span></h2>
+    <p class="statement-text" data-words>{ABOUT.introduction}</p>
+    <div class="statement-more" data-rise>
+      <p>{ABOUT.context}</p>
+      <p class="statement-school">Studied at {EDUCATION.institution}.</p>
+      <a class="text-link section-link" href="/about">More about me <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>

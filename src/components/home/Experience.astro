@@ -1,0 +1,38 @@
+---
+// Employment, newest first, straight from the experience record.
+import { EXPERIENCE } from "@/data/experience";
+
+const month = new Intl.DateTimeFormat("en", { month: "short", year: "numeric", timeZone: "UTC" });
+const format = (value: string) => month.format(new Date(`${value}-01T00:00:00Z`));
+---
+<section id="experience" class="band experience" aria-labelledby="experience-title">
+  <div class="site-container">
+    <header class="band-head">
+      <p class="tag"><span aria-hidden="true">&#123;</span> Experience <span aria-hidden="true">&#125;</span></p>
+      <h2 id="experience-title" class="band-title" data-lines>Where I’ve worked so far.</h2>
+    </header>
+
+    <ol class="roles">
+      {EXPERIENCE.map((role) => (
+        <li class="role">
+          <span class="rule" aria-hidden="true" data-rule></span>
+          <p class="role-when" data-rise>
+            <span><time datetime={role.start}>{format(role.start)}</time> – {role.end ? <time datetime={role.end}>{format(role.end)}</time> : "now"}</span>
+            {!role.end && <span class="live-tag"><span aria-hidden="true"></span>Current</span>}
+          </p>
+          <div class="role-who" data-rise>
+            <h3 class="role-company">{role.company}</h3>
+            <p class="role-title">{role.title}</p>
+          </div>
+          <div class="role-what" data-rise>
+            <p class="role-summary">{role.summary}</p>
+            <ul class="role-points">
+              {role.contributions.map((contribution) => <li>{contribution.text}</li>)}
+            </ul>
+            {role.technologies.length > 0 && <p class="role-tools"><span>Built with</span> {role.technologies.join(", ")}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

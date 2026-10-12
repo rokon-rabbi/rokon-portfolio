@@ -1,21 +1,36 @@
 ---
 export const prerender = true;
+import { getImage } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import HomePage from "@/components/HomePage";
+import Hero from "@/components/home/Hero.astro";
+import Statement from "@/components/home/Statement.astro";
+import Experience from "@/components/home/Experience.astro";
+import Projects from "@/components/home/Projects.astro";
+import Stack from "@/components/home/Stack.astro";
+import Principles from "@/components/home/Principles.astro";
+import Closing from "@/components/home/Closing.astro";
 import { validatePortfolioContent } from "@/lib/portfolio-content";
 import { DATA } from "@/data/resume";
-import { getPublishedPosts } from "@/lib/blog";
-import "@/styles/profile-pages.css";
+import cutoutSource from "@/assets/brand/rokon-cutout.webp";
+import "@/styles/home.css";
+
 validatePortfolioContent();
-const articles = (await getPublishedPosts()).slice(0, 3).map(post => ({
-  id: post.id,
-  title: post.data.title,
-  summary: post.data.description,
-  publishedAt: post.data.date,
-}));
+// The cover shows the portrait at up to about 900px tall; 1280px wide keeps it
+// sharp on dense screens. It is also the texture the scene draws.
+const image = await getImage({ src: cutoutSource, width: 1280, format: "webp", quality: 84 });
+const portrait = { src: image.src, width: Number(image.attributes.width), height: Number(image.attributes.height) };
 ---
 
-<Layout>
-  <HomePage data={DATA} articles={articles} />
-  <script>import "../scripts/systems-hero";</script>
+<Layout bleed stage intro preloadImage={portrait.src}>
+  <div class="stage-canvas" data-stage data-photo={portrait.src} aria-hidden="true"></div>
+  <Hero portrait={portrait} />
+  <div class="sheet" data-sheet>
+    <Statement />
+    <Experience />
+    <Projects projects={DATA.projects} intro={DATA.sections.projects.text} />
+    <Stack />
+    <Principles />
+  </div>
+  <Closing />
+  <script>import "../scripts/home";</script>
 </Layout>

@@ -182,14 +182,14 @@ test("theme contrast and behavior", async (t) => {
     };
   }
   await t.test(
-    "first paint follows saved choice, then system, including denied storage",
+    "first paint follows saved choice, then light, including denied storage",
     () => {
       for (const [options, expected] of [
         [{ preference: "light", dark: true }, "light"],
         [{ preference: "dark", dark: false }, "dark"],
-        [{ dark: true }, "dark"],
-        [{ preference: "invalid", dark: true }, "dark"],
-        [{ blocked: true, dark: true }, "dark"],
+        [{ dark: true }, "light"],
+        [{ preference: "invalid", dark: true }, "light"],
+        [{ blocked: true, dark: true }, "light"],
       ]) {
         const env = environment(options);
         runInNewContext(bootstrap, env.context);
@@ -206,18 +206,18 @@ test("theme contrast and behavior", async (t) => {
     },
   );
   await t.test(
-    "system changes are followed until an explicit choice is made",
+    "light is the default until an explicit choice is made, whatever the system prefers",
     () => {
-      const env = environment();
+      const env = environment({ dark: true });
       runInNewContext(controller, env.context);
-      env.media.matches = true;
-      env.media.listeners.change();
+      assert.equal(env.root.dataset.theme, "light");
+      assert.equal(env.media.listeners.change, undefined);
+      env.buttons[0].listeners.click();
       assert.equal(env.root.dataset.theme, "dark");
+      assert.equal(env.storage.value, "dark");
       env.buttons[0].listeners.click();
       assert.equal(env.root.dataset.theme, "light");
       assert.equal(env.storage.value, "light");
-      env.media.listeners.change();
-      assert.equal(env.root.dataset.theme, "light");
       assert.equal(env.buttons[1].attributes["aria-label"], "Use dark theme");
     },
   );

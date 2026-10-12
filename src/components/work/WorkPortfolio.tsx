@@ -29,7 +29,7 @@ export default function WorkPortfolio({
             Personal projects and open-source repositories, with technical
             context from public source code and clear contribution boundaries.
           </p>
-          <a href="/#work" className="text-link">
+          <a href="/#experience" className="text-link">
             Professional experience <span aria-hidden="true">↗</span>
           </a>
         </div>
@@ -90,7 +90,7 @@ export default function WorkPortfolio({
             Employer-related work is presented separately as professional
             experience.
           </p>
-          <a href="/#work" className="text-link">
+          <a href="/#experience" className="text-link">
             Read my experience <span aria-hidden="true">↗</span>
           </a>
         </div>

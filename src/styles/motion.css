@@ -26,23 +26,20 @@
     position: relative;
     transition: color var(--duration-fast) var(--ease-ui);
   }
+  /* The current page gets a short mint bar, the smallest piece of the logo. */
   .desktop-nav .nav-link::after {
     content: "";
     position: absolute;
-    inset: auto 0 0.25rem;
-    height: 1px;
-    background: currentColor;
+    inset: auto 0 0.375rem;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--brand);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform var(--duration-fast) var(--ease-ui);
-  }
-  .desktop-nav .nav-link:is(:hover, [aria-current="page"]) {
-    text-decoration: none;
+    transition: transform 260ms var(--ease-out);
   }
   .desktop-nav .nav-link[aria-current="page"]::after {
     transform: scaleX(1);
-    background: var(--primary);
-    height: 2px;
   }
   .desktop-nav .nav-link:focus-visible::after {
     transform: scaleX(1);

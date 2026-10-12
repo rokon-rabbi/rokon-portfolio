@@ -1,0 +1,78 @@
+---
+// Personal projects. Each one shows a short excerpt of its reviewed source in
+// place of a screenshot, because that is the evidence the records hold.
+import type { Project } from "@/schemas/portfolio";
+import { workHref } from "@/lib/work";
+
+interface Props {
+  projects: readonly Project[];
+  intro: string;
+}
+const { projects, intro } = Astro.props;
+
+// "GET  /api/events/{eventId}" -> verb, then path with its variables marked.
+const httpLine = (line: string) => {
+  const match = line.match(/^([A-Z]+)(\s+)(\S.*)$/);
+  if (!match) return [{ text: line, kind: "plain" }];
+  const [, verb, gap, rest] = match;
+  return [
+    { text: verb, kind: "verb" },
+    { text: gap, kind: "plain" },
+    ...rest.split(/(\{[^}]+\})/).filter(Boolean).map((text) => ({ text, kind: text.startsWith("{") ? "slot" : "plain" })),
+  ];
+};
+---
+<section id="projects" class="band projects" aria-labelledby="projects-title">
+  <div class="site-container">
+    <header class="band-head band-head-split">
+      <div>
+        <p class="tag"><span aria-hidden="true">&#123;</span> Projects <span aria-hidden="true">&#125;</span></p>
+        <h2 id="projects-title" class="band-title" data-lines>Things I’ve built outside of work.</h2>
+      </div>
+      <div class="band-side" data-rise>
+        <p>{intro}</p>
+        <a class="text-link section-link" href="/work">All work <span aria-hidden="true">→</span></a>
+      </div>
+    </header>
+
+    <div class="builds">
+      {projects.map((project) => {
+        const sample = project.caseStudy.codeSamples[0];
+        const links = project.links.filter((link) => link.kind === "source" || link.kind === "upstream");
+        return (
+          <article class="build" data-build>
+            <span class="rule" aria-hidden="true" data-rule></span>
+            <div class="build-copy">
+              <p class="build-kind" data-rise>{project.attribution.label}</p>
+              <h3 class="build-name" data-lines><a href={workHref(project)}>{project.title}</a></h3>
+              {project.summary && <p class="build-about" data-rise>{project.summary}</p>}
+              {project.technologies.length > 0 && (
+                <ul class="build-stack" aria-label="Built with" data-rise>
+                  {project.technologies.map((technology) => <li>{technology}</li>)}
+                </ul>
+              )}
+              <p class="build-actions" data-rise>
+                <a class="button button-primary" href={workHref(project)} aria-label={`Read the case study: ${project.title}`}>Read the case study <span aria-hidden="true">→</span></a>
+                {links.map((link) => (
+                  <a class="text-link" href={link.url} target="_blank" rel="noopener noreferrer" aria-label={`${link.label}: ${project.title}`}>{link.label} <span aria-hidden="true">↗</span></a>
+                ))}
+              </p>
+            </div>
+
+            {sample && (
+              <div class="window-wrap" data-tilt>
+                <figure class="window" data-window>
+                  <p class="window-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="window-title">{sample.title}</span><span class="window-language">{sample.language}</span></p>
+                  <pre class="window-code" tabindex="0" aria-label={sample.title}><code>{sample.language === "http"
+                    ? sample.code.split("\n").map((line, index) => <>{index > 0 && "\n"}{httpLine(line).map((token) => token.kind === "plain" ? token.text : <span class={token.kind}>{token.text}</span>)}</>)
+                    : sample.code}</code></pre>
+                  <figcaption class="window-note">{sample.caption}</figcaption>
+                </figure>
+              </div>
+            )}
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

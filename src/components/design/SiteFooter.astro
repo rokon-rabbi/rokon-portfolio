@@ -1,23 +1,42 @@
 ---
+import { getImage } from "astro:assets";
 import { PROFILE } from "@/data/profile";
 import { CONTACT_DETAILS, emailHref } from "@/data/contact";
+import logoSource from "@/assets/brand/rokon-logo.png";
+
+const logo = await getImage({ src: logoSource, width: 360, format: "webp" });
 ---
-<footer class="site-footer">
+<footer class="site-footer" data-header-tone="stage">
   <div class="site-container footer-grid">
-    <div><a href="/" class="footer-brand">Rokon<span class="text-primary">.</span></a><p class="metadata mt-3">Systems in Motion</p></div>
-    <p class="footer-note">Thoughtful interfaces.<br />Connected systems.</p>
-    <nav aria-label="Footer" class="footer-links">
-      {PROFILE.contacts.map((contact) => <a class="text-link" href={contact.url} target="_blank" rel="noopener noreferrer">{contact.label} <span aria-hidden="true">↗</span></a>)}
-      {CONTACT_DETAILS.linkedin && <a class="text-link" href={CONTACT_DETAILS.linkedin}>LinkedIn <span aria-hidden="true">↗</span></a>}
-      {CONTACT_DETAILS.email && <a class="text-link" href={emailHref(CONTACT_DETAILS.email)}>Email <span aria-hidden="true">↗</span></a>}
-      <a class="text-link" href="/about">About</a>
-      <a class="text-link" href="/contact">Contact</a>
-      <a class="text-link" href="/resume">Resume</a>
-      <a class="text-link" href="/blog">Writing</a>
-      <a class="text-link" href="/rss.xml">RSS</a>
-      <a class="text-link" href="/work">Work</a>
-      <a class="text-link" href="/design-system">Design system</a>
+    <div>
+      <a href="/" class="footer-brand" aria-label={`${PROFILE.name} — home`}>
+        <img src={logo.src} width={logo.attributes.width} height={logo.attributes.height} alt="" loading="lazy" decoding="async" />
+      </a>
+      <p class="footer-note">{PROFILE.name}. {PROFILE.headline}, working across frontend applications, REST APIs and CI/CD.</p>
+    </div>
+    <nav aria-label="Footer" class="footer-column">
+      <h2>On this site</h2>
+      <div class="footer-links">
+        <a href="/work">Work</a>
+        <a href="/about">About</a>
+        <a href="/blog">Writing</a>
+        <a href="/resume">Résumé</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </nav>
+    <nav aria-label="Elsewhere" class="footer-column">
+      <h2>Elsewhere</h2>
+      <div class="footer-links">
+        {PROFILE.contacts.map((contact) => <a href={contact.url} target="_blank" rel="noopener noreferrer">{contact.label} <span aria-hidden="true">↗</span></a>)}
+        {CONTACT_DETAILS.linkedin && <a href={CONTACT_DETAILS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>}
+        {CONTACT_DETAILS.email && <a href={emailHref(CONTACT_DETAILS.email)}>Email <span aria-hidden="true">↗</span></a>}
+        <a href="/rss.xml">RSS</a>
+        <a href="/design-system">Design system</a>
+      </div>
     </nav>
   </div>
-  <div class="site-container footer-bottom"><span class="metadata">© {new Date().getUTCFullYear()} {PROFILE.name}</span><a class="metadata text-link" href="#main-content">Back to top ↑</a></div>
+  <div class="site-container footer-bottom">
+    <span>© {new Date().getUTCFullYear()} {PROFILE.name}. Built with Astro, GSAP and three.js.</span>
+    <a href="#main-content">Back to top <span aria-hidden="true">↑</span></a>
+  </div>
 </footer>

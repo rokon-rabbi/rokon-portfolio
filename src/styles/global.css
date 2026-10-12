@@ -8,33 +8,63 @@
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:is(.dark *));
 
+/* One family does everything. Mona Sans has a width axis as well as a weight
+   axis: headings are the same face drawn narrow and heavy, body text is the
+   face at its normal width. */
 @font-face {
-  font-family: "Outfit Variable";
+  font-family: "Mona Sans Variable";
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
   font-display: swap;
-  src: url("@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2")
+  src: url("@fontsource-variable/mona-sans/files/mona-sans-latin-wdth-normal.woff2")
+    format("woff2-variations");
+}
+@font-face {
+  font-family: "Mona Sans Variable";
+  font-style: italic;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("@fontsource-variable/mona-sans/files/mona-sans-latin-wght-italic.woff2")
+    format("woff2-variations");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2")
     format("woff2");
 }
 @font-face {
-  font-family: "Geist Mono Variable";
+  font-family: "IBM Plex Mono";
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 500;
   font-display: swap;
-  src: url("@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2")
+  src: url("@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2")
     format("woff2");
+}
+/* Metric-matched fallback so text does not reflow when the face lands. */
+@font-face {
+  font-family: "Mona Fallback";
+  src: local("Arial");
+  size-adjust: 103%;
+  ascent-override: 93%;
+  descent-override: 24%;
+  line-gap-override: 0%;
 }
 
 @theme inline {
   --font-sans:
-    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  --font-display: "Outfit Variable", ui-sans-serif, sans-serif;
-  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
+    "Mona Sans Variable", "Mona Fallback", ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-sans);
+  --font-serif: var(--font-display);
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -47,6 +77,7 @@
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary-hover: var(--secondary-hover);
+  --color-link: var(--link);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -61,20 +92,55 @@
   --color-surface-hover: var(--surface-hover);
   --color-disabled-background: var(--disabled-background);
   --color-disabled-foreground: var(--disabled-foreground);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-ink: var(--brand-ink);
+  --color-navy: var(--navy);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-stage: var(--stage);
+  --color-stage-foreground: var(--stage-foreground);
 }
 
 :root {
-  --radius: 0.5rem;
-  --page-width: 76rem;
+  --radius: 0.75rem;
+  --radius-pill: 999px;
+  --radius-control: 0.625rem;
+  --radius-panel: clamp(1.5rem, 3vw, 2.75rem);
+  --page-width: 80rem;
   --reading-width: 68ch;
   --page-gutter: clamp(1.25rem, 5vw, 4rem);
+  --page-pad-top: clamp(3rem, 6vw, 6rem);
   --section-space: clamp(4rem, 8vw, 8rem);
-  --text-display: clamp(3.25rem, 8.5vw, 7.5rem);
-  --text-heading: clamp(2rem, 4.5vw, 4rem);
-  --text-title: clamp(1.5rem, 2.8vw, 2.5rem);
-  --text-body: clamp(1rem, 0.94rem + 0.25vw, 1.125rem);
+  --header-height: 4rem;
+  --grid-gap: clamp(1rem, 1.7vw, 1.5rem);
+  --text-display: clamp(2.75rem, 6.6vw, 6rem);
+  --text-heading: clamp(2rem, 4vw, 3.5rem);
+  --text-title: clamp(1.5rem, 2.4vw, 2.125rem);
+  --text-body: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+  --text-lede: clamp(1.125rem, 1.02rem + 0.45vw, 1.3125rem);
+  --text-label: 0.8125rem;
+  --tracking-display: -0.03em;
+  --tracking-heading: -0.022em;
+  /* Headings are the text face, narrower and heavier. */
+  --width-display: 80%;
+  --width-heading: 88%;
+  --tracking-label: 0;
+  --rule-strong: 1px solid color-mix(in srgb, var(--foreground) 26%, transparent);
+  --rule-hair: 1px solid var(--border);
+  --redline-weight: 1.5px;
   --duration-fast: 160ms;
   --ease-ui: cubic-bezier(0.2, 0.65, 0.3, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* The logo's gradient, left to right. */
+  --brand-gradient: linear-gradient(90deg, var(--brand), var(--brand-deep));
+  /* What the header draws with. The dark screens swap these. */
+  --header-ink: var(--foreground);
+  --header-quiet: var(--muted-foreground);
+}
+@media (min-width: 64rem) {
+  :root {
+    --header-height: 4.75rem;
+  }
 }
 
 @layer base {
@@ -82,7 +148,7 @@
     border-color: var(--border);
   }
   html {
-    scroll-padding-top: 7.5rem;
+    scroll-padding-top: calc(var(--header-height) + 1.5rem);
   }
   body {
     margin: 0;
@@ -90,17 +156,21 @@
     color: var(--foreground);
     font-family: var(--font-sans);
     font-size: var(--text-body);
-    line-height: 1.7;
+    line-height: 1.6;
+    font-feature-settings: "kern", "liga", "calt";
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   h1,
   h2,
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 500;
-    line-height: 1.12;
-    letter-spacing: -0.035em;
+    font-weight: 700;
+    font-stretch: var(--width-heading);
+    line-height: 1.04;
+    letter-spacing: var(--tracking-heading);
     text-wrap: balance;
   }
   p {
@@ -127,6 +197,7 @@
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 4px;
+    border-radius: 0.25rem;
   }
   ::selection {
     background: var(--selection-background);
@@ -170,9 +241,14 @@
     padding-inline: var(--page-gutter);
   }
   .page-content {
-    padding-block: clamp(3rem, 6vw, 6rem) var(--section-space);
+    padding-block: var(--page-pad-top) var(--section-space);
   }
-  .page-content:focus {
+  /* Pages that own their full-bleed bands place .site-container per section. */
+  .page-bleed {
+    padding-bottom: var(--section-space);
+  }
+  .page-content:focus,
+  .page-bleed:focus {
     outline: none;
   }
   .skip-link {
@@ -191,29 +267,53 @@
   }
   .metadata,
   .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    line-height: 1.6;
-    letter-spacing: 0.04em;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.55;
   }
   .metadata {
     color: var(--muted-foreground);
   }
   .eyebrow {
     color: var(--primary);
-    text-transform: uppercase;
-    letter-spacing: 0.13em;
+    font-weight: 600;
+  }
+  .label {
+    font-family: var(--font-sans);
+    font-size: var(--text-label);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--muted-foreground);
+  }
+  /* The logo's braces, as the label of each part of the page. */
+  .tag {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    font-stretch: 100%;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: var(--foreground);
+  }
+  .tag > span {
+    color: var(--primary);
+    font-weight: 700;
   }
   .display-title {
     font-size: var(--text-display);
-    line-height: 0.99;
-    letter-spacing: -0.055em;
+    font-weight: 750;
+    font-stretch: var(--width-display);
+    line-height: 0.95;
+    letter-spacing: var(--tracking-display);
   }
   .page-title {
     font-size: var(--text-heading);
   }
   .text-link {
-    color: var(--primary);
+    color: var(--link);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.3em;
@@ -230,10 +330,10 @@
     justify-content: center;
     align-items: center;
     gap: 0.625rem;
-    padding: 0.625rem 1.125rem;
+    padding: 0.625rem 1.25rem;
     border: 1px solid transparent;
-    border-radius: var(--radius);
-    font-size: 0.875rem;
+    border-radius: var(--radius-control);
+    font-size: 0.9375rem;
     font-weight: 600;
     line-height: 1.4;
     text-decoration: none;
@@ -242,12 +342,27 @@
       border-color var(--duration-fast) var(--ease-ui),
       color var(--duration-fast) var(--ease-ui);
   }
+  /* The main action is ink; mint is for the one moment per page that should
+     be noticed first. */
+  .button-brand {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: var(--brand-ink);
+  }
+  .button-brand:hover {
+    background: var(--foreground);
+    border-color: var(--foreground);
+    color: var(--background);
+  }
   .button-primary {
-    background: var(--primary);
-    color: var(--primary-foreground);
+    background: var(--foreground);
+    border-color: var(--foreground);
+    color: var(--background);
   }
   .button-primary:hover {
-    background: var(--primary-hover);
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-foreground);
   }
   .button-secondary {
     background: var(--secondary);
@@ -257,9 +372,12 @@
     background: var(--secondary-hover);
   }
   .button-outline {
-    border-color: var(--input);
+    border-color: color-mix(in srgb, var(--foreground) 30%, transparent);
     background: transparent;
     color: var(--foreground);
+  }
+  .button-outline:hover {
+    border-color: var(--foreground);
   }
   .button-outline:hover,
   .button-ghost:hover {
@@ -277,7 +395,7 @@
     text-decoration: underline;
   }
   .button-link {
-    color: var(--primary);
+    color: var(--link);
     text-decoration: underline;
     text-underline-offset: 0.3em;
   }
@@ -293,7 +411,8 @@
   }
   .button-lg {
     min-height: 3.25rem;
-    padding-inline: 1.5rem;
+    padding-inline: 1.625rem;
+    font-size: 1rem;
   }
   .button-icon {
     width: 2.75rem;
@@ -309,11 +428,12 @@
     gap: 0.4rem;
     padding: 0.25rem 0.625rem;
     border: 1px solid var(--border);
-    border-radius: 0.25rem;
-    background: var(--muted);
+    border-radius: 0.5rem;
+    background: var(--card);
     color: var(--foreground);
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
     line-height: 1.65;
   }
   .technical-badge[data-variant="primary"] {
@@ -331,38 +451,86 @@
     color: var(--destructive-foreground);
     border-color: var(--destructive);
   }
+  /* Header. Rokon's logo, split into its mark and wordmark so both stay
+     legible at navbar height. It steps aside while reading down the page and
+     returns on the way back up. Over the dark screens it drops its panel and
+     draws in the stage's colours. */
   .site-header {
-    border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
-    z-index: 30;
-    background: var(--background);
+    z-index: 40;
+    background: color-mix(in srgb, var(--background) 88%, transparent);
+    border-bottom: 1px solid transparent;
+    transition:
+      transform 480ms var(--ease-out),
+      background-color 320ms var(--ease-ui),
+      border-color 240ms var(--ease-ui);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .site-header {
+      backdrop-filter: saturate(1.4) blur(14px);
+    }
+  }
+  .site-header.is-scrolled {
+    border-bottom-color: var(--border);
+  }
+  .site-header.is-away:not(:focus-within) {
+    transform: translateY(-101%);
+  }
+  .site-header[data-tone="stage"] {
+    --header-ink: var(--stage-foreground);
+    --header-quiet: var(--stage-muted);
+    background: transparent;
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+  }
+  .site-header[data-tone="stage"].is-scrolled {
+    background: linear-gradient(
+      color-mix(in srgb, var(--stage) 92%, transparent),
+      color-mix(in srgb, var(--stage) 0%, transparent)
+    );
   }
   .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
-    min-height: 6rem;
+    min-height: var(--header-height);
   }
   .brand {
     display: inline-flex;
     align-items: center;
+    gap: 0.625rem;
     min-height: 2.75rem;
-    gap: 0.75rem;
-    font-family: var(--font-display);
-    font-size: 1.625rem;
-    font-weight: 600;
-    letter-spacing: -0.05em;
+    padding-block: 0.25rem;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+  }
+  .brand img {
+    display: block;
+    width: auto;
   }
   .brand-mark {
-    width: 1.875rem;
-    height: 1.875rem;
-    color: var(--primary);
+    height: 2.125rem;
+    transition: transform 420ms var(--ease-out);
+  }
+  .brand-wordmark {
+    height: 0.9375rem;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .brand:hover .brand-mark {
+      transform: translateX(3px);
+    }
+  }
+  @media (max-width: 22.4375rem) {
+    .brand-wordmark {
+      display: none;
+    }
   }
   .desktop-nav {
     display: none;
-    gap: 1.75rem;
+    gap: clamp(1.25rem, 2.4vw, 2.25rem);
+    margin-left: auto;
   }
   .nav-link {
     display: inline-flex;
@@ -370,27 +538,46 @@
     justify-content: space-between;
     gap: 1rem;
     min-height: 2.75rem;
-    font-size: 0.8125rem;
-    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--header-quiet);
     text-decoration: none;
   }
-  .nav-link:hover {
-    color: var(--foreground);
-    text-decoration: underline;
-  }
+  .nav-link:hover,
   .nav-link[aria-current="page"] {
-    color: var(--foreground);
-    text-decoration: underline;
-    text-decoration-color: var(--primary);
-    text-decoration-thickness: 2px;
+    color: var(--header-ink);
   }
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.25rem;
   }
   .header-contact {
     display: none;
+    min-height: 2.75rem;
+    margin-left: 0.75rem;
+    padding-inline: 1.125rem;
+  }
+  .site-header .theme-switch {
+    border-color: transparent;
+    color: var(--header-quiet);
+  }
+  .site-header .theme-switch:hover {
+    background: color-mix(in srgb, var(--header-ink) 12%, transparent);
+    border-color: transparent;
+    color: var(--header-ink);
+  }
+  .site-header[data-tone="stage"] .header-contact {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: var(--brand-ink);
+  }
+  .site-header[data-tone="stage"] .header-contact:hover {
+    background: var(--stage-foreground);
+    border-color: var(--stage-foreground);
+  }
+  .site-header[data-tone="stage"] :focus-visible {
+    outline-color: var(--brand);
   }
   .theme-switch-compact {
     padding: 0;
@@ -412,36 +599,84 @@
     justify-content: center;
     gap: 0.5rem;
     min-height: 2.75rem;
-    border: 1px solid var(--input);
-    border-radius: var(--radius);
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8125rem;
+    border: 1px solid color-mix(in srgb, var(--header-ink) 34%, transparent);
+    border-radius: var(--radius-control);
+    padding: 0.5rem 1rem;
+    color: var(--header-ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+    list-style: none;
   }
   .mobile-nav summary::-webkit-details-marker {
     display: none;
   }
   .mobile-nav summary svg {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .mobile-nav[open] summary {
+    background: var(--header-ink);
+    border-color: var(--header-ink);
+    color: var(--background);
+  }
+  .site-header[data-tone="stage"] .mobile-nav[open] summary {
+    color: var(--stage);
+  }
+  /* On the narrowest phones the name keeps its size and the control loses
+     its visible label; the summary's aria-label still names it. */
+  @media (max-width: 22.4375rem) {
+    .mobile-nav .menu-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .mobile-nav summary {
+      width: 2.75rem;
+      padding: 0;
+    }
   }
   .mobile-nav-panel {
     position: fixed;
-    top: 6rem;
-    max-height: calc(100dvh - 6rem);
+    top: calc(var(--header-height) + 1px);
+    max-height: calc(100dvh - var(--header-height) - 1px);
     overflow-y: auto;
     overscroll-behavior: contain;
     left: 0;
     right: 0;
-    padding: 1rem var(--page-gutter) 1.5rem;
-    background: var(--popover);
-    color: var(--popover-foreground);
-    border-block: 1px solid var(--border);
-    box-shadow: 0 12px 24px rgb(0 0 0 / 0.08);
+    padding: 0.5rem var(--page-gutter) 1.5rem;
+    background: var(--background);
+    color: var(--foreground);
+    border-bottom: 1px solid var(--border);
+    border-radius: 0 0 var(--radius-panel) var(--radius-panel);
+    box-shadow: 0 24px 40px -28px color-mix(in srgb, var(--navy) 55%, transparent);
   }
   .mobile-nav-panel .nav-link {
     display: flex;
+    min-height: 3.5rem;
     padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: var(--rule-hair);
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 700;
+    font-stretch: var(--width-heading);
+    letter-spacing: var(--tracking-heading);
+    color: var(--foreground);
+  }
+  .mobile-nav-panel .nav-link:last-child {
+    border-bottom: 0;
+  }
+  .mobile-nav-panel .nav-link > span {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--muted-foreground);
+  }
+  .mobile-nav-panel .nav-link[aria-current="page"] {
+    color: var(--primary);
   }
   .section-block {
     margin-top: var(--section-space);
@@ -1185,38 +1420,105 @@
     max-width: 40ch;
     margin-bottom: 1.5rem;
   }
+  /* Footer. The stage again, so every page ends on the colour the homepage
+     begins with. On the homepage it continues the closing screen above it. */
   .site-footer {
-    background: var(--muted);
-    border-top: 1px solid var(--border);
-    padding-top: 3rem;
+    position: relative;
+    z-index: 3;
+    background: var(--stage);
+    color: var(--stage-foreground);
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+  }
+  main:has(> .closing) + .site-footer {
+    border-radius: 0;
+    padding-top: 0;
+    background: var(--stage);
   }
   .footer-grid {
     display: grid;
-    gap: 2rem;
+    gap: 2.5rem;
+    padding-top: 0;
+  }
+  main:has(> .closing) + .site-footer .footer-grid {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+  /* Rules stop at the text column, not at the edge of the gutter. */
+  main:has(> .closing) + .site-footer .footer-grid,
+  .footer-bottom {
+    position: relative;
+  }
+  main:has(> .closing) + .site-footer .footer-grid::before,
+  .footer-bottom::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: var(--page-gutter);
+    left: var(--page-gutter);
+    height: 1px;
+    background: var(--stage-line);
   }
   .footer-brand {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    letter-spacing: -0.04em;
+    display: inline-block;
+    border-radius: var(--radius-sm);
+  }
+  .footer-brand img {
+    display: block;
+    width: 7.5rem;
+    height: auto;
   }
   .footer-note {
-    color: var(--muted-foreground);
-    font-size: 0.875rem;
+    max-width: 30ch;
+    margin-top: 1.25rem;
+    color: var(--stage-muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .footer-column h2 {
+    margin-bottom: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-stretch: 100%;
+    letter-spacing: 0;
+    color: var(--stage-muted);
   }
   .footer-links {
-    display: flex;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-    font-size: 0.8125rem;
+    display: grid;
+    justify-items: start;
+    font-size: 0.9375rem;
+  }
+  .footer-links a {
+    gap: 0.3125rem;
+    color: var(--stage-foreground);
+    text-decoration: none;
+  }
+  .footer-links a:hover {
+    color: var(--brand);
+  }
+  .site-footer :focus-visible {
+    outline-color: var(--brand);
   }
   .footer-bottom {
-    margin-top: 3rem;
-    padding-block: 1.5rem;
-    border-top: 1px solid var(--border);
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding-block: 1.25rem 1.5rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
     justify-content: space-between;
+    color: var(--stage-muted);
+    font-size: 0.8125rem;
+  }
+  .footer-bottom a {
+    gap: 0.3125rem;
+    color: var(--stage-foreground);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+  }
+  .footer-bottom a:hover {
+    color: var(--brand);
   }
   .blog-header {
     margin-bottom: 3rem;
@@ -1422,9 +1724,6 @@
     margin-block: 1.5rem;
   }
   @media (min-width: 40rem) {
-    .header-contact {
-      display: inline-flex;
-    }
     .skills-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -1432,10 +1731,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .footer-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-    .footer-links {
-      grid-column: 1 / -1;
+      grid-template-columns: 1.4fr 1fr 1fr;
     }
   }
   @media (min-width: 48rem) {
@@ -1478,16 +1774,16 @@
     .mobile-nav {
       display: none;
     }
+    /* Below this width the menu already carries the contact link. */
+    .header-contact {
+      display: inline-flex;
+    }
     .skills-grid {
       grid-template-columns: repeat(4, 1fr);
     }
     .footer-grid {
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 2fr 1fr 1fr;
       align-items: start;
-    }
-    .footer-links {
-      grid-column: auto;
-      justify-content: flex-end;
     }
   }
 }
@@ -1568,11 +1864,5 @@
   .dark .shiki span {
     color: var(--shiki-dark);
     background: transparent;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) .shiki,
-    :root:not([data-theme]) .shiki span {
-      color: var(--shiki-dark);
-    }
   }
 }
