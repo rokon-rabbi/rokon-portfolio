@@ -5,6 +5,7 @@ import { CONFIG } from "@/data/config";
 import SiteHeader from "@/components/design/SiteHeader.astro";
 import SiteFooter from "@/components/design/SiteFooter.astro";
 import { THEME_CSS } from "@/design/tokens";
+import { PREFERENCES_BOOTSTRAP } from "@/design/preferences";
 import { canonicalUrl, pageSchema, serializeSchema, socialPreviewImage } from "@/lib/seo";
 import sansFont from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
 
@@ -50,16 +51,8 @@ const { baseFontSize } = CONFIG.typography;
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" href={sansFont} as="font" type="font/woff2" crossorigin />
 
-    <script is:inline>
-      (function () {
-        var saved = null;
-        try { var value = localStorage.getItem("theme"); if (value === "dark" || value === "light") saved = value; } catch (_) {}
-        var mode = saved || "light";
-        document.documentElement.dataset.theme = mode;
-        document.documentElement.classList.toggle("dark", mode === "dark");
-        document.documentElement.style.colorScheme = mode;
-      })();
-    </script>
+    <!-- Saved appearance choices, applied before the first paint. -->
+    <script is:inline set:html={PREFERENCES_BOOTSTRAP}></script>
     <style is:inline set:html={THEME_CSS}></style>
 
     <!-- Favicon -->
@@ -107,7 +100,7 @@ const { baseFontSize } = CONFIG.typography;
     <SiteHeader />
     <main id="main-content" class="site-container page-content" tabindex="-1"><slot /></main>
     <SiteFooter />
-    <script>import "../scripts/theme";</script>
+    <script>import "../scripts/preferences";</script>
     <script>import "../scripts/motion";</script>
   </body>
 </html>

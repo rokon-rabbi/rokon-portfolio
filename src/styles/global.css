@@ -8,7 +8,9 @@
 @custom-variant dark (&:is(.dark *));
 
 /* One plain sans for everything that is read: Geist. JetBrains Mono is for
-   code and for things that are code-like: tool names, routes, addresses. */
+   code and for things that are code-like: tool names, routes, addresses.
+   The two faces after them are a visitor's choice in the appearance panel;
+   a browser fetches one only once it is asked for. */
 @font-face {
   font-family: "Geist Variable";
   font-style: normal;
@@ -25,12 +27,26 @@
   src: url("@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2")
     format("woff2-variations");
 }
+@font-face {
+  font-family: "Source Serif 4 Variable";
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2")
+    format("woff2-variations");
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Next Variable";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("@fontsource-variable/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2")
+    format("woff2-variations");
+}
 
 @theme inline {
-  --font-sans:
-    "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    sans-serif;
-  --font-display: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-text), var(--font-text-fallback);
+  --font-display: var(--font-text), var(--font-text-fallback);
   --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", monospace;
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
@@ -89,6 +105,46 @@
   --arrow-ne: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 11.5l7-7M5.5 4.5h6v6'/%3E%3C/svg%3E");
   --arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 8h11M9 3.5 13.5 8 9 12.5'/%3E%3C/svg%3E");
   --arrow-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2.5v11M3.5 9 8 13.5 12.5 9'/%3E%3C/svg%3E");
+  /* What the appearance panel changes. These are the site as designed; a
+     visitor's choice arrives as an attribute on the root (see
+     src/design/preferences.ts for the lists). */
+  --font-text: "Geist Variable";
+  --font-text-fallback:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --text-scale: 1;
+  --line: 1.65;
+}
+:root[data-font="serif"] {
+  --font-text: "Source Serif 4 Variable";
+  --font-text-fallback: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+}
+:root[data-font="legible"] {
+  --font-text: "Atkinson Hyperlegible Next Variable";
+}
+:root[data-font="mono"] {
+  --font-text: "JetBrains Mono Variable";
+  --font-text-fallback: ui-monospace, "SF Mono", monospace;
+}
+:root[data-font="system"] {
+  --font-text: system-ui;
+}
+:root[data-text-size="90"] {
+  --text-scale: 0.9;
+}
+:root[data-text-size="110"] {
+  --text-scale: 1.1;
+}
+:root[data-text-size="120"] {
+  --text-scale: 1.2;
+}
+:root[data-text-size="130"] {
+  --text-scale: 1.3;
+}
+:root[data-spacing="compact"] {
+  --line: 1.5;
+}
+:root[data-spacing="relaxed"] {
+  --line: 1.85;
 }
 /* Moving between pages is a short cross-fade. */
 @view-transition {
@@ -125,7 +181,7 @@
     color: var(--foreground);
     font-family: var(--font-sans);
     font-size: var(--text-body);
-    line-height: 1.65;
+    line-height: var(--line);
     font-synthesis: none;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -219,9 +275,26 @@
   /* ---- Page frame -------------------------------------------------- */
   .site-container {
     width: 100%;
-    max-width: calc(var(--page-width) + var(--page-gutter) * 2);
+    max-width: calc(
+      (var(--page-width) + var(--page-gutter) * 2) * var(--unzoom, 1)
+    );
     margin-inline: auto;
-    padding-inline: var(--page-gutter);
+    padding-inline: calc(var(--page-gutter) * var(--unzoom, 1));
+  }
+  /* Text size enlarges what is read: the page and the footer, with their
+     spacing. The column keeps its width and the header its size, so the
+     panel that sets the size does not move under the pointer. */
+  main,
+  .site-footer {
+    zoom: var(--text-scale);
+    --unzoom: calc(1 / var(--text-scale));
+  }
+  @media print {
+    main,
+    .site-footer {
+      zoom: 1;
+      --unzoom: 1;
+    }
   }
   .page-content {
     padding-block: clamp(2.25rem, 6vw, 4rem) var(--section-space);
@@ -574,21 +647,46 @@
     align-items: center;
     gap: 0.25rem;
   }
-  .theme-switch {
+  .theme-switch,
+  .settings-toggle {
     border-color: transparent;
     color: var(--muted-foreground);
   }
-  .theme-switch:hover {
+  .theme-switch:hover,
+  .settings-toggle:hover,
+  .settings-toggle[aria-expanded="true"] {
     border-color: transparent;
     background: transparent;
     color: var(--foreground);
   }
-  .theme-switch-compact {
+  .theme-switch-compact,
+  .settings-toggle {
     padding: 0;
     width: 2.5rem;
   }
   .theme-switch-compact .theme-switch-label {
     display: none;
+  }
+  /* Where the header is at its tightest (the narrowest phones, and the
+     first widths that show the links in a row) its parts sit a little
+     closer, so both buttons keep their place in any text face. */
+  @media (max-width: 22.49rem), (min-width: 40rem) and (max-width: 43.99rem) {
+    .header-inner {
+      gap: 0.5rem;
+    }
+    .header-actions {
+      gap: 0;
+    }
+    .header-actions .theme-switch,
+    .settings-toggle {
+      width: 2.25rem;
+    }
+    .desktop-nav .nav-link {
+      padding-inline: 0.5rem;
+    }
+    .header-actions .mobile-nav summary {
+      padding-left: 0.25rem;
+    }
   }
   .theme-icon-dark,
   .dark .theme-icon-light {
@@ -638,6 +736,269 @@
   }
   .mobile-nav-panel .nav-link:last-child {
     border-bottom: 0;
+  }
+
+  /* ---- Appearance: palette, text face, size and spacing ---------------
+     A sheet along the bottom of a small screen; a panel under the header
+     on a wide one. It stays put while the page scrolls behind it, so a
+     choice can be judged against the text it changes. */
+  .settings-panel {
+    position: fixed;
+    z-index: 40;
+    inset: auto 0.5rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
+    display: grid;
+    gap: 1.125rem;
+    max-height: calc(100dvh - 1rem);
+    padding: 1rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--popover);
+    color: var(--popover-foreground);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.05),
+      0 16px 40px -12px rgb(0 0 0 / 0.24);
+    /* Always the site's own face, so the controls hold still while the
+       text behind them changes. */
+    font-family:
+      "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+      sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    animation: settings-rise 200ms var(--ease-out);
+  }
+  .settings-panel:focus {
+    outline: none;
+  }
+  @keyframes settings-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+  }
+  @keyframes settings-drop {
+    from {
+      opacity: 0;
+      transform: translateY(-0.375rem);
+    }
+  }
+  .settings-head,
+  .settings-row,
+  .settings-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .settings-head {
+    margin: -0.375rem -0.375rem -0.5rem 0;
+  }
+  /* On the narrowest phones a control drops under its label. */
+  .settings-row {
+    flex-wrap: wrap;
+    row-gap: 0.375rem;
+  }
+  .settings-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+  .settings-close,
+  .settings-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 2.25rem;
+    border-radius: var(--radius);
+    color: var(--muted-foreground);
+    transition:
+      background var(--duration-fast) var(--ease-ui),
+      color var(--duration-fast) var(--ease-ui);
+  }
+  .settings-close {
+    width: 2.25rem;
+  }
+  .settings-close svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .settings-close:hover,
+  .settings-action:hover {
+    background: var(--surface-hover);
+    color: var(--foreground);
+  }
+  .settings-group {
+    display: grid;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  .settings-label,
+  .settings-hint {
+    color: var(--muted-foreground);
+    font-size: 0.8125rem;
+  }
+  .settings-label {
+    white-space: nowrap;
+  }
+  .theme-tiles,
+  .font-tiles {
+    display: grid;
+    /* Three across, or two where a name would no longer fit its tile. */
+    grid-template-columns: repeat(auto-fit, minmax(5.75rem, 1fr));
+    gap: 0.5rem;
+  }
+  .font-tiles {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.375rem;
+  }
+  /* The radio itself is hidden; the label's tile shows its state. */
+  .settings-option {
+    position: relative;
+    display: block;
+    min-width: 0;
+    cursor: pointer;
+  }
+  .settings-option input:focus-visible + * {
+    outline: 2px solid var(--ring);
+    outline-offset: 4px;
+  }
+  .theme-tile,
+  .font-tile {
+    border: 1px solid var(--tile-line, var(--border));
+    border-radius: 0.5rem;
+    transition: box-shadow var(--duration-fast) var(--ease-ui);
+  }
+  .settings-option input:checked + :is(.theme-tile, .font-tile) {
+    box-shadow:
+      0 0 0 2px var(--popover),
+      0 0 0 3.5px var(--foreground);
+  }
+  .theme-tile {
+    display: flex;
+    align-items: center;
+    gap: 0.4375rem;
+    min-height: 2.75rem;
+    padding-inline: 0.625rem;
+    background: var(--tile-bg, transparent);
+    color: var(--tile-fg, inherit);
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+  .theme-tile i {
+    width: 0.6875rem;
+    height: 0.6875rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--tile-dot);
+    box-shadow: 0 0 0 1px var(--tile-dot-line, transparent);
+  }
+  .font-tile {
+    display: grid;
+    justify-items: center;
+    gap: 0.125rem;
+    padding: 0.5rem 0.125rem 0.4375rem;
+    color: var(--muted-foreground);
+    font-size: 0.6875rem;
+    line-height: 1.3;
+  }
+  .font-tile b {
+    color: var(--foreground);
+    font-size: 1.1875rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  /* Each sample is set in the face it stands for. */
+  .font-tile[data-font-sample="serif"] b {
+    font-family: "Source Serif 4 Variable", Georgia, serif;
+  }
+  .font-tile[data-font-sample="legible"] b {
+    font-family: "Atkinson Hyperlegible Next Variable", ui-sans-serif, sans-serif;
+  }
+  .font-tile[data-font-sample="mono"] b {
+    font-family: var(--font-mono);
+  }
+  .font-tile[data-font-sample="system"] b {
+    font-family: system-ui, sans-serif;
+  }
+  .stepper,
+  .segmented {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+  }
+  .stepper button {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.125rem;
+    border-radius: 0.4375rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: background var(--duration-fast) var(--ease-ui);
+  }
+  .stepper button:hover {
+    background: var(--surface-hover);
+  }
+  .stepper button[aria-disabled="true"],
+  .settings-action[aria-disabled="true"] {
+    background: transparent;
+    color: var(--input);
+    cursor: default;
+  }
+  .stepper-small {
+    font-size: 0.75rem;
+  }
+  .stepper-large {
+    font-size: 1.0625rem;
+  }
+  .stepper output {
+    min-width: 3.5rem;
+    border-inline: 1px solid var(--border);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 2.125rem;
+    text-align: center;
+  }
+  .segmented {
+    gap: 0.125rem;
+    padding: 0.125rem;
+  }
+  .segment {
+    display: grid;
+    place-items: center;
+    min-height: 1.875rem;
+    padding-inline: 0.5rem;
+    border-radius: 0.3125rem;
+    color: var(--muted-foreground);
+    font-size: 0.8125rem;
+    transition:
+      background var(--duration-fast) var(--ease-ui),
+      color var(--duration-fast) var(--ease-ui);
+  }
+  .settings-option:hover .segment {
+    color: var(--foreground);
+  }
+  .settings-option input:checked + .segment {
+    background: var(--foreground);
+    color: var(--background);
+  }
+  .settings-foot {
+    margin: 0 -0.375rem -0.375rem;
+    padding-top: 0.625rem;
+    border-top: 1px solid var(--border);
+  }
+  .settings-action {
+    padding-inline: 0.5rem;
+    font-size: 0.8125rem;
+  }
+  .settings-action svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .settings-reset {
+    margin-left: auto;
   }
 
   /* ---- Sections ----------------------------------------------------- */
@@ -1250,6 +1611,14 @@
     .mobile-nav {
       display: none;
     }
+    /* Under the header, its right edge on the column's. */
+    .settings-panel {
+      inset: 3.625rem
+        max(var(--page-gutter), calc((100% - var(--page-width)) / 2)) auto auto;
+      width: 21rem;
+      max-height: calc(100dvh - 4.5rem);
+      animation-name: settings-drop;
+    }
     .row {
       grid-template-columns: var(--label-width) minmax(0, 1fr);
     }
@@ -1287,7 +1656,7 @@
     --tw-prose-td-borders: var(--border);
     max-width: var(--reading-width);
     font-size: 1.0625rem;
-    line-height: 1.75;
+    line-height: calc(var(--line) + 0.1);
   }
   .prose h2 {
     font-size: 1.375rem;

@@ -1,6 +1,7 @@
 ---
 import { getImage } from "astro:assets";
 import ThemeSwitch from "./ThemeSwitch.astro";
+import SiteSettings from "./SiteSettings.astro";
 import { PROFILE } from "@/data/profile";
 import markSource from "@/assets/brand/rokon-mark-mask.png";
 
@@ -27,6 +28,7 @@ const mark = await getImage({ src: markSource, width: 252, format: "png" });
     </nav>
     <div class="header-actions">
       <ThemeSwitch compact />
+      <SiteSettings />
       <details class="mobile-nav" data-mobile-nav>
         <summary aria-label="Open navigation menu"><span class="menu-label">Menu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M5 8.5h14M9 15.5h10" /></svg></summary>
         <nav class="mobile-nav-panel" aria-label="Mobile primary">

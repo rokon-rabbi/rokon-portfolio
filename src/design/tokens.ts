@@ -1,9 +1,11 @@
 // The only source of theme colors. Layout emits these as shadcn CSS variables;
 // Tailwind utilities and contrast checks consume the same values.
 //
-// The palette is paper and ink with one oxblood accent, taken from the colour
-// theme Rokon asked for (bazlur.com): its page, three inks, hairline, code
-// surface and link colour are used unchanged in both modes.
+// Every palette is the same idea: a page, three inks, a hairline and one
+// accent. "light" and "dark" are the site as designed, paper and ink with an
+// oxblood accent, taken from the colour theme Rokon asked for (bazlur.com).
+// The others are a visitor's choice in the appearance panel and hold the same
+// roles to the same contrast: a neutral white, a book page, and a navy night.
 export const THEMES = {
   light: {
     background: "#FFFCF5",
@@ -78,14 +80,139 @@ export const THEMES = {
     brace: "#E0836F",
     "brace-shade": "#8A3B2E",
   },
+  snow: {
+    background: "#FFFFFF",
+    foreground: "#0B0D12",
+    card: "#FFFFFF",
+    "card-foreground": "#0B0D12",
+    popover: "#FFFFFF",
+    "popover-foreground": "#0B0D12",
+    primary: "#1D4ED8",
+    "primary-foreground": "#FFFFFF",
+    "primary-hover": "#1A3FA8",
+    secondary: "#0B0D12",
+    "secondary-foreground": "#FFFFFF",
+    "secondary-hover": "#262A33",
+    muted: "#F4F5F7",
+    "muted-foreground": "#585E69",
+    accent: "#F4F5F7",
+    "accent-foreground": "#0B0D12",
+    border: "#E4E6EA",
+    input: "#7A808B",
+    ring: "#1D4ED8",
+    destructive: "#B3261E",
+    "destructive-foreground": "#FFFFFF",
+    warm: "#854D0E",
+    "warm-decorative": "#E3B778",
+    "surface-hover": "#ECEEF1",
+    "disabled-background": "#E9EBEE",
+    "disabled-foreground": "#555B65",
+    "selection-background": "#1D4ED8",
+    "selection-foreground": "#FFFFFF",
+    "soft-foreground": "#3B4049",
+    faint: "#6B717B",
+    "brace-light": "#5B8DEF",
+    brace: "#1D4ED8",
+    "brace-shade": "#0F2A78",
+  },
+  sepia: {
+    background: "#F4ECD8",
+    foreground: "#2B2118",
+    card: "#FAF4E4",
+    "card-foreground": "#2B2118",
+    popover: "#FAF4E4",
+    "popover-foreground": "#2B2118",
+    primary: "#8A3A18",
+    "primary-foreground": "#FAF4E4",
+    "primary-hover": "#6B2B10",
+    secondary: "#2B2118",
+    "secondary-foreground": "#F4ECD8",
+    "secondary-hover": "#45382B",
+    muted: "#EBE1C9",
+    "muted-foreground": "#5C5140",
+    accent: "#EBE1C9",
+    "accent-foreground": "#2B2118",
+    border: "#DDD0B3",
+    input: "#7D6E54",
+    ring: "#8A3A18",
+    destructive: "#A32219",
+    "destructive-foreground": "#FFFFFF",
+    warm: "#74460E",
+    "warm-decorative": "#D9A860",
+    "surface-hover": "#E4D9BF",
+    "disabled-background": "#E1D6BC",
+    "disabled-foreground": "#574C3C",
+    "selection-background": "#8A3A18",
+    "selection-foreground": "#FAF4E4",
+    "soft-foreground": "#4A3F31",
+    faint: "#6C604D",
+    "brace-light": "#C0683F",
+    brace: "#8A3A18",
+    "brace-shade": "#4A1C0A",
+  },
+  midnight: {
+    background: "#0E1420",
+    foreground: "#E6EBF4",
+    card: "#131A28",
+    "card-foreground": "#E6EBF4",
+    popover: "#18202F",
+    "popover-foreground": "#E6EBF4",
+    primary: "#7CB1FF",
+    "primary-foreground": "#0E1420",
+    "primary-hover": "#A5C9FF",
+    secondary: "#E6EBF4",
+    "secondary-foreground": "#0E1420",
+    "secondary-hover": "#FFFFFF",
+    muted: "#18202F",
+    "muted-foreground": "#9BA7BC",
+    accent: "#1D2637",
+    "accent-foreground": "#E6EBF4",
+    border: "#232D40",
+    input: "#72809A",
+    ring: "#7CB1FF",
+    destructive: "#FF8E80",
+    "destructive-foreground": "#0E1420",
+    warm: "#E3B778",
+    "warm-decorative": "#E3B778",
+    "surface-hover": "#1D2637",
+    "disabled-background": "#222B3C",
+    "disabled-foreground": "#9BA7BC",
+    "selection-background": "#7CB1FF",
+    "selection-foreground": "#0E1420",
+    "soft-foreground": "#B4BECF",
+    faint: "#94A0B5",
+    "brace-light": "#B4D2FF",
+    brace: "#7CB1FF",
+    "brace-shade": "#2F5FA8",
+  },
 } as const;
 
 export type Theme = keyof typeof THEMES;
+// Whether a palette is a light page or a dark one. Code colours, form
+// controls and scrollbars follow this, not the palette's name.
+export const THEME_SCHEME: Record<Theme, "light" | "dark"> = {
+  light: "light",
+  dark: "dark",
+  snow: "light",
+  sepia: "light",
+  midnight: "dark",
+};
 const declarations = (mode: Theme) =>
   Object.entries(THEMES[mode])
     .map(([key, value]) => `--${key}:${value}`)
     .join(";");
-export const THEME_CSS = `
+// "light" is the page without a choice or without scripts. ".dark" alone
+// still selects the dark palette; the named palettes come after it so that a
+// dark one such as midnight wins over the class it also carries.
+const themeCss = () => `
   :root { ${declarations("light")}; color-scheme:light; }
   :root.dark, :root[data-theme="dark"] { ${declarations("dark")}; color-scheme:dark; }
+${(Object.keys(THEMES) as Theme[])
+  .filter((mode) => mode !== "light" && mode !== "dark")
+  .map(
+    (mode) =>
+      `  :root[data-theme="${mode}"] { ${declarations(mode)}; color-scheme:${THEME_SCHEME[mode]}; }`,
+  )
+  .join("\n")}
 `;
+export const THEME_CSS = /* @__PURE__ */ themeCss();

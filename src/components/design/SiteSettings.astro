@@ -1,0 +1,72 @@
+---
+import { THEMES } from "@/design/tokens";
+import { DEFAULTS, FONT_OPTIONS, SPACING_OPTIONS, THEME_OPTIONS } from "@/design/preferences";
+
+// Each palette tile is drawn in its own colours, whatever theme the page is in.
+const tile = (id: (typeof THEME_OPTIONS)[number]["id"]) =>
+  id === "auto"
+    ? `--tile-dot:linear-gradient(90deg,${THEMES.light.background} 50%,${THEMES.dark.background} 50%);--tile-dot-line:var(--input)`
+    : `--tile-bg:${THEMES[id].background};--tile-fg:${THEMES[id].foreground};--tile-line:${THEMES[id].border};--tile-dot:${THEMES[id].primary}`;
+---
+<div class="settings">
+  <button type="button" class="settings-toggle button button-outline" data-settings-toggle aria-label="Appearance settings" aria-haspopup="dialog" aria-expanded="false" aria-controls="site-settings" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 8h8m6 0h2M4 16h2m6 0h8" /><circle cx="15" cy="8" r="2.5" /><circle cx="9" cy="16" r="2.5" /></svg>
+  </button>
+  <div id="site-settings" class="settings-panel" role="dialog" aria-label="Appearance" data-settings tabindex="-1" hidden>
+    <div class="settings-head">
+      <p class="settings-title">Appearance</p>
+      <button type="button" class="settings-close" data-settings-close aria-label="Close appearance settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" /></svg>
+      </button>
+    </div>
+    <div class="settings-group" role="radiogroup" aria-labelledby="settings-theme">
+      <p id="settings-theme" class="settings-label">Theme</p>
+      <div class="theme-tiles">
+        {THEME_OPTIONS.map((option) => (
+          <label class="settings-option">
+            <input class="sr-only" type="radio" name="settings-theme" value={option.id} data-pref="theme" checked={option.id === DEFAULTS.theme} autocomplete="off" />
+            <span class="theme-tile" style={tile(option.id)}><i aria-hidden="true"></i>{option.label}</span>
+          </label>
+        ))}
+      </div>
+      <p class="settings-hint" data-auto-hint hidden>Auto follows your device’s light or dark setting.</p>
+    </div>
+    <div class="settings-group" role="radiogroup" aria-labelledby="settings-font">
+      <p id="settings-font" class="settings-label">Font</p>
+      <div class="font-tiles">
+        {FONT_OPTIONS.map((option) => (
+          <label class="settings-option" title={option.family}>
+            <input class="sr-only" type="radio" name="settings-font" value={option.id} data-pref="font" checked={option.id === DEFAULTS.font} autocomplete="off" />
+            <span class="font-tile" data-font-sample={option.id}><b aria-hidden="true">Aa</b>{option.label}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+    <div class="settings-row" role="group" aria-labelledby="settings-size">
+      <p id="settings-size" class="settings-label">Text size</p>
+      <div class="stepper">
+        <button type="button" data-size-step="-1" aria-label="Smaller text"><span class="stepper-small" aria-hidden="true">A</span></button>
+        <output data-size-value>{DEFAULTS.size}%</output>
+        <button type="button" data-size-step="1" aria-label="Larger text"><span class="stepper-large" aria-hidden="true">A</span></button>
+      </div>
+    </div>
+    <div class="settings-row" role="radiogroup" aria-labelledby="settings-spacing">
+      <p id="settings-spacing" class="settings-label">Line spacing</p>
+      <div class="segmented">
+        {SPACING_OPTIONS.map((option) => (
+          <label class="settings-option">
+            <input class="sr-only" type="radio" name="settings-spacing" value={option.id} data-pref="spacing" checked={option.id === DEFAULTS.spacing} autocomplete="off" />
+            <span class="segment">{option.label}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+    <div class="settings-foot">
+      <button type="button" class="settings-action" data-fullscreen-toggle aria-pressed="false" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5" /></svg>
+        <span data-fullscreen-label>Full screen</span>
+      </button>
+      <button type="button" class="settings-action settings-reset" data-settings-reset aria-disabled="true">Reset</button>
+    </div>
+  </div>
+</div>
