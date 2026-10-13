@@ -33,6 +33,16 @@ The experience timeline uses two short strokes that follow scroll directly on wi
 
 Buttons and text-link arrows move 2px on keyboard focus and fine-pointer hover. Desktop navigation uses a short underline transition; the native mobile disclosure enters by 4px over 180ms. Native CSS smooth scrolling handles fragment links. Full route changes remain normal browser navigation with a short incoming editorial-header entrance; no outgoing animation delays links. Keyboard, touch, focus outlines, menu Escape behavior, and history restoration remain native.
 
+## Homepage, 2026-10-13
+
+The one-column homepage carries no `data-motion` annotations and does not load GSAP. Its motion is CSS, in `src/styles/home.css`, with a few lines of `src/scripts/page.ts`:
+
+- **Opening.** The intro's lines and the sections share one `arrive` keyframe (a 10px rise from transparent, 640ms, 65ms apart, `backwards` fill so nothing lingers as a stacking context). This is the only place text starts transparent, and it is a CSS animation that the browser itself finishes: no script can leave it hidden.
+- **Further down.** A section that was below the window when the page opened gets `data-reveal="in"` from an IntersectionObserver as it arrives, and its heading and body play `settle`, a 16px rise with no change of opacity. Nothing is held back beforehand, so a whole-page capture, a print or a visit without scripts shows every section. An earlier version hid those sections until they were reached; a full-page screenshot came out blank below the first screen, which is why the rule above (no baseline CSS hides content) applies here too.
+- **Reading.** The header's veil, the accent filling its hairline, the section list's marker, a stack row lit for a moment when the intro links to it (`:target`), and the tool names that light together under a role are all transitions or short keyframes. The one loop is the ring round the "currently" dot.
+
+All of it stops under `prefers-reduced-motion: reduce` through the base rule in `global.css`; the observer is not created at all in that case.
+
 ## Lifecycle and accessibility
 
 - Initial reduced motion skips the GSAP module download. Changing the preference immediately reverts contexts, transforms, listeners, and every owned ScrollTrigger. Existing CSS disables interaction transitions and returns scrolling to `auto`.

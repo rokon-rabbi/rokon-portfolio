@@ -1,6 +1,45 @@
 /* The homepage: one column of text. Rows, links and labels are shared with
    the other pages and live in global.css. */
 @layer components {
+  /* ---- Intro ---------------------------------------------------------- */
+  /* Where he works and what time it is there, above the greeting. */
+  .intro-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.125rem 0.625rem;
+    margin-bottom: 0.875rem;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .intro-status a {
+    color: var(--foreground);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-ui);
+  }
+  .intro-status a:hover {
+    color: var(--primary);
+  }
+  .intro-clock {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .intro-clock::before {
+    content: "·";
+    margin-right: 0.625rem;
+    color: var(--input);
+  }
+  /* On a phone the time takes a line of its own, under the words. */
+  @media (max-width: 29.99rem) {
+    .intro-clock {
+      flex-basis: 100%;
+      padding-left: 1.0625rem;
+    }
+    .intro-clock::before {
+      content: none;
+    }
+  }
   .intro h1 {
     font-size: var(--text-display);
     letter-spacing: -0.028em;
@@ -15,6 +54,66 @@
     margin-top: 0.75rem;
   }
 
+  /* A phrase of the intro that stands for a row of the stack. It is set in
+     the page's full ink with a dotted rule: follow it to the row, or rest
+     on it to read what the row holds. */
+  .term {
+    position: relative;
+    color: var(--foreground);
+    text-decoration: underline dotted;
+    text-decoration-color: var(--input);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    transition: text-decoration-color var(--duration-fast) var(--ease-ui);
+  }
+  .term:hover,
+  .term:focus-visible {
+    text-decoration-color: var(--primary);
+  }
+  /* The note is drawn by the stylesheet and given an empty spoken form: it
+     repeats the row the link leads to, so it stays out of the sentence for
+     a screen reader, a copy and a search. A browser that cannot give it
+     that empty form draws no note at all. */
+  @supports (content: "a" / "b") {
+    /* From 64rem the margins are wide enough to hold the longest note
+       beside the last phrase of a line, at any text size on offer. */
+    @media (hover: hover) and (pointer: fine) and (min-width: 64rem) {
+      .term {
+        white-space: nowrap;
+      }
+      .term::after {
+        content: attr(data-tools) / "";
+        position: absolute;
+        z-index: 5;
+        bottom: calc(100% + 0.5rem);
+        left: -0.625rem;
+        padding: 0.3125rem 0.625rem;
+        border: 1px solid var(--border);
+        border-radius: 0.4375rem;
+        background: var(--popover);
+        color: var(--soft-foreground);
+        box-shadow: 0 8px 24px -10px rgb(0 0 0 / 0.22);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        line-height: 1.5;
+        white-space: nowrap;
+        opacity: 0;
+        transform: translateY(0.25rem);
+        pointer-events: none;
+        transition:
+          opacity 160ms var(--ease-ui),
+          transform 160ms var(--ease-ui);
+      }
+      .term:hover::after,
+      .term:focus-visible::after {
+        opacity: 1;
+        transform: none;
+        transition-delay: 90ms;
+      }
+    }
+  }
+
+  /* ---- Sections ------------------------------------------------------- */
   .home-section {
     margin-top: var(--section-space);
     scroll-margin-top: 1.5rem;
@@ -36,5 +135,201 @@
   }
   .row-body > .link-row {
     margin-top: 0.25rem;
+  }
+  /* The role he holds today reads in the page's full ink. */
+  .row-now {
+    color: var(--foreground);
+  }
+  /* So does a tool named inside a sentence. Resting the pointer on a name,
+     there or in the line of tools under the role, marks every place that
+     role mentions it (the page script sets data-lit). */
+  .tool-ref {
+    color: var(--foreground);
+  }
+  [data-tools-scope] [data-tool] {
+    border-radius: 0.1875rem;
+    transition:
+      background-color var(--duration-fast) var(--ease-ui),
+      box-shadow var(--duration-fast) var(--ease-ui),
+      color var(--duration-fast) var(--ease-ui);
+  }
+  [data-tools-scope] [data-tool][data-lit] {
+    background-color: color-mix(in srgb, var(--primary) 13%, transparent);
+    box-shadow: 0 0 0 0.1875rem
+      color-mix(in srgb, var(--primary) 13%, transparent);
+    color: var(--foreground);
+  }
+  /* A project's title says it can be opened once the pointer is on it. */
+  .arrow-hint {
+    margin-left: 0.375rem;
+    opacity: 0;
+    transition:
+      opacity var(--duration-fast) var(--ease-ui),
+      transform var(--duration-fast) var(--ease-ui);
+  }
+  .row-title-link:hover > .arrow-hint,
+  .row-title-link:focus-visible > .arrow-hint {
+    opacity: 1;
+  }
+
+  /* A row of the stack reached from the intro is lit for a moment, so the
+     eye finds where the page has taken it. */
+  .stack-row {
+    position: relative;
+    isolation: isolate;
+    scroll-margin-top: 6rem;
+  }
+  .stack-row::before {
+    content: "";
+    position: absolute;
+    inset: -0.3125rem -0.75rem;
+    z-index: -1;
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--primary) 9%, transparent);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .stack-row:target::before {
+    animation: row-lit 2.4s var(--ease-ui);
+  }
+  @keyframes row-lit {
+    12%,
+    60% {
+      opacity: 1;
+    }
+  }
+
+  /* ---- Contact -------------------------------------------------------- */
+  .contact-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.875rem;
+    margin-top: 1rem;
+  }
+  .contact-address {
+    color: var(--foreground);
+    font-size: 1.1875rem;
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-color: var(--input);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    transition:
+      color var(--duration-fast) var(--ease-ui),
+      text-decoration-color var(--duration-fast) var(--ease-ui);
+  }
+  .contact-address:hover {
+    color: var(--primary);
+    text-decoration-color: currentColor;
+  }
+  .contact-clock {
+    margin-top: 0.375rem;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- The page's contents, in the margin of a wide screen ------------- */
+  .section-rail {
+    display: none;
+  }
+  @media (min-width: 75rem) and (min-height: 30rem) {
+    .section-rail {
+      position: fixed;
+      z-index: 5;
+      top: calc(var(--header-height) + 4rem - 0.375rem);
+      right: calc(50% + var(--page-width) / 2 + 3.5rem);
+      display: block;
+      font-size: 0.8125rem;
+      line-height: 1;
+    }
+    .section-rail ul {
+      display: grid;
+      list-style: none;
+    }
+    .section-rail a {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.625rem;
+      min-height: 1.75rem;
+      color: var(--muted-foreground);
+      text-decoration: none;
+      transition: color var(--duration-fast) var(--ease-ui);
+    }
+    .rail-mark {
+      order: 1;
+      width: 0.75rem;
+      height: 1px;
+      background: var(--input);
+      transition:
+        width 260ms var(--ease-out),
+        background var(--duration-fast) var(--ease-ui);
+    }
+    .section-rail a:hover,
+    .section-rail a[aria-current] {
+      color: var(--foreground);
+    }
+    .section-rail a:hover .rail-mark {
+      background: var(--foreground);
+    }
+    .section-rail a[aria-current] .rail-mark {
+      width: 1.75rem;
+      background: var(--primary);
+    }
+  }
+
+  /* ---- Arriving -------------------------------------------------------
+     The first screen assembles once, top to bottom, as the page opens.
+     Further down, a section settles into place as it is reached (the page
+     script marks it then). That second motion is a rise only: text below
+     the first screen is never hidden, so a page captured whole or printed
+     shows all of it. Neither runs for a visitor who asked for less motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .intro > *,
+    .home-section {
+      animation: arrive 640ms var(--ease-out) backwards;
+      animation-delay: calc(var(--arrive-step, 4) * 65ms);
+    }
+    .intro > :nth-child(1) {
+      --arrive-step: 0;
+    }
+    .intro > :nth-child(2) {
+      --arrive-step: 1;
+    }
+    .intro > :nth-child(3) {
+      --arrive-step: 2;
+    }
+    .intro > :nth-child(4) {
+      --arrive-step: 3;
+    }
+    .home-section[data-reveal="in"] {
+      animation: none;
+    }
+    .home-section[data-reveal="in"] > * {
+      animation: settle 720ms var(--ease-out) backwards;
+    }
+    .home-section[data-reveal="in"] > :nth-child(n + 2) {
+      animation-delay: 70ms;
+    }
+  }
+  @keyframes arrive {
+    from {
+      opacity: 0;
+      transform: translateY(0.625rem);
+    }
+  }
+  @keyframes settle {
+    from {
+      transform: translateY(1rem);
+    }
+  }
+  @media print {
+    .section-rail {
+      display: none;
+    }
   }
 }

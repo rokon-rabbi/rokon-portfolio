@@ -4,6 +4,7 @@ import { DATA } from "@/data/resume";
 import { CONFIG } from "@/data/config";
 import SiteHeader from "@/components/design/SiteHeader.astro";
 import SiteFooter from "@/components/design/SiteFooter.astro";
+import CommandMenu from "@/components/design/CommandMenu.astro";
 import { THEME_CSS } from "@/design/tokens";
 import { PREFERENCES_BOOTSTRAP } from "@/design/preferences";
 import { canonicalUrl, pageSchema, serializeSchema, socialPreviewImage } from "@/lib/seo";
@@ -17,11 +18,14 @@ interface Props {
   article?: { publishedTime: string; modifiedTime: string; author: string; tags: string[] };
   canonicalURL?: string;
   noindex?: boolean;
+  // A long page may show how far down it the reader is, along the header.
+  progress?: boolean;
 }
 
 const {
   title,
   noindex = false,
+  progress = false,
   description = DATA.description,
   image,
   imageAlt,
@@ -44,6 +48,7 @@ const { baseFontSize } = CONFIG.typography;
 <html
   lang={CONFIG.site.locale.split("_")[0]}
   style={`font-size: ${baseFontSize}%;`}
+  data-progress={progress ? "" : undefined}
 >
   <head>
     <meta charset="UTF-8" />
@@ -54,6 +59,9 @@ const { baseFontSize } = CONFIG.typography;
     <!-- Saved appearance choices, applied before the first paint. -->
     <script is:inline set:html={PREFERENCES_BOOTSTRAP}></script>
     <style is:inline set:html={THEME_CSS}></style>
+    <!-- The header stays in view. The page script gives it a veil once the
+         page has moved under it; without scripts it wears the veil always. -->
+    <noscript><style is:inline>.site-header{box-shadow:0 1px 0 var(--border)}.site-header::before{opacity:1}</style></noscript>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
@@ -98,9 +106,14 @@ const { baseFontSize } = CONFIG.typography;
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
     <SiteHeader />
+    <slot name="rail" />
     <main id="main-content" class="site-container page-content" tabindex="-1"><slot /></main>
     <SiteFooter />
+    <CommandMenu />
+    <p class="notice" role="status" aria-live="polite" data-notice></p>
     <script>import "../scripts/preferences";</script>
     <script>import "../scripts/motion";</script>
+    <script>import "../scripts/page";</script>
+    <script>import "../scripts/command-menu";</script>
   </body>
 </html>

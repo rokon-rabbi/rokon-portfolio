@@ -14,6 +14,7 @@
     "astro": "astro",
     "check:content": "node tests/content-foundation.test.mjs",
     "check:design": "node tests/design-system.test.mjs",
+    "check:commands": "node --test tests/command-menu.test.mjs",
     "check:work": "node tests/work-content.test.mjs",
     "check:work:routes": "node tests/work-routes.test.mjs",
     "check:work:browser": "node tests/work-browser-qa.mjs",

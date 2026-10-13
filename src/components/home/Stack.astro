@@ -1,11 +1,11 @@
 ---
 import { SKILL_GROUPS } from "@/data/skills";
 ---
-<section id="stack" class="home-section" aria-labelledby="stack-heading">
+<section id="stack" class="home-section" aria-labelledby="stack-heading" data-reveal>
   <h2 id="stack-heading">Stack</h2>
   <dl class="rows rows-tight">
     {SKILL_GROUPS.map((group) => (
-      <div class="row">
+      <div id={`stack-${group.id}`} class="row stack-row">
         <dt class="row-label">{group.label}</dt>
         <dd class="stack-tools">{group.skills.join(", ")}</dd>
       </div>

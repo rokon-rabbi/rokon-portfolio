@@ -27,6 +27,7 @@ const mark = await getImage({ src: markSource, width: 252, format: "png" });
       {links.map((link) => <a class="nav-link" href={link.href} aria-current={link.current ? "page" : undefined}>{link.label}</a>)}
     </nav>
     <div class="header-actions">
+      <button type="button" class="command-trigger" data-command-open aria-label="Open the command menu" aria-haspopup="dialog" aria-expanded="false" aria-controls="command-menu" hidden><kbd data-command-key>Ctrl K</kbd></button>
       <ThemeSwitch compact />
       <SiteSettings />
       <details class="mobile-nav" data-mobile-nav>

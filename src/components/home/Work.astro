@@ -4,14 +4,14 @@ import { workHref } from "@/lib/work";
 
 const projects = DATA.projects.filter((project) => project.featured);
 ---
-<section id="projects" class="home-section" aria-labelledby="projects-heading">
+<section id="projects" class="home-section" aria-labelledby="projects-heading" data-reveal>
   <h2 id="projects-heading">Projects</h2>
   <ul class="rows">
     {projects.map((project) => (
       <li class="row">
         <p class="row-label">{project.attribution.kind === "fork" ? "Team project, forked" : "Personal project"}</p>
         <div class="row-body">
-          <h3><a class="row-title-link" href={workHref(project)}>{project.title}</a></h3>
+          <h3><a class="row-title-link" href={workHref(project)}>{project.title}<span class="arrow arrow-right arrow-hint" aria-hidden="true"></span></a></h3>
           <p class="row-text">{project.summary}</p>
           <ul class="tools" aria-label="Technologies">{project.technologies.map((technology) => <li>{technology}</li>)}</ul>
           <p class="link-row">

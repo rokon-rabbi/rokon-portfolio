@@ -1,0 +1,15 @@
+---
+// The homepage's own contents, standing in the margin on a wide screen. The
+// page script marks the part being read with aria-current="location".
+interface Props {
+  sections: { id: string; label: string }[];
+}
+const { sections } = Astro.props;
+---
+<nav class="section-rail" aria-label="On this page" data-rail>
+  <ul>
+    {sections.map((section) => (
+      <li><a href={`#${section.id}`}><span class="rail-mark" aria-hidden="true"></span>{section.label}</a></li>
+    ))}
+  </ul>
+</nav>

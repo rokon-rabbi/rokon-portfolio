@@ -8,6 +8,7 @@ import Work from "@/components/home/Work.astro";
 import Writing from "@/components/home/Writing.astro";
 import Education from "@/components/home/Education.astro";
 import Contact from "@/components/home/Contact.astro";
+import SectionRail from "@/components/home/SectionRail.astro";
 import { validatePortfolioContent } from "@/lib/portfolio-content";
 import { getPublishedPosts } from "@/lib/blog";
 import "@/styles/home.css";
@@ -17,9 +18,20 @@ const articles = (await getPublishedPosts()).slice(0, 3).map((post) => ({
   title: post.data.title,
   publishedAt: post.data.date,
 }));
+// The parts of this page in reading order, for the list in the margin.
+const sections = [
+  { id: "intro", label: "Intro" },
+  { id: "experience", label: "Experience" },
+  { id: "stack", label: "Stack" },
+  { id: "projects", label: "Projects" },
+  ...(articles.length > 0 ? [{ id: "writing", label: "Writing" }] : []),
+  { id: "education", label: "Education" },
+  { id: "contact", label: "Contact" },
+];
 ---
 
-<Layout>
+<Layout progress>
+  <SectionRail slot="rail" sections={sections} />
   <Hero />
   <Experience />
   <Stack />

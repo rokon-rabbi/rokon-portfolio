@@ -1,0 +1,53 @@
+---
+import { PROFILE } from "@/data/profile";
+import { CONTACT_DETAILS, emailHref } from "@/data/contact";
+import { COMMAND_GROUPS, siteCommands } from "@/design/commands";
+
+const { email, linkedin } = CONTACT_DETAILS;
+const commands = siteCommands({
+  email,
+  emailHref: email ? emailHref(email) : null,
+  profiles: [
+    ...PROFILE.contacts.map((contact) => ({ label: contact.label, url: contact.url })),
+    ...(linkedin ? [{ label: "LinkedIn", url: linkedin }] : []),
+  ],
+});
+const groups = COMMAND_GROUPS.map((name, index) => ({
+  name,
+  id: `command-group-${index + 1}`,
+  commands: commands.filter((command) => command.group === name),
+})).filter((group) => group.commands.length > 0);
+---
+<!-- Ctrl or ⌘ and K: every page and action of the site, one search away.
+     Each entry is a real link or button; the script only filters them. -->
+<dialog id="command-menu" class="command" aria-label="Command menu" data-command>
+  <div class="command-field">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4" /></svg>
+    <input type="text" class="command-input" role="combobox" aria-expanded="true" aria-controls="command-list" aria-autocomplete="list" aria-label="Search pages and actions" placeholder="Where to?" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" data-command-input />
+    <kbd>esc</kbd>
+  </div>
+  <div id="command-list" class="command-list" role="listbox" aria-label="Pages and actions" data-command-list>
+    {groups.map((group) => (
+      <div class="command-group" role="group" aria-labelledby={group.id} data-command-group>
+        <p id={group.id} class="command-group-label">{group.name}</p>
+        {group.commands.map((command) =>
+          command.href ? (
+            <a id={`command-${command.id}`} class="command-option" role="option" aria-selected="false" tabindex="-1" href={command.href} download={command.download} target={command.external ? "_blank" : undefined} rel={command.external ? "noopener noreferrer" : undefined} data-keywords={command.keywords}>
+              <span data-command-label>{command.label}</span>
+              {command.external ? <span class="arrow" aria-hidden="true"></span> : command.download ? <span class="arrow arrow-down" aria-hidden="true"></span> : <span class="arrow arrow-right" aria-hidden="true"></span>}
+            </a>
+          ) : (
+            <button type="button" id={`command-${command.id}`} class="command-option" role="option" aria-selected="false" tabindex="-1" data-command-action={command.action} data-copy={command.action === "copy-email" ? email : undefined} data-keywords={command.keywords}>
+              <span data-command-label>{command.label}</span>
+            </button>
+          ),
+        )}
+      </div>
+    ))}
+    <p class="command-empty" data-command-empty hidden>Nothing here by that name. Try “work”, “résumé” or “theme”.</p>
+  </div>
+  <p class="command-foot" aria-hidden="true">
+    <span><kbd>↑</kbd><kbd>↓</kbd> to move</span>
+    <span><kbd>↵</kbd> to open</span>
+  </p>
+</dialog>

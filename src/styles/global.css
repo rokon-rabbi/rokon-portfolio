@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "./work.css";
 @import "./motion.css";
+@import "./command.css";
 @import "./publication.css";
 
 @plugin "@tailwindcss/typography";
@@ -172,7 +173,8 @@
     border-color: var(--border);
   }
   html {
-    scroll-padding-top: 1.5rem;
+    /* A fragment's target lands clear of the header that stays in view. */
+    scroll-padding-top: calc(var(--header-height) + 0.5rem);
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -446,6 +448,9 @@
     text-decoration: underline;
     text-underline-offset: 0.3em;
   }
+  .button:active {
+    transform: translateY(1px);
+  }
   .button:disabled,
   .button[aria-disabled="true"] {
     background: var(--disabled-background);
@@ -587,11 +592,91 @@
     min-height: 2.75rem;
   }
 
-  /* ---- Header: the name and a line of links ------------------------- */
+  /* ---- Header: the name and a line of links -------------------------
+     It stays at the top of the window. Over the top of a page it is clear;
+     once the page has moved under it (the page script sets data-scrolled)
+     a veil of the page colour and a hairline separate the two.
+
+     The veil is a layer of its own, for three reasons. A backdrop filter
+     on the header itself would make the header the frame for the
+     appearance panel, which is fixed to the window. A named view
+     transition cuts everything inside it off from the page behind, so the
+     name is on the row inside and the veil is outside that row. And a blur
+     can only use what lies under its own box, so text crossing the lower
+     edge would stay sharp: the layer reaches 2rem below the header and is
+     masked back to it, which lets the blur see what is about to arrive. */
   .site-header {
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 30;
-    view-transition-name: site-header;
+    box-shadow: 0 1px 0 0 transparent;
+    transition: box-shadow 240ms var(--ease-ui);
+  }
+  .site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 -2rem;
+    z-index: -1;
+    /* Nearly solid where the page behind cannot be blurred. */
+    background: color-mix(in srgb, var(--background) 96%, transparent);
+    -webkit-backdrop-filter: saturate(1.5) blur(14px);
+    backdrop-filter: saturate(1.5) blur(14px);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 calc(100% - 2rem),
+      transparent calc(100% - 2rem)
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 calc(100% - 2rem),
+      transparent calc(100% - 2rem)
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 240ms var(--ease-ui);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .site-header::before {
+      background: color-mix(in srgb, var(--background) 84%, transparent);
+    }
+  }
+  :root[data-scrolled] .site-header {
+    box-shadow: 0 1px 0 0 var(--border);
+  }
+  :root[data-scrolled] .site-header::before {
+    opacity: 1;
+  }
+  /* How far down a long page the reader is: the hairline under the header
+     fills with the accent. Drawn by the scroll position itself, where a
+     browser can do that; elsewhere the hairline stays as it is. The
+     timeline reaches its property through a variable on purpose: written
+     out, the build's minifier folds it into the `animation` shorthand,
+     which browsers then reject whole. */
+  @supports (animation-timeline: scroll()) {
+    :root[data-progress] .site-header::after {
+      --page-timeline: scroll(root block);
+      content: "";
+      position: absolute;
+      inset: auto 0 -1px;
+      height: 2px;
+      border-radius: 0 1px 1px 0;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      pointer-events: none;
+      animation: page-progress linear both;
+      animation-timeline: var(--page-timeline);
+    }
+  }
+  @keyframes page-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @media print {
+    .site-header {
+      position: static;
+    }
   }
   .header-inner {
     display: flex;
@@ -599,6 +684,7 @@
     justify-content: space-between;
     gap: 1rem;
     min-height: var(--header-height);
+    view-transition-name: site-header;
   }
   .brand {
     display: inline-flex;
@@ -646,6 +732,43 @@
     display: flex;
     align-items: center;
     gap: 0.25rem;
+  }
+  /* The command menu's button: the keys that open it, set as keys. It is a
+     keyboard's shortcut, so it appears where the header has room to spare. */
+  .command-trigger {
+    display: none;
+    align-items: center;
+    min-height: 2.5rem;
+    margin-right: 0.25rem;
+    padding-inline: 0.25rem;
+  }
+  .command-trigger kbd,
+  .command kbd {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.375rem;
+    height: 1.375rem;
+    padding-inline: 0.375rem;
+    border: 1px solid var(--border);
+    border-radius: 0.3125rem;
+    color: var(--muted-foreground);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      border-color var(--duration-fast) var(--ease-ui),
+      color var(--duration-fast) var(--ease-ui);
+  }
+  .command-trigger:hover kbd,
+  .command-trigger[aria-expanded="true"] kbd {
+    border-color: var(--input);
+    color: var(--foreground);
+  }
+  @media (min-width: 48rem) {
+    .command-trigger {
+      display: inline-flex;
+    }
   }
   .theme-switch,
   .settings-toggle {
@@ -999,6 +1122,103 @@
   }
   .settings-reset {
     margin-left: auto;
+  }
+
+  /* ---- A notice: one line saying what just happened -------------------- */
+  .notice {
+    position: fixed;
+    z-index: 60;
+    left: 50%;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    max-width: calc(100vw - 2rem);
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.5rem;
+    background: var(--foreground);
+    color: var(--background);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.3);
+    opacity: 0;
+    transform: translate(-50%, 0.5rem);
+    pointer-events: none;
+    transition:
+      opacity 200ms var(--ease-ui),
+      transform 200ms var(--ease-ui);
+  }
+  .notice[data-show] {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  @media print {
+    .notice {
+      display: none;
+    }
+  }
+
+  /* ---- Something that is true right now: a dot with a slow ring -------- */
+  .live-dot {
+    position: relative;
+    display: inline-block;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--primary);
+  }
+  .live-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: live-ring 2.6s var(--ease-out) infinite;
+  }
+  @keyframes live-ring {
+    from {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    70%,
+    to {
+      opacity: 0;
+      transform: scale(3.2);
+    }
+  }
+
+  /* ---- A copy button beside the thing it copies ------------------------ */
+  .copy-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 2rem;
+    padding-inline: 0.625rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--muted-foreground);
+    font-size: 0.8125rem;
+    line-height: 1;
+    transition:
+      border-color var(--duration-fast) var(--ease-ui),
+      color var(--duration-fast) var(--ease-ui);
+  }
+  .copy-button:hover {
+    border-color: var(--input);
+    color: var(--foreground);
+  }
+  .copy-button svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  .copy-button .copied-icon,
+  .copy-button[data-copied] .copy-icon {
+    display: none;
+  }
+  .copy-button[data-copied] {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .copy-button[data-copied] .copied-icon {
+    display: inline;
   }
 
   /* ---- Sections ----------------------------------------------------- */

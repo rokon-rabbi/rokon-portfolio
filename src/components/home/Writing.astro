@@ -6,7 +6,7 @@ const { articles } = Astro.props;
 const day = (value: string) =>
   new Date(`${value}T00:00:00Z`).toLocaleDateString("en", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
 ---
-<section id="writing" class="home-section" aria-labelledby="writing-heading">
+<section id="writing" class="home-section" aria-labelledby="writing-heading" data-reveal>
   <h2 id="writing-heading">Writing</h2>
   <ul class="rows rows-tight">
     {articles.map((article) => (

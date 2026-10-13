@@ -1,20 +1,31 @@
 ---
 import { EXPERIENCE } from "@/data/experience";
+import { SKILL_GROUPS } from "@/data/skills";
 
 const month = (value: string) =>
   new Intl.DateTimeFormat("en", { month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}-01T00:00:00Z`));
+
+// A tool named inside a sentence is set in the page's full ink, so a reader
+// scanning for one finds it, and it answers to the same name in the line of
+// tools under the role. Longest names first, so "Spring Boot" is one name.
+const names = [...new Set([...EXPERIENCE.flatMap((role) => [...role.technologies]), ...SKILL_GROUPS.flatMap((group) => [...group.skills])])]
+  .sort((a, b) => b.length - a.length)
+  .map((name) => name.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&"));
+const named = new RegExp(`(?<![\\w.])(${names.join("|")})(?!\\w)`, "g");
+// split() with one group alternates: plain text, a name, plain text, …
+const parts = (text: string) => text.split(named).map((part, index) => ({ part, tool: index % 2 === 1 }));
 ---
-<section id="experience" class="home-section" aria-labelledby="experience-heading">
+<section id="experience" class="home-section" aria-labelledby="experience-heading" data-reveal>
   <h2 id="experience-heading">Experience</h2>
   <ol class="rows">
     {EXPERIENCE.map((role) => (
       <li class="row">
-        <p class="row-label"><time datetime={role.start}>{month(role.start)}</time> – {role.end ? <time datetime={role.end}>{month(role.end)}</time> : "Now"}</p>
-        <div class="row-body">
+        <p class="row-label"><time datetime={role.start}>{month(role.start)}</time> – {role.end ? <time datetime={role.end}>{month(role.end)}</time> : <span class="row-now">Now</span>}</p>
+        <div class="row-body" data-tools-scope>
           <h3>{role.title}</h3>
           <p class="row-sub">{role.company}</p>
-          <ul class="row-points">{role.contributions.map((claim) => <li>{claim.text}</li>)}</ul>
-          {role.technologies.length > 0 && <ul class="tools" aria-label="Technologies">{role.technologies.map((skill) => <li>{skill}</li>)}</ul>}
+          <ul class="row-points">{role.contributions.map((claim) => <li>{parts(claim.text).map(({ part, tool }) => (tool ? <span class="tool-ref" data-tool={part}>{part}</span> : part))}</li>)}</ul>
+          {role.technologies.length > 0 && <ul class="tools" aria-label="Technologies">{role.technologies.map((skill) => <li><span data-tool={skill}>{skill}</span></li>)}</ul>}
         </div>
       </li>
     ))}

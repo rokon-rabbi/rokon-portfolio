@@ -1,14 +1,32 @@
 ---
 import { LOCATION } from "@/data/about";
 import { PROFILE } from "@/data/profile";
+import { EXPERIENCE } from "@/data/experience";
+import { SKILL_GROUPS } from "@/data/skills";
 import { CONTACT_DETAILS, emailHref } from "@/data/contact";
 
 const { email, linkedin } = CONTACT_DETAILS;
 const github = PROFILE.contacts.find((contact) => contact.id === "github");
+const current = EXPERIENCE.find((role) => role.end === null);
+// "End to end" has three parts, and each is a row of the stack further down.
+// The phrase links to its row and, on hover, names what is in it.
+const tools = (id: (typeof SKILL_GROUPS)[number]["id"]) =>
+  SKILL_GROUPS.find((group) => group.id === id)!.skills.join(" · ");
+// His clock, as an offset a reader anywhere can place: "GMT+6".
+const offset = new Intl.DateTimeFormat("en", { timeZone: LOCATION.timeZone, timeZoneName: "shortOffset" })
+  .formatToParts(new Date())
+  .find((part) => part.type === "timeZoneName")?.value;
 ---
-<section class="intro" aria-labelledby="intro-title">
+<section id="intro" class="intro" aria-labelledby="intro-title">
+  {current && (
+    <p class="intro-status">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span>Currently at <a href="#experience">{current.company}</a></span>
+      <span class="intro-clock" data-local-clock data-time-zone={LOCATION.timeZone} hidden><time data-local-time></time> {offset}</span>
+    </p>
+  )}
   <h1 id="intro-title">Hi, I’m Rokon.</h1>
-  <p class="intro-text">I’m a full-stack software engineer in {LOCATION.city}. I build web apps end to end: the screens people use, the APIs behind them, and the pipelines that ship them.</p>
+  <p class="intro-text">I’m a full-stack software engineer in {LOCATION.city}. I build web apps end to end: <a class="term" href="#stack-frontend" data-tools={tools("frontend")}>the screens people use</a>, <a class="term" href="#stack-backend" data-tools={tools("backend")}>the APIs behind them</a>, and <a class="term" href="#stack-delivery" data-tools={tools("delivery")}>the pipelines that ship them</a>.</p>
   <p class="link-row intro-links">
     <a class="text-link" href="/resume">Résumé <span class="arrow arrow-right" aria-hidden="true"></span></a>
     {github && <a class="text-link" href={github.url} target="_blank" rel="noopener noreferrer">GitHub <span class="arrow" aria-hidden="true"></span></a>}

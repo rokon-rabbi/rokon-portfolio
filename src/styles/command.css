@@ -1,0 +1,164 @@
+/* The command menu: a search field over a list of the site's pages and
+   actions, opened with Ctrl or ⌘ and K. A modal dialog in the top layer, so
+   it needs no stacking order of its own and the page behind it is inert. */
+@layer components {
+  .command {
+    position: fixed;
+    inset: 0;
+    width: min(34rem, calc(100vw - 1.5rem));
+    max-width: none;
+    max-height: min(27rem, calc(100dvh - 14vh - 1.5rem));
+    margin: 14vh auto auto;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--popover);
+    color: var(--popover-foreground);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.05),
+      0 24px 60px -16px rgb(0 0 0 / 0.32);
+    /* The site's own face, as in the appearance panel: the controls hold
+       still whatever text face a visitor has chosen. */
+    font-family:
+      "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+      sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+  }
+  .command[open] {
+    display: flex;
+    flex-direction: column;
+    animation: command-arrive 180ms var(--ease-out);
+  }
+  .command::backdrop {
+    background: rgb(17 17 17 / 0.28);
+    animation: command-dim 180ms var(--ease-ui);
+  }
+  .dark .command::backdrop {
+    background: rgb(0 0 0 / 0.56);
+  }
+  @keyframes command-arrive {
+    from {
+      opacity: 0;
+      transform: translateY(-0.375rem) scale(0.985);
+    }
+  }
+  @keyframes command-dim {
+    from {
+      opacity: 0;
+    }
+  }
+  .command-field {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding-inline: 0.875rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted-foreground);
+  }
+  .command-field svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .command-input {
+    flex: 1;
+    min-width: 0;
+    height: 3.125rem;
+    background: transparent;
+    color: var(--foreground);
+    font-size: 1rem;
+  }
+  .command-input::placeholder {
+    color: var(--muted-foreground);
+    opacity: 1;
+  }
+  /* The field is the only thing in the menu that takes focus, and the menu
+     is open only while it has it. */
+  .command-input:focus,
+  .command-input:focus-visible {
+    outline: none;
+  }
+
+  .command-list {
+    flex: 1;
+    min-height: 0;
+    padding: 0.375rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-padding-block: 0.375rem;
+  }
+  .command-group + .command-group {
+    margin-top: 0.375rem;
+  }
+  .command-group-label {
+    padding: 0.5rem 0.625rem 0.25rem;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+  }
+  .command-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    min-height: 2.375rem;
+    padding-inline: 0.625rem;
+    border-radius: 0.4375rem;
+    color: var(--soft-foreground);
+    text-align: left;
+    text-decoration: none;
+  }
+  .command-option .arrow {
+    color: var(--input);
+    opacity: 0;
+  }
+  .command-option[aria-selected="true"] {
+    background: var(--surface-hover);
+    color: var(--foreground);
+  }
+  .command-option[aria-selected="true"] .arrow {
+    opacity: 1;
+  }
+  .command-empty {
+    padding: 1.5rem 0.625rem;
+    color: var(--muted-foreground);
+    text-align: center;
+  }
+  .command-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 0.5rem 0.875rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+  }
+  .command-foot span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .command-foot kbd + kbd {
+    margin-left: -0.0625rem;
+  }
+  .command-foot kbd:last-of-type {
+    margin-right: 0.125rem;
+  }
+  /* A phone has no arrow keys to explain. */
+  @media (max-width: 39.99rem) {
+    .command {
+      max-height: min(27rem, calc(100dvh - 8vh - 1.5rem));
+      margin-top: 8vh;
+    }
+    .command-foot {
+      display: none;
+    }
+  }
+  @media (forced-colors: active) {
+    .command-option[aria-selected="true"] {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+  }
+}
